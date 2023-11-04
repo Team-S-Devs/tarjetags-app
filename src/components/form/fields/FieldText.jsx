@@ -19,8 +19,9 @@ import { TextField } from "@mui/material";
  * @param {Function} props.onBlur - A function to be executed when the input field loses focus.
  * @param {boolean} props.multiline - Specifies if the input field is multiline.
  * @param {string} props.autoComplete - Specifies autocomplete behavior for the input field.
- * @param {Object} props.errorObject - An object containing error state and message.
- * @param {Function} props.setErrorObject - A function to update the error state and message.
+ * @param {boolean} props.error - A boolean containing error state.
+ * @param {string} props.errorMessage - A string containing error message.
+ * @param {Function} props.setError - A function to update the error state.
  * @param {Function} props.validateMethod - A function to validate the input field's value.
  * @returns {JSX.Element} Returns a JSX element representing the FieldText component.
  */
@@ -40,8 +41,9 @@ const FieldText = ({
   onBlur = () => {}, 
   multiline = true, 
   autoComplete="off", 
-  errorObject = {isError: false, errorMessage: ""},
-  setErrorObject = () => {},
+  error = false,
+  errorMessage = "",
+  setError = () => {},
   validateMethod = () => {},
 }) => {
   /**
@@ -49,9 +51,7 @@ const FieldText = ({
    */
   const handleFocus = () => {
     onFocus();
-    const err = errorObject;
-    err.isError = false;
-    setErrorObject(err);
+    setError(false);
   };
 
   /**
@@ -64,6 +64,7 @@ const FieldText = ({
 
   return (
     <TextField 
+      style={{ marginTop: 12 }}
       id={name}
       variant={variant} 
       value={value} 
@@ -71,7 +72,7 @@ const FieldText = ({
       type={type}  
       label={label} 
       required={required} 
-      helperText={errorObject.isError ? errorObject.errorMessage : helperText}
+      helperText={error ? errorMessage : helperText}
       placeholder={placeholder} 
       fullWidth={fullWidth}
       disabled={disabled}
@@ -80,7 +81,7 @@ const FieldText = ({
       onFocus={handleFocus}
       onBlur={handleBlur}
       onChange={(event) => setValue(event.target.value)}
-      error={errorObject.isError}
+      error={error}
     />
   );
 };

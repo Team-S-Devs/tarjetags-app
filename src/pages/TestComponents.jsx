@@ -9,19 +9,21 @@ const TestComponents = () => {
      * @type {string}
      */
     const [emailValue, setEmailValue] = useState("");
-    const [emailError, setEmailError] = useState({
-        isError: false,
-        errorMessage: "Not valid email"
-    });
+    const [emailError, setEmailError] = useState(false);
+    const [emailErrorMessage, setEmailErrorMessage] = useState("Not valid email");
     const [disabledEmail, setDisabledEmail] = useState(false)
 
+    const validateEmail = () => {
+        // Regular expression pattern for validating email addresses
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        setEmailError(!emailPattern.test(emailValue));
+    }
 
-    const [departmentValue, setDepartmentValue] = useState("Selecciona ");
 
+    const [departmentValue, setDepartmentValue] = useState("");
     const departmentsOptions = 
         ["La Paz", "Cochabamba", "Santa Cruz", "Beni", "Chuquisaca", "Oruro", "Pando", "Potosí", "Tarija"]
 
-        console.log(departmentValue)
     return (
         <div className="container">
             <Typography variant='h4' component="h1">Standard Full Width Field Text Component example: </Typography>
@@ -30,12 +32,15 @@ const TestComponents = () => {
                 setValue={setEmailValue}
                 label={"Email"} 
                 placeholder='nombre@ejemplo.com' 
-                errorObject={emailError}
+                error={emailError}
+                setError={setEmailError}
+                errorMessage={emailErrorMessage}
                 disabled={disabledEmail}
                 fullWidth={true}
                 required={true}
                 onFocus={() => console.log("Email Field Focused")}
                 onBlur={() => console.log("Email Field lost focus")}
+                validateMethod={validateEmail}
             />
 
             <br />
@@ -44,25 +49,29 @@ const TestComponents = () => {
 
             <Typography variant='h4' component="h1">Outlined non-full-width Field Text Component example: </Typography>
             <FieldText 
+                variant='outlined'
                 value={emailValue}
                 setValue={setEmailValue}
-                variant='outlined'
                 label={"Email"} 
                 placeholder='nombre@ejemplo.com' 
-                errorObject={emailError}
+                error={emailError}
+                setError={setEmailError}
+                errorMessage={emailErrorMessage}
                 disabled={disabledEmail}
                 fullWidth={false}
                 required={true}
                 onFocus={() => console.log("Email Field Focused")}
                 onBlur={() => console.log("Email Field lost focus")}
+                validateMethod={validateEmail}
             />
 
             <br />
             <br />
             <br />
 
-            <Typography variant='h4' component="h1">Dropdown Field Component example: </Typography>
+            <Typography variant='h4' component="h1">Outlined Full Width Dropdown Field Component example: </Typography>
             <DropdownField 
+                variant='outlined'
                 options={departmentsOptions} 
                 value={departmentValue} 
                 setValue={setDepartmentValue}

@@ -8,11 +8,20 @@ const BoldTitleWithBackButton = ({ children, centered = false }) => {
     return (
         <div className="d-flex align-items-center">
             <div>
-                <BackButton className="col-md-1" />
+                <BackButton />
             </div>
             <div style={getTitleStyle()}>
-                <BoldTitle className="col-md-8" variant='h3' color="#000">{children}</BoldTitle>
+                <BoldTitle 
+                    textAlign={centered ? "center" : "left"} 
+                    variant='h3' 
+                    color="#000"
+                >{children}</BoldTitle>
             </div>
+            { centered &&
+                <div>
+                    <BackButton color='transparent' />
+                </div>
+            }
         </div>
     )
 }

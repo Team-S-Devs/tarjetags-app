@@ -19,7 +19,7 @@ const BackButton = ({ color="#000" }) => {
             aria-label="back" 
             onClick={handleBack}
         >
-            <FaChevronLeft color="#000" size={44} />
+            <FaChevronLeft color={color} size={44} />
         </IconButton>
     </div>
   );

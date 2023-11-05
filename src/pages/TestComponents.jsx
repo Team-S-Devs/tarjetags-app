@@ -9,6 +9,7 @@ import BoldTitle from '../components/texts/BoldTitle';
 import BackButton from '../components/buttons/BackButton';
 import BoldTitleWithBackButton from '../components/texts/BoldTitleWithBackButton';
 import GreySubtitleWithLink from '../components/texts/GreySubtitleWithLink';
+import GreySubtitle from '../components/texts/GreySubtitle';
 
 const TestComponents = () => {
     /**
@@ -122,6 +123,14 @@ const TestComponents = () => {
             <ThinTitle variant='h5'>Bold Title with Back Button and Medium Small Title: </ThinTitle>
             <BoldTitleWithBackButton>Registro</BoldTitleWithBackButton>
             <GreySubtitleWithLink subtitleText='¿Ya tienes una cuenta?' linkText='Inicia Sesión' />
+
+            <br />
+            <br />
+            <br />
+            <BoldTitleWithBackButton centered>Restablecer contraseña</BoldTitleWithBackButton>
+            <br/>
+            <GreySubtitle variant='h6' textAlign={"center"} paddingHorizontal={40}>Introduce el email con el que te registraste y se te enviará un enlace a tu correo electrónico para  cambiar tu contraseña</GreySubtitle>
+
         </div>
     )
 }

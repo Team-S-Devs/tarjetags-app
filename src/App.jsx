@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import TestComponents from './pages/TestComponents'
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material';
+import LogIn from './pages/LogIn';
 
 const theme = createTheme({
   palette: {
@@ -21,9 +22,6 @@ const theme = createTheme({
   typography: {
     fontFamily: 'Poppins, sans-serif', 
     h1: {
-      fontFamily: 'Mulish, sans-serif',
-    },
-    h2: {
       fontFamily: 'Mulish, sans-serif',
     },
     h2: {
@@ -72,6 +70,7 @@ const App = () => {
         <Routes>
           <Route path='/' Component={Home} />
           <Route path='test-components' Component={TestComponents} />
+          <Route path='login' Component={LogIn} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

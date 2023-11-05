@@ -2,15 +2,57 @@ import { Router, Route, Routes, BrowserRouter } from 'react-router-dom'
 import Splash from './pages/Splash'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TestComponents from './pages/TestComponents'
+import { ThemeProvider } from '@emotion/react';
+import { createTheme } from '@mui/material';
 
-function App() {
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#561AD9',
+    },
+    grey: {
+      main: "#727070"
+    },
+    accent: {
+      main: "#9DD91A"
+    }
+  },
+  typography: {
+    fontFamily: 'Poppins, sans-serif', 
+    h1: {
+      fontFamily: 'Mulish, sans-serif',
+    },
+    h2: {
+      fontFamily: 'Mulish, sans-serif',
+    },
+    h2: {
+      fontFamily: 'Mulish, sans-serif',
+    },
+    h3: {
+      fontFamily: 'Mulish, sans-serif',
+    },
+    h4: {
+      fontFamily: 'Mulish, sans-serif',
+    },
+    h5: {
+      fontFamily: 'Mulish, sans-serif',
+    },
+    h6: {
+      fontFamily: 'Mulish, sans-serif',
+    },
+  },
+});
+
+const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' Component={Splash} />
-        <Route path='test-components' Component={TestComponents} />
-      </Routes>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' Component={Splash} />
+          <Route path='test-components' Component={TestComponents} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   )
 }
 

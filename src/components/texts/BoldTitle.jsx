@@ -1,9 +1,9 @@
 import { Typography } from '@mui/material';
 import React from 'react';
 
-const BoldTitle = ({ children, color="#561AD9", variant='h4', component="h1", textAlign = "left" }) => {
+const BoldTitle = ({ children, color="primary", variant='h4', component="h1", textAlign = "left" }) => {
   return (
-    <Typography variant={variant} component={component} style={{ color, fontWeight: 'bold', textAlign }}>
+    <Typography color={color} variant={variant} component={component} style={{ fontWeight: 'bold', textAlign }}>
       {children}
     </Typography>
   );

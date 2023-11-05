@@ -1,9 +1,12 @@
+import { Typography } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const LinkComponent = ({ children, to }) => {
+const LinkComponent = ({ children, to, color = "primary" }) => {
   return (
-    <Link to={to} style={{ fontSize: 22 }}>{children}</Link>
+    <Link to={to}>
+      <Typography  style={{ fontSize: 22 }} color={color} >{children}</Typography>
+    </Link>
   )
 }
 

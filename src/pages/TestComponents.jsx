@@ -122,6 +122,7 @@ const TestComponents = () => {
 
             <ThinTitle variant='h5'>Bold Title with Back Button and Medium Small Title: </ThinTitle>
             <BoldTitleWithBackButton>Registro</BoldTitleWithBackButton>
+            <div className="mt-2"></div>
             <GreySubtitleWithLink subtitleText='¿Ya tienes una cuenta?' linkText='Inicia Sesión' />
 
             <br />

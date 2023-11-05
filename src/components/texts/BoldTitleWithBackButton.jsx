@@ -19,7 +19,7 @@ const BoldTitleWithBackButton = ({ children, centered = false }) => {
             </div>
             { centered &&
                 <div>
-                    <BackButton color='transparent' />
+                    <BackButton color='transparent' disabled />
                 </div>
             }
         </div>

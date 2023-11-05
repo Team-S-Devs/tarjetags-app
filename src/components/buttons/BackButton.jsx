@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import { FaChevronLeft } from 'react-icons/fa';
 
-const BackButton = ({ color="#000" }) => {
+const BackButton = ({ color="#000", disabled }) => {
     const navigate = useNavigate();
 
     const handleBack = () => {
@@ -17,6 +17,7 @@ const BackButton = ({ color="#000" }) => {
                 padding: 0
             }} 
             aria-label="back" 
+            disabled={disabled}
             onClick={handleBack}
         >
             <FaChevronLeft color={color} size={44} />

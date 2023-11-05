@@ -41,6 +41,27 @@ const theme = createTheme({
       fontFamily: 'Mulish, sans-serif',
     },
   },
+  components: {
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: '8px',
+          boxShadow: '0 0 6px rgba(0, 0, 0, 0.15)',
+          background: "#fff"
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          paddingLeft: "50px",
+          paddingRight: "50px",
+          borderRadius: "12px",
+          textTransform: 'none', // Set textTransform to capitalize
+        },
+      },
+    },
+  },
 });
 
 const App = () => {

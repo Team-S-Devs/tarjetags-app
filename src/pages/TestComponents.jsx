@@ -10,6 +10,8 @@ import BackButton from '../components/buttons/BackButton';
 import BoldTitleWithBackButton from '../components/texts/BoldTitleWithBackButton';
 import GreySubtitleWithLink from '../components/texts/GreySubtitleWithLink';
 import GreySubtitle from '../components/texts/GreySubtitle';
+import StyledCard from '../components/card/StyledCard';
+import AccentButton from '../components/buttons/AccentButton';
 
 const TestComponents = () => {
     /**
@@ -131,6 +133,19 @@ const TestComponents = () => {
             <BoldTitleWithBackButton centered>Restablecer contraseña</BoldTitleWithBackButton>
             <br/>
             <GreySubtitle variant='h6' textAlign={"center"} paddingHorizontal={40}>Introduce el email con el que te registraste y se te enviará un enlace a tu correo electrónico para  cambiar tu contraseña</GreySubtitle>
+
+            <br />
+            <br />
+            <br />
+            <ThinTitle color='primary' variant='h5' textAlign='center'>Mi tarjeta</ThinTitle>
+            <div className="mt-2"></div>
+            <StyledCard>
+                <div className="d-flex flex-column align-items-center">
+                    <ThinTitle variant='h4'>Título 1</ThinTitle>
+                    <AccentButton>https://tarjetag.com/example</AccentButton>
+                </div>
+            </StyledCard>
+            <br />
 
         </div>
     )

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import image from '../assets/images/logo.png'
+import image from '../assets/images/auth/logo.png'
 import { Link, useLocation } from 'react-router-dom'
 import { BiSolidUser } from "react-icons/bi";
 import { LiaIdCardSolid } from "react-icons/lia";

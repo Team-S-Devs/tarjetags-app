@@ -7,7 +7,9 @@ import { FaEye, FaLock, FaEnvelope } from 'react-icons/fa';
 import FieldText from '../components/form/fields/FieldText';
 import {app} from '../utils/firebase-config'
 import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
-import image from '../assets/images/loginImage.png'
+import image from '../assets/images/auth/loginImage.png'
+import image3 from '../assets/images/auth/person.png'
+import image2 from '../assets/svg/login1.svg'
 import BoldTitleWithBackButton from '../components/texts/BoldTitleWithBackButton';
 import GreySubtitleWithLink from '../components/texts/GreySubtitleWithLink';
 import BigPrimaryButton from '../components/buttons/BigPrimaryButton';
@@ -74,6 +76,7 @@ const LogIn = () => {
 
     return (
         <div className='login-background'>
+            
             <div className='d-flex justify-content-center flex-column login-container '> 
 
             <BoldTitleWithBackButton children="Inicio de Sesión"/>
@@ -106,7 +109,6 @@ const LogIn = () => {
                              />
 
                             </Box>
-
                             <div className="d-flex align-items-center pswd-container">
                                 <div>
                                     Contraseña *
@@ -155,7 +157,7 @@ const LogIn = () => {
             </div>
 
             <div className='image-log-container'>
-                <img src={image} alt="" />
+                <img src={image3} alt="" />
             </div>
 
         </div>

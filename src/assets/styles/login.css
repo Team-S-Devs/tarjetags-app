@@ -69,7 +69,11 @@
 
 
 .iconButton {
-    height: 50px;
+    margin-block: auto;
+}
+
+.image-log-container img {
+    max-height: 70vh;
 }
 
 

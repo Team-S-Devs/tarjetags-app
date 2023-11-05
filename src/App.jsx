@@ -6,6 +6,7 @@ import TestComponents from './pages/TestComponents'
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material';
 import LogIn from './pages/LogIn';
+import Dashboard from './pages/Dashboard';
 
 const theme = createTheme({
   palette: {
@@ -68,7 +69,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
-          <Route path='/' Component={Home} />
+          <Route path='/' Component={Dashboard} />
           <Route path='test-components' Component={TestComponents} />
           <Route path='login' Component={LogIn} />
         </Routes>

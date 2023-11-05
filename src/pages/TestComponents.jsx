@@ -12,6 +12,8 @@ import GreySubtitleWithLink from '../components/texts/GreySubtitleWithLink';
 import GreySubtitle from '../components/texts/GreySubtitle';
 import StyledCard from '../components/card/StyledCard';
 import AccentButton from '../components/buttons/AccentButton';
+import HorizontalLine from '../components/lines/HorizontalLine';
+import SmallPrimaryButton from '../components/buttons/SmallPrimaryButton';
 
 const TestComponents = () => {
     /**
@@ -138,6 +140,7 @@ const TestComponents = () => {
             <br />
             <br />
             <ThinTitle color='primary' variant='h5' textAlign='center'>Mi tarjeta</ThinTitle>
+            <HorizontalLine/>
             <div className="mt-2"></div>
             <StyledCard>
                 <div className="d-flex flex-column align-items-center">
@@ -147,6 +150,9 @@ const TestComponents = () => {
             </StyledCard>
             <br />
 
+            <ThinTitle variant='h4'>Small Primary Button</ThinTitle>
+            <SmallPrimaryButton>Guardar</SmallPrimaryButton>
+            <SmallPrimaryButton variant='outlined'>Cancelar</SmallPrimaryButton>
         </div>
     )
 }

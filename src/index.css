@@ -39,7 +39,6 @@
 
 
 :root {
-	font-family: 'Mulish';
 	line-height: 1.5;
 	font-weight: 400;
   
@@ -49,10 +48,13 @@
 	--third-green: #9DD91A;
 	--black: #121212;
 
+	--background-color-white: #EDF0F7;
+
 	--font-family-headline: Mulish, sans-serif;
 	--font-family-subtitle: Mulish, sans-serif;
 	--font-family-body: Poppins, sans-serif;
 	--border-radious-general: 21px;
+	--border-radious-soft: 5px;
 
 
 	--font-weight-headline: 700;
@@ -66,24 +68,7 @@
 	--font-weight-subtitle2-mobile: 700;
 	--font-size-subtitle2-desktop: 14px;
 	--font-size-subtitle2-mobile: 16px;
-	--font-weight-button-desktop-mobile: 600;
-	--font-size-button-desktop: 14px;
-	--font-size-button-mobile: 16px;
-	--font-weight-body1-desktop-mobile: 600;
-	--font-size-body1-desktop: 14px;
-	--font-size-body1-mobile: 16px;
-	--font-weight-body1-regular-desktop-mobile: 400;
-	--font-weight-body2-desktop: 400;
-	--font-weight-body2-mobile: 600;
-	--font-weight-body2-regular: 400;
-	--font-size-body2-desktop: 12px;
-	--font-size-body2-mobile: 14px;
-	--font-weight-caption-regular-desktop-mobile: 400;
-	--font-size-caption-desktop: 10px;
-	--font-size-caption-mobile: 12px;
-	--font-weight-overline-desktop: 600;
-	--font-weight-overline-mobile: 400;
-	--font-size-overline-desktop-mobile: 12px;  
+
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
@@ -92,17 +77,29 @@
 	-webkit-text-size-adjust: 100%;
   }
   
-  a {
-	font-weight: 500;
-	color: var(--prim-purple);
-	text-decoration: inherit;
-  }
 
-  a:hover {
-	color: var(--sec-purple-light);
-  }
   
   body {
+	margin: 0;
+  }  
+
+*{
+	font-family: 'Poppins', sans-serif;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
 	margin: 0;
   }
   
@@ -115,9 +112,5 @@
   }
 
   .subtitle {
-	font-family: var(--font-family-subtitle);
-  }
-
-  h2 {
 	font-family: var(--font-family-subtitle);
   }

@@ -13,6 +13,18 @@ header {
     max-width: 100vw;
 }
 
+
+header a {
+	font-weight: 500;
+	color: var(--prim-purple);
+	text-decoration: inherit;
+  }
+
+header a:hover {
+	color: var(--sec-purple-light);
+  }
+
+
   .logo_img img {
     height: 65px;
     width: auto;

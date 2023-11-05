@@ -1,7 +1,14 @@
 import React, { useState } from 'react'
 import FieldText from '../components/form/fields/FieldText'
-import { Typography } from '@mui/material';
 import DropdownField from '../components/form/fields/DropdownField';
+import BigPrimaryButton from '../components/buttons/BigPrimaryButton';
+import MediumPrimaryButton from '../components/buttons/MediumPrimaryButton';
+import MediumSecondaryButton from '../components/buttons/MediumSecondaryButton';
+import ThinTitle from '../components/texts/ThinTitle';
+import BoldTitle from '../components/texts/BoldTitle';
+import BackButton from '../components/buttons/BackButton';
+import BoldTitleWithBackButton from '../components/texts/BoldTitleWithBackButton';
+import GreySubtitleWithLink from '../components/texts/GreySubtitleWithLink';
 
 const TestComponents = () => {
     /**
@@ -26,7 +33,9 @@ const TestComponents = () => {
 
     return (
         <div className="container">
-            <Typography variant='h4' component="h1">Standard Full Width Field Text Component example: </Typography>
+            <BoldTitle>EDITAR TARJETA</BoldTitle>
+
+            <ThinTitle>Standard Full Width Field Text Component example: </ThinTitle>
             <FieldText 
                 value={emailValue}
                 setValue={setEmailValue}
@@ -47,7 +56,7 @@ const TestComponents = () => {
             <br />
             <br />
 
-            <Typography variant='h4' component="h1">Outlined non-full-width Field Text Component example: </Typography>
+            <ThinTitle>Outlined non-full-width Field Text Component example: </ThinTitle>
             <FieldText 
                 variant='outlined'
                 value={emailValue}
@@ -69,7 +78,7 @@ const TestComponents = () => {
             <br />
             <br />
 
-            <Typography variant='h4' component="h1">Outlined Full Width Dropdown Field Component example: </Typography>
+            <ThinTitle>Outlined Full Width Dropdown Field Component example: </ThinTitle>
             <DropdownField 
                 variant='outlined'
                 options={departmentsOptions} 
@@ -77,6 +86,42 @@ const TestComponents = () => {
                 setValue={setDepartmentValue}
                 label="Departamento:"
             />
+
+            <br />
+            <br />
+            <br />
+
+            <ThinTitle>Big Primary Button Component example: </ThinTitle>
+            <BigPrimaryButton onClick={() => console.log("Click en big button")}>Registrarse</BigPrimaryButton>
+
+            <br />
+            <br />
+            <br />
+
+            <ThinTitle>Medium Primary Button Component example: </ThinTitle>
+            <MediumPrimaryButton onClick={() => console.log("Click en medium button")}>Registrarse</MediumPrimaryButton>
+
+            <br />
+            <br />
+            <br />
+
+            <ThinTitle>Medium Secondary Button Component example: </ThinTitle>
+            <MediumSecondaryButton onClick={() => console.log("Click en secondary button")}>Registrarse</MediumSecondaryButton>
+
+            <br />
+            <br />
+            <br />
+
+            <ThinTitle variant='h4'>Back Button and Medium Thin Title: </ThinTitle>
+            <BackButton/>
+
+            <br />
+            <br />
+            <br />
+
+            <ThinTitle variant='h5'>Bold Title with Back Button and Medium Small Title: </ThinTitle>
+            <BoldTitleWithBackButton>Registro</BoldTitleWithBackButton>
+            <GreySubtitleWithLink subtitleText='¿Ya tienes una cuenta?' linkText='Inicia Sesión' />
         </div>
     )
 }

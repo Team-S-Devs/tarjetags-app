@@ -2,10 +2,14 @@ import { Typography } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const LinkComponent = ({ children, to, color = "primary" }) => {
+const LinkComponent = ({ children, size=22, to, color = "primary" }) => {
+
   return (
-    <Link to={to}>
-      <Typography  style={{ fontSize: 22 }} color={color} >{children}</Typography>
+    <Link style={{
+      textDecorationColor: 'var(--prim-purple)',
+    
+    }} to={to}>
+      <Typography className='general-link' style={{ fontSize: size }} color={color} >{children}</Typography>
     </Link>
   )
 }

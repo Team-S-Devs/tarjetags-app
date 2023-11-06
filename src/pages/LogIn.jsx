@@ -80,7 +80,7 @@ const LogIn = () => {
             <div className='d-flex justify-content-center flex-column login-container '> 
 
             <BoldTitleWithBackButton children="Inicio de Sesión"/>
-            <GreySubtitleWithLink subtitleText='¿Aún no tienes una cuenta?' linkText='Registrate' />
+            <GreySubtitleWithLink linkSize={22} subtitleText='¿Aún no tienes una cuenta?' linkText='Registrate'/>
                 
                 <div className='login-secondary-container'>
                         <form id='logForm' className='form-login' onSubmit={functAutentiaction}>
@@ -114,8 +114,8 @@ const LogIn = () => {
                                     Contraseña *
                                 </div>
                                 <div className='link-login'>
-                                <Link to="/">
-                                    <Typography  style={{ fontSize: 17 }} color={"primary"} >¿Ha olvidado su contraseña?</Typography>
+                                <Link style={{textDecorationColor:'var(--prim-purple)'}} to="/">
+                                    <Typography className='general-link'  style={{ fontSize: 17 }} color={"primary"} >¿Ha olvidado su contraseña?</Typography>
                                 </Link>
                                 </div>
                             </div>

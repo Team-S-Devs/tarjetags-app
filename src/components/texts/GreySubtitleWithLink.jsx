@@ -2,7 +2,7 @@ import React from 'react'
 import GreySubtitle from './GreySubtitle'
 import LinkComponent from '../buttons/LinkComponent'
 
-const GreySubtitleWithLink = ({ subtitleText = "", linkText = "", centered }) => {
+const GreySubtitleWithLink = ({ subtitleText = "", linkText = "", centered, linkSize =22 }) => {
     const getTitleStyle = () => centered ? { marginLeft: 16, flex: 10 } : { marginLeft: 16 };
 
   return (
@@ -11,7 +11,7 @@ const GreySubtitleWithLink = ({ subtitleText = "", linkText = "", centered }) =>
             <GreySubtitle>{subtitleText}</GreySubtitle>
         </div>
         <div style={getTitleStyle()}>
-            <LinkComponent>{linkText}</LinkComponent>
+            <LinkComponent size={linkSize}>{linkText}</LinkComponent>
         </div>
     </div>
   )

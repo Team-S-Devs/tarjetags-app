@@ -112,7 +112,7 @@ const LogIn = () => {
     }
 
     return (
-        <div className='login-background'>
+        <div className='general-background'>
             
             <div className='d-flex justify-content-center flex-column login-container '> 
 

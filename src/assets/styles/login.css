@@ -26,7 +26,7 @@
     margin-bottom: 1.5rem;
 }
 
-.login-background {
+.general-background {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -93,7 +93,7 @@
         min-width: 40vw;
     }
 
-    .login-background {
+    .general-background {
         flex-direction: column;
     }
 

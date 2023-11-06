@@ -14,6 +14,7 @@ import StyledCard from '../components/card/StyledCard';
 import AccentButton from '../components/buttons/AccentButton';
 import HorizontalLine from '../components/lines/HorizontalLine';
 import SmallPrimaryButton from '../components/buttons/SmallPrimaryButton';
+import PasswordField from '../components/form/fields/PasswordField';
 
 const TestComponents = () => {
     /**
@@ -83,6 +84,27 @@ const TestComponents = () => {
             <br />
             <br />
 
+            <ThinTitle>Password Field:</ThinTitle>
+            <PasswordField 
+                variant='outlined'
+                value={emailValue}
+                setValue={setEmailValue}
+                label={"Password"} 
+                placeholder='nombre@ejemplo.com' 
+                error={emailError}
+                setError={setEmailError}
+                errorMessage={emailErrorMessage}
+                disabled={disabledEmail}
+                fullWidth={false}
+                required={true}
+                onFocus={() => console.log("Password Field Focused")}
+                onBlur={() => console.log("Password Field lost focus")}
+            />
+
+            <br />
+            <br />
+            <br />
+
             <ThinTitle>Outlined Full Width Dropdown Field Component example: </ThinTitle>
             <DropdownField 
                 variant='outlined'
@@ -97,7 +119,7 @@ const TestComponents = () => {
             <br />
 
             <ThinTitle>Big Primary Button Component example: </ThinTitle>
-            <BigPrimaryButton onClick={() => console.log("Click en big button")}>Registrarse</BigPrimaryButton>
+            <BigPrimaryButton loading onClick={() => console.log("Click en big button")}>Registrarse</BigPrimaryButton>
 
             <br />
             <br />

@@ -4,6 +4,8 @@ import { Link, useLocation } from 'react-router-dom'
 import { BiSolidUser } from "react-icons/bi";
 import { LiaIdCardSolid } from "react-icons/lia";
 import LinkComponent from '../components/buttons/LinkComponent'
+import { signOut } from 'firebase/auth';
+import { auth } from '../utils/firebase-config';
 
 const Header = () => {
   const location = useLocation();
@@ -35,8 +37,8 @@ const Header = () => {
         <Link to="/"><span className='link'>Ver Tarjetas Creadas</span></Link>
 
         <BiSolidUser className='icon-header'/>
-        <Link to="/"><span className='link'>Ver Perfil</span></Link>
-        <Link to="" target='_blank'><span className='link mainButton'>Chapo Guzman</span></Link>
+        <Link onClick={() => signOut(auth)} to="/"><span className='link'>Ver Perfil</span></Link>
+        <Link to="/" ><span className='link mainButton'>Chapo Guzman</span></Link>
       </nav>
       <div className='menuButton' onClick={onClickHeader}>
         <button className="headerButton">

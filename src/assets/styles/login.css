@@ -1,7 +1,7 @@
 .field-container {
     display: flex;
     align-items: flex-end;
-    margin-top: -1rem;
+    margin-top: 1.2rem;
 }
 
 .login-container{
@@ -41,8 +41,10 @@
 }
 
 .link-login{
-    margin-left: 1rem;
     font-size: 10px;
+    display: flex;
+    justify-content: right;
+    margin-top: 10px;
 }
 
 .pswd-container {
@@ -69,11 +71,16 @@
 
 
 .iconButton {
-    margin-block: auto;
+    margin: auto;
 }
 
 .image-log-container img {
     max-height: 70vh;
+}
+
+.error {
+    margin-top: 1.5rem;
+    color: red;
 }
 
 

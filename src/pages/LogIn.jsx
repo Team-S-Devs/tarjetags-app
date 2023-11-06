@@ -1,46 +1,25 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import { Box } from '@mui/system';
 import { FaEye, FaLock, FaEnvelope } from 'react-icons/fa';
 import FieldText from '../components/form/fields/FieldText';
 import {app} from '../utils/firebase-config'
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged} from "firebase/auth";
 import image from '../assets/images/auth/loginImage.png'
 import image3 from '../assets/images/auth/person.png'
 import image2 from '../assets/svg/login1.svg'
 import BoldTitleWithBackButton from '../components/texts/BoldTitleWithBackButton';
 import GreySubtitleWithLink from '../components/texts/GreySubtitleWithLink';
 import BigPrimaryButton from '../components/buttons/BigPrimaryButton';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
+import PasswordField from '../components/form/fields/PasswordField';
 
 
 
 const LogIn = () => {
-    const [showPassword, setShowPassword] = useState(false)
-
-        const functAutentiaction = async(e) => {
-            e.preventDefault();
-            const email = e.target.email.value;
-            const password = e.target.password.value;
-            console.log(email);
-            console.log(password);
-            
-                try {
-                    await signInWithEmailAndPassword(auth, email, password)
-                } catch (error) {
-                    alert("User or password is incorrect")
-                }
-        }
-
-    const auth = getAuth(app)
-
-    const sumbitForm = () => {
-        document.getElementById("logForm").submit();
-    }
-    
 
         /**
      * State to manage the email value in the sign up
@@ -73,6 +52,64 @@ const LogIn = () => {
             }
         
 
+    const [loading, setLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
+    const navigate = useNavigate()
+    
+    useEffect(() => {
+        const auth = getAuth(app)
+        onAuthStateChanged(auth, (user) => {
+        if (user) navigate("/dashboard")
+        })
+    }, [])
+    
+
+    const change = e => {
+        e.preventDefault()
+        setErrorMessage("")
+      }
+    
+
+    const submit = e => {
+        setLoading(true)
+        const auth = getAuth(app)
+        e.preventDefault()
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+
+        console.log(email)
+        console.log(password)
+        
+        signInWithEmailAndPassword(auth, email, password)
+
+        .then((userCredential) => {
+
+        const user = userCredential.user;
+        navigate("/dashboard")
+        setLoading(false)
+
+        })
+        .catch((error) => {
+        const errorCode = error.code;
+        switch (errorCode) {
+            case 'auth/user-not-found':
+            setErrorMessage("No existe un usuario con ese email. Por favor Registrate");
+            break;
+            case 'auth/invalid-password':
+            setErrorMessage("Contraseña Incorrecta");
+            break;
+            case 'auth/invalid-email':
+            setErrorMessage("Introduce un email valido porfavor.");
+            break;
+            case 'auth/invalid-login-credentials':
+                setErrorMessage("Contraseña Incorrecta")
+                break;
+            default:
+            setErrorMessage(error.message);
+        }
+        setLoading(false)
+        });
+    }
 
     return (
         <div className='login-background'>
@@ -83,8 +120,7 @@ const LogIn = () => {
             <GreySubtitleWithLink linkSize={22} subtitleText='¿Aún no tienes una cuenta?' linkText='Registrate'/>
                 
                 <div className='login-secondary-container'>
-                        <form id='logForm' className='form-login' onSubmit={functAutentiaction}>
-                            <p className='form-subtitle'>Correo Electronico *</p>
+                        <form id='logForm' className='form-login' onSubmit={submit} onChange={change}>
                             <Box className="field-container">
                             <FaEnvelope 
                                 color={"#555"} size={26} className="iconButton"  style={{marginRight: '5px'}}
@@ -101,7 +137,7 @@ const LogIn = () => {
                                 setError={setEmailError}
                                 errorMessage={emailErrorMessage}
                                 disabled={disabledEmail}
-                                fullWidth={false}
+                                fullWidth={true}
                                 required={true}
                                 onFocus={() => console.log("Email Field Focused")}
                                 onBlur={() => console.log("Email Field lost focus")}
@@ -109,49 +145,47 @@ const LogIn = () => {
                              />
 
                             </Box>
-                            <div className="d-flex align-items-center pswd-container">
-                                <div>
-                                    Contraseña *
-                                </div>
-                                <div className='link-login'>
-                                <Link style={{textDecorationColor:'var(--prim-purple)'}} to="/">
-                                    <Typography className='general-link'  style={{ fontSize: 17 }} color={"primary"} >¿Ha olvidado su contraseña?</Typography>
-                                </Link>
-                                </div>
-                            </div>
 
                             <Box className="field-container">
                             <FaLock 
                                 color={"#555"} size={26} className="iconButton"  style={{marginRight: '5px'}}
                             />
-                            <FieldText 
+
+                            <PasswordField 
                                 variant='outlined'
-                                type={showPassword ? "text" : "password"}
                                 value={passwordValue}
-                                setValue={setPasswordValue}
                                 name='password'
-                                label={"Contraseña*"} 
+                                setValue={setPasswordValue}
+                                label={"Contraseña"} 
+                                placeholder='' 
                                 error={passwordError}
                                 setError={setPasswordError}
                                 errorMessage={passwordErrorMessage}
                                 disabled={disabledPassword}
                                 fullWidth={false}
-                                required={false}
-                                multiline={false}
+                                required={true}
                                 onFocus={() => console.log("Password Field Focused")}
                                 onBlur={() => console.log("Password Field lost focus")}
-                                validateMethod={validatePassword}
-                             />
-                            <FaEye 
-                                color={"#555"} size={26} className="iconButton"  style={{marginLeft: '10px', cursor: "pointer"}} onClick={() => setShowPassword(!showPassword)}
-                            />
+                                        />
                             </Box>
+
+                            <div className='link-login'>
+                                <Link style={{textDecorationColor:'var(--prim-purple)'}} to="/">
+                                    <Typography className='general-link'  style={{ fontSize: 17 }} color={"primary"} >¿Ha olvidado su contraseña?</Typography>
+                                </Link>
+                                </div>
+                           { errorMessage.length > 0 && (
+                                <div className='error'>
+                                <p>{errorMessage}</p>
+                                </div>
+                            )
+                            }
+
                             <div className='button-log-container'>
                             <BigPrimaryButton children={"Iniciar Sesión"} />
                             </div>
 
                         </form>    
-
 
                 </div>
             </div>

@@ -1,12 +1,13 @@
 import { Button, CircularProgress } from '@mui/material'
 import React from 'react'
 
-const BigPrimaryButton = ({ children, onClick, type = "submit", loading = false }) => (
+const BigPrimaryButton = ({ children, onClick, type = "submit", loading = false, fullWidth }) => (
     <Button 
         style={{ fontSize: 22 }} 
         onClick={onClick} 
         type={type} 
         disabled={loading} 
+        fullWidth={fullWidth}
         variant="contained">
             {children} {loading && <CircularProgress style={{ marginLeft: 18 }} size={20} />}
     </Button>

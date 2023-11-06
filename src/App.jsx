@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import TestComponents from './pages/TestComponents'
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material';
+import SignUp from './pages/SignUp';
 
 const theme = createTheme({
   palette: {
@@ -68,6 +69,7 @@ const App = () => {
         <Routes>
           <Route path='/' Component={Splash} />
           <Route path='test-components' Component={TestComponents} />
+          <Route path='sign-up' Component={SignUp} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

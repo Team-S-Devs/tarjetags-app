@@ -8,7 +8,7 @@ const GreySubtitleWithLink = ({ subtitleText = "", linkText = "", centered }) =>
   return (
     <div className="d-flex align-items-center">
         <div>
-            <GreySubtitle>{subtitleText}</GreySubtitle>
+            <GreySubtitle variant='h6'>{subtitleText}</GreySubtitle>
         </div>
         <div style={getTitleStyle()}>
             <LinkComponent>{linkText}</LinkComponent>

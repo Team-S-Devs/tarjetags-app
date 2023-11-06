@@ -9,7 +9,7 @@ const PasswordField = ({
   label,
   setValue = () => {},
   placeholder = "",
-  helperText = "",
+  helperText = " ",
   required = false,
   disabled = false,
   fullWidth = true,

@@ -1,4 +1,4 @@
-import { Button } from '@mui/material'
+import { Button, CircularProgress } from '@mui/material'
 import React from 'react'
 
 const SmallPrimaryButton = ({ children, onClick, type = "submit", variant="contained", loading = false }) => (

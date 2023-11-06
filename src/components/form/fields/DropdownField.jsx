@@ -3,7 +3,7 @@ import { MenuItem, TextField } from "@mui/material";
 /**
  * @description A customizable text field component using Material-UI TextField.
  *
- * @param {Object} props - The properties to customize the FieldText component.
+ * @param {Object} props - The properties to customize the DropdownField component.
  * @param {string} props.variant - The variant of the TextField component (e.g., "standard", "outlined", "filled").
  * @param {string} props.type - The type of the input element (e.g., "text", "password").
  * @param {string} props.value - The value of the input field.
@@ -25,9 +25,9 @@ import { MenuItem, TextField } from "@mui/material";
  * @param {Function} props.validateMethod - A function to validate the input field's value.
  * @param {*} props.defaultValue - The default value for the dropdown
  * @param {Array} props.defaultValue - An array containing the options for the dropdown
- * @returns {JSX.Element} Returns a JSX element representing the FieldText component.
+ * @returns {JSX.Element} Returns a JSX element representing the DropdownField component.
  */
-const FieldText = ({ 
+const DropdownField = ({ 
   variant = "standard", 
   type = "text", 
   value, 
@@ -35,7 +35,7 @@ const FieldText = ({
   label, 
   setValue = () => {},
   placeholder = "", 
-  helperText = "", 
+  helperText = " ", 
   required = false, 
   disabled = false, 
   fullWidth = true,
@@ -98,4 +98,4 @@ const FieldText = ({
   );
 };
 
-export default FieldText;
+export default DropdownField;

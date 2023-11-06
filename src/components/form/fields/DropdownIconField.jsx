@@ -1,9 +1,13 @@
-import { TextField } from "@mui/material";
+import { Button, Dialog, DialogContent, DialogTitle, MenuItem, TextField } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { FaICursor } from "react-icons/fa";
+import FieldText from "./FieldText";
+import SmallPrimaryButton from "../../buttons/SmallPrimaryButton";
 
 /**
  * @description A customizable text field component using Material-UI TextField.
  *
- * @param {Object} props - The properties to customize the FieldText component.
+ * @param {Object} props - The properties to customize the DropdownIconField component.
  * @param {string} props.variant - The variant of the TextField component (e.g., "standard", "outlined", "filled").
  * @param {string} props.type - The type of the input element (e.g., "text", "password").
  * @param {string} props.value - The value of the input field.
@@ -23,9 +27,11 @@ import { TextField } from "@mui/material";
  * @param {string} props.errorMessage - A string containing error message.
  * @param {Function} props.setError - A function to update the error state.
  * @param {Function} props.validateMethod - A function to validate the input field's value.
- * @returns {JSX.Element} Returns a JSX element representing the FieldText component.
+ * @param {*} props.defaultValue - The default value for the dropdown
+ * @param {Array} props.options - An array containing the options for the dropdown
+ * @returns {JSX.Element} Returns a JSX element representing the DropdownIconField component.
  */
-const FieldText = ({ 
+const DropdownIconField = ({ 
   variant = "standard", 
   type = "text", 
   value, 
@@ -45,6 +51,12 @@ const FieldText = ({
   errorMessage = "",
   setError = () => {},
   validateMethod = () => {},
+  defaultValue = "",
+  options = [{ id: 0, icon: <FaICursor/>, title: "" }],
+  setOptions = () => {},
+  forNew = false,
+  customOption,
+  setCustomOption
 }) => {
   /**
    * Sets the focus on the input field.
@@ -62,10 +74,28 @@ const FieldText = ({
     validateMethod();
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOptionChange = (event) => {
+    const val = event.target.value;
+    setValue(val);
+
+    if (val === options[options.length - 1].id) {
+      setIsModalOpen(true);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
+    <>
     <TextField 
       style={{ marginTop: 12 }}
       id={name}
+      select
+      defaultValue={defaultValue}
       variant={variant} 
       value={value} 
       name={name} 
@@ -80,10 +110,48 @@ const FieldText = ({
       multiline={multiline}
       onFocus={handleFocus}
       onBlur={handleBlur}
-      onChange={(event) => setValue(event.target.value)}
+      onChange={handleOptionChange}
       error={error}
-    />
+    >
+        {options.map((option, index) => (
+            <MenuItem key={option.id} value={option.id} onClick={() => {
+                if (option.id === options[options.length - 1].id) {
+                    setIsModalOpen(true);
+                  }
+            }}>
+              <div className="d-flex">
+                {React.cloneElement(option.icon, { size: 20, style: { marginRight: 10 }, color: (index == options.length - 1 && forNew) ? '#561AD9' : "black" })}
+                {option.title}
+              </div>
+            </MenuItem>
+          ))}
+    </TextField>
+    <Dialog open={isModalOpen} onClose={handleCloseModal}>
+        <DialogTitle>Ingrese el rubro de empresa: </DialogTitle>
+        <DialogContent>
+          <FieldText
+            label="Rubro de empresa"
+            variant="outlined"
+            fullWidth
+            value={customOption}
+            setValue={setCustomOption}
+          />
+          <div className="mt-2"></div>
+          <div className="d-flex">
+            <SmallPrimaryButton onClick={() => {
+                setIsModalOpen(false);
+                let opts = [...options];
+                opts[opts.length - 1].title = customOption
+                setOptions(opts)
+            }}>Guardar</SmallPrimaryButton>
+            <div className="ml-2">
+                <SmallPrimaryButton variant="outlined" onClick={handleCloseModal}>Cancelar</SmallPrimaryButton>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+      </>
   );
 };
 
-export default FieldText;
+export default DropdownIconField;

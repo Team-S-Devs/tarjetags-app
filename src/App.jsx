@@ -25,9 +25,6 @@ const theme = createTheme({
     h2: {
       fontFamily: 'Mulish, sans-serif',
     },
-    h2: {
-      fontFamily: 'Mulish, sans-serif',
-    },
     h3: {
       fontFamily: 'Mulish, sans-serif',
     },

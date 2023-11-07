@@ -116,3 +116,14 @@ time, mark, audio, video {
   .general-link:hover {
 	transform: scale(1.03);
   }
+
+  @media (max-width: 500px) {
+	.resp-grey-subtitle-link {
+		flex-direction: column;
+	}
+
+	.resp-grey-subtitle-link div {
+		font-size: 2rem;
+		margin-top: .5rem;
+	}
+  }

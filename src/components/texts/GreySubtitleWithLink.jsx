@@ -6,7 +6,7 @@ const GreySubtitleWithLink = ({ subtitleText = "", linkText = "", centered, link
     const getTitleStyle = () => centered ? { marginLeft: 16, flex: 10 } : { marginLeft: 16 };
 
   return (
-    <div className="d-flex align-items-center">
+    <div className="d-flex align-items-center resp-grey-subtitle-link">
         <div>
             <GreySubtitle>{subtitleText}</GreySubtitle>
         </div>

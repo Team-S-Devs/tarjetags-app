@@ -3,13 +3,10 @@ import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import { Box } from '@mui/system';
-import { FaEye, FaLock, FaEnvelope } from 'react-icons/fa';
 import FieldText from '../components/form/fields/FieldText';
-import {app} from '../utils/firebase-config'
+import {app, auth} from '../utils/firebase-config'
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged} from "firebase/auth";
-import image from '../assets/images/auth/loginImage.png'
 import image3 from '../assets/images/auth/person.png'
-import image2 from '../assets/svg/login1.svg'
 import BoldTitleWithBackButton from '../components/texts/BoldTitleWithBackButton';
 import GreySubtitleWithLink from '../components/texts/GreySubtitleWithLink';
 import BigPrimaryButton from '../components/buttons/BigPrimaryButton';
@@ -27,7 +24,7 @@ const LogIn = () => {
      */
         const [emailValue, setEmailValue] = useState("");
         const [emailError, setEmailError] = useState(false);
-        const [emailErrorMessage, setEmailErrorMessage] = useState("Not valid email");
+        const [emailErrorMessage, setEmailErrorMessage] = useState("Introduce un email valido porfavor");
         const [disabledEmail, setDisabledEmail] = useState(false)
     
         const validateEmail = () => {
@@ -42,13 +39,11 @@ const LogIn = () => {
      */
             const [passwordValue, setPasswordValue] = useState("");
             const [passwordError, setPasswordError] = useState(false);
-            const [passwordErrorMessage, setPasswordErrorMessage] = useState("Not valid password");
+            const [passwordErrorMessage, setPasswordErrorMessage] = useState("Contraseña invalida");
             const [disabledPassword, setDisabledPassword] = useState(false)
         
             const validatePassword = () => {
                 // Regular expression pattern for validating password addresses
-                const passwordPattern = /^[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-                setPasswordError(!passwordPattern.test(passwordValue));
             }
         
 
@@ -57,7 +52,6 @@ const LogIn = () => {
     const navigate = useNavigate()
     
     useEffect(() => {
-        const auth = getAuth(app)
         onAuthStateChanged(auth, (user) => {
         if (user) navigate("/dashboard")
         })
@@ -71,44 +65,49 @@ const LogIn = () => {
     
 
     const submit = e => {
-        setLoading(true)
-        const auth = getAuth(app)
-        e.preventDefault()
-        const email = e.target.email.value;
-        const password = e.target.password.value;
-
-        console.log(email)
-        console.log(password)
-        
-        signInWithEmailAndPassword(auth, email, password)
-
-        .then((userCredential) => {
-
-        const user = userCredential.user;
-        navigate("/dashboard")
-        setLoading(false)
-
-        })
-        .catch((error) => {
-        const errorCode = error.code;
-        switch (errorCode) {
-            case 'auth/user-not-found':
-            setErrorMessage("No existe un usuario con ese email. Por favor Registrate");
-            break;
-            case 'auth/invalid-password':
-            setErrorMessage("Contraseña Incorrecta");
-            break;
-            case 'auth/invalid-email':
-            setErrorMessage("Introduce un email valido porfavor.");
-            break;
-            case 'auth/invalid-login-credentials':
-                setErrorMessage("Contraseña Incorrecta")
+            setLoading(true)
+            e.preventDefault()
+            const email = e.target.email.value;
+            const password = e.target.password.value;
+    
+            console.log(email)
+            console.log(password)
+            
+            signInWithEmailAndPassword(auth, email, password)
+    
+            .then(() => {
+    
+            navigate("/dashboard")
+            setLoading(false)
+    
+            })
+    
+            .catch((error) => {
+            const errorCode = error.code;
+            console.log(error.code)
+            switch (errorCode) {
+                case 'auth/invalid-email':
+                setEmailErrorMessage("Introduce un email valido porfavor");
+                setEmailError(true)
                 break;
-            default:
-            setErrorMessage(error.message);
-        }
-        setLoading(false)
-        });
+                case 'auth/user-not-found':
+                setEmailErrorMessage("No existe un usuario con ese email. Por favor Registrate");
+                setEmailError(true)
+                break;
+                case 'auth/invalid-password':
+                setPasswordErrorMessage("Tu contraseña es incorrecta")
+                setPasswordError(true)
+                break;
+                case 'auth/invalid-login-credentials':
+                    setErrorMessage("Credenciales invalidos, introduce los datos correctamente")
+                    break;
+     
+                default:
+                setErrorMessage(error.message);
+            }
+            setLoading(false)
+            });
+       
     }
 
     return (
@@ -117,14 +116,11 @@ const LogIn = () => {
             <div className='d-flex justify-content-center flex-column login-container '> 
 
             <BoldTitleWithBackButton children="Inicio de Sesión"/>
-            <GreySubtitleWithLink linkSize={22} subtitleText='¿Aún no tienes una cuenta?' linkText='Registrate'/>
+            <GreySubtitleWithLink linkSize={20} subtitleText='¿Aún no tienes una cuenta?' linkText='Registrate'/>
                 
                 <div className='login-secondary-container'>
                         <form id='logForm' className='form-login' onSubmit={submit} onChange={change}>
                             <Box className="field-container">
-                            <FaEnvelope 
-                                color={"#555"} size={26} className="iconButton"  style={{marginRight: '5px'}}
-                            />
 
                             <FieldText 
                                 variant='outlined'
@@ -147,10 +143,6 @@ const LogIn = () => {
                             </Box>
 
                             <Box className="field-container">
-                            <FaLock 
-                                color={"#555"} size={26} className="iconButton"  style={{marginRight: '5px'}}
-                            />
-
                             <PasswordField 
                                 variant='outlined'
                                 value={passwordValue}
@@ -166,6 +158,7 @@ const LogIn = () => {
                                 required={true}
                                 onFocus={() => console.log("Password Field Focused")}
                                 onBlur={() => console.log("Password Field lost focus")}
+                                validateMethod={validatePassword}
                                         />
                             </Box>
 
@@ -181,7 +174,7 @@ const LogIn = () => {
                             )
                             }
 
-                            <div className='button-log-container'>
+                            <div className='button-log-container' style={{pointerEvents: emailError ? 'none' : ''}}>
                             <BigPrimaryButton children={"Iniciar Sesión"} />
                             </div>
 

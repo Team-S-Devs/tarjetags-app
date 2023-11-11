@@ -106,6 +106,7 @@ const SignUp = () => {
         companySector: companiesSector.filter(c => c.id === companySectorValue)[0].title,
         department: departmentValue,
         discountCode: discountCodeValue,
+        license: 0
       };
       setLoading(true);
 

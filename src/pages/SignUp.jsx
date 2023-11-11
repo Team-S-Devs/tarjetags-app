@@ -20,6 +20,7 @@ import Form from '../components/form/Form';
 import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../utils/firebase-config';
+import { Timestamp } from 'firebase/firestore';
 
 /**
  * SignUp component provides a user registration form with optional company details.
@@ -106,7 +107,8 @@ const SignUp = () => {
         companySector: companiesSector.filter(c => c.id === companySectorValue)[0].title,
         department: departmentValue,
         discountCode: discountCodeValue,
-        license: 0
+        license: Timestamp.fromMillis(0),
+        createdAt: Timestamp.now(),
       };
       setLoading(true);
 
@@ -234,7 +236,7 @@ const SignUp = () => {
                         options={departmentsOptions} 
                         value={departmentValue} 
                         setValue={setDepartmentValue}
-                        label="Departamento"
+                        label="Departamento (Opcional)"
                     />
 
                     <div className="mt-md-3 mt-sm-0"></div>

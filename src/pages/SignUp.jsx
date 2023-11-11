@@ -1,81 +1,145 @@
-import React, { useState } from 'react'
-import BoldTitleWithBackButton from '../components/texts/BoldTitleWithBackButton'
-import GreySubtitleWithLink from '../components/texts/GreySubtitleWithLink'
-import FieldText from '../components/form/fields/FieldText'
-import PasswordField from '../components/form/fields/PasswordField'
+import React, { useEffect, useState } from 'react';
+import BoldTitleWithBackButton from '../components/texts/BoldTitleWithBackButton';
+import GreySubtitleWithLink from '../components/texts/GreySubtitleWithLink';
+import FieldText from '../components/form/fields/FieldText';
+import PasswordField from '../components/form/fields/PasswordField';
 import { LiaLaptopCodeSolid, LiaChalkboardTeacherSolid, LiaMoneyBillWaveSolid, LiaLeafSolid, LiaBroadcastTowerSolid, LiaHospitalSolid, LiaUmbrellaBeachSolid, LiaPlusSolid } from 'react-icons/lia';
 import { LuUtensilsCrossed } from 'react-icons/lu';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { BsPalette, BsBriefcase } from 'react-icons/bs';
 import { HiOutlineBuildingOffice } from 'react-icons/hi2';
-import DropdownIconField from '../components/form/fields/DropdownIconField'
-import DropdownField from '../components/form/fields/DropdownField'
-import BigPrimaryButton from '../components/buttons/BigPrimaryButton'
-import useWindowSize from '../hooks/useWindowsSize'
-import SignUpSVG from '../components/svg/SignUpSVG'
+import DropdownIconField from '../components/form/fields/DropdownIconField';
+import DropdownField from '../components/form/fields/DropdownField';
+import BigPrimaryButton from '../components/buttons/BigPrimaryButton';
+import useWindowSize from '../hooks/useWindowsSize';
+import SignUpSVG from '../components/svg/SignUpSVG';
+import '../assets/styles/sign-up.css';
+import { signUpWithEmailAndPassword } from '../utils/sign-up-methods';
+import { Container, Typography } from '@mui/material';
+import Form from '../components/form/Form';
+import { useNavigate } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../utils/firebase-config';
 
+/**
+ * SignUp component provides a user registration form with optional company details.
+ *
+ * @component
+ * @returns {JSX.Element} - Rendered SignUp component.
+ */
 const SignUp = () => {
-    const [fullname, setFullname] = useState("")
-    const [fullnameError, setFullnameError] = useState(false);
+  // State for user registration form
+  const [fullname, setFullname] = useState('');
+  const [fullnameError, setFullnameError] = useState(false);
 
-    const [emailValue, setEmailValue] = useState("");
-    const [emailError, setEmailError] = useState(false);
-    const [emailErrorMessage, setEmailErrorMessage] = useState("Introduce un correo electrónico válido");
+  const [emailValue, setEmailValue] = useState('');
+  const [emailError, setEmailError] = useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState('Introduce un correo electrónico válido');
 
-    const [phoneValue, setPhoneValue] = useState("");
-    const [phoneError, setPhoneError] = useState(false);
+  const [phoneValue, setPhoneValue] = useState('');
+  const [phoneError, setPhoneError] = useState(false);
 
-    const [passwordValue, setPasswordValue] = useState("");
-    const [passwordError, setPasswordError] = useState(false);
-    const [passwordErrorMessage, setPasswordErrorMessage] = useState("Introduce una contraseña de al menos 6 caracteres");
+  const [passwordValue, setPasswordValue] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('Introduce una contraseña de al menos 6 caracteres');
 
-    const validateEmail = () => {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        setEmailError(!emailPattern.test(emailValue.trim()));
+  const validateEmail = () => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setEmailError(!emailPattern.test(emailValue.trim()));
+  };
+
+  const validatePhone = () => {
+    const phonePattern = /^(?:\+\d{1,3})?\s?\(?(\d{1,})\)?[-.\s]?(\d{1,})[-.\s]?(\d{1,})$/;
+    setPhoneError(!phonePattern.test(phoneValue.trim()));
+  };
+
+  // State for optional company details
+  const [companyValue, setCompanyValue] = useState('');
+  const [companySectorValue, setCompanySectorValue] = useState('');
+  const [customOption, setCustomOption] = useState('Otro');
+
+  const [companiesSector, setCompaniesSectors] = useState([
+    { id: 0, icon: <LuUtensilsCrossed />, title: 'Alimentación y Bebidas' },
+    { id: 1, icon: <BsPalette />, title: 'Arte y Entretenimiento' },
+    { id: 2, icon: <AiOutlineShoppingCart />, title: 'Comercio Electrónico' },
+    { id: 3, icon: <HiOutlineBuildingOffice />, title: 'Construcción y Arquitectura' },
+    { id: 4, icon: <BsBriefcase />, title: 'Consultoría Empresarial' },
+    { id: 5, icon: <LiaChalkboardTeacherSolid />, title: 'Educación y Enseñanza' },
+    { id: 6, icon: <LiaMoneyBillWaveSolid />, title: 'Finanzas y Banca' },
+    { id: 7, icon: <LiaLeafSolid />, title: 'Medio Ambiente y Energías Renovables' },
+    { id: 8, icon: <LiaBroadcastTowerSolid />, title: 'Medios y Comunicaciones' },
+    { id: 9, icon: <LiaHospitalSolid />, title: 'Salud y Cuidado Médico' },
+    { id: 10, icon: <LiaLaptopCodeSolid />, title: 'Tecnología de la Información (IT)' },
+    { id: 11, icon: <LiaUmbrellaBeachSolid />, title: 'Turismo y Hospitalidad' },
+    { id: 12, icon: <LiaPlusSolid/>, title: 'Otro' }
+  ]);
+
+  const [departmentValue, setDepartmentValue] = useState('');
+  const departmentsOptions = ["La Paz", "Cochabamba", "Santa Cruz", "Beni", "Chuquisaca", "Oruro", "Pando", "Potosí", "Tarija"];
+
+  const [discountCodeValue, setDiscountCodeValue] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const navigate = useNavigate();
+
+  // Handle sign-up button click
+  const handleSignUp = async () => {
+    // Validate form fields
+    setFullnameError(fullname.trim().length < 4);
+    validateEmail();
+    validatePhone();
+    setPasswordError(passwordValue.length < 6);
+
+    // If any error, return
+    if (fullnameError || emailError || phoneError || passwordError) {
+      return;
     }
 
-    const validatePhone = () => {
-        const phonePattern = /^(?:\+\d{1,3})?\s?\(?(\d{1,})\)?[-.\s]?(\d{1,})[-.\s]?(\d{1,})$/;
-        setPhoneError(!phonePattern.test(phoneValue.trim()));
+    try {
+    // Create user data in Firestore
+      const userData = {
+        fullname,
+        email: emailValue,
+        phone: phoneValue,
+        company: companyValue,
+        companySector: companiesSector.filter(c => c.id === companySectorValue)[0].title,
+        department: departmentValue,
+        discountCode: discountCodeValue,
+      };
+      setLoading(true);
+
+      // Perform Firebase sign-up
+      const userCredential = await signUpWithEmailAndPassword(emailValue, passwordValue, userData);
+      navigate("/dashboard")
+      setLoading(false)
+      // Handle successful sign-up, e.g., redirect or show a success message
+    } catch (error) {
+        setLoading(false);
+        if(error.code === 'auth/email-already-in-use') {
+            setEmailError(true);
+            setEmailErrorMessage("Ya existe una cuenta registrada con este email, por favor inicia sesión o introduce un email diferente")
+        } else setError(true)
     }
+  };
 
-
-    const [companyValue, setCompanyValue] = useState("");
-
-    const [companySectorValue, setCompanySectorValue] = useState("");
-    const [customOption, setCustomOption] = useState("Otro");
-
-    const [companiesSector, setCompaniesSectors] = useState([
-        { id: 0, icon: <LuUtensilsCrossed />, title: 'Alimentación y Bebidas' },
-        { id: 1, icon: <BsPalette />, title: 'Arte y Entretenimiento' },
-        { id: 2, icon: <AiOutlineShoppingCart />, title: 'Comercio Electrónico' },
-        { id: 3, icon: <HiOutlineBuildingOffice />, title: 'Construcción y Arquitectura' },
-        { id: 4, icon: <BsBriefcase />, title: 'Consultoría Empresarial' },
-        { id: 5, icon: <LiaChalkboardTeacherSolid />, title: 'Educación y Enseñanza' },
-        { id: 6, icon: <LiaMoneyBillWaveSolid />, title: 'Finanzas y Banca' },
-        { id: 7, icon: <LiaLeafSolid />, title: 'Medio Ambiente y Energías Renovables' },
-        { id: 8, icon: <LiaBroadcastTowerSolid />, title: 'Medios y Comunicaciones' },
-        { id: 9, icon: <LiaHospitalSolid />, title: 'Salud y Cuidado Médico' },
-        { id: 10, icon: <LiaLaptopCodeSolid />, title: 'Tecnología de la Información (IT)' },
-        { id: 11, icon: <LiaUmbrellaBeachSolid />, title: 'Turismo y Hospitalidad' },
-        { id: 12, icon: <LiaPlusSolid/>, title: 'Otro' }
-      ]);
-
-    const [departmentValue, setDepartmentValue] = useState("");
-    const departmentsOptions = 
-      ["La Paz", "Cochabamba", "Santa Cruz", "Beni", "Chuquisaca", "Oruro", "Pando", "Potosí", "Tarija"];
-
-    const [discountCodeValue, setDiscountCodeValue] = useState("");
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+        if (user) navigate("/dashboard")
+    })
+}, [])
 
   return (
-    <div className="container my-5 my-md-0 d-flex flex-column justify-content-center" style={{ minHeight: "100vh"}}>
+    <Container>
+        <div className="my-5 my-md-0 d-flex flex-column justify-content-center" style={{ minHeight: "100vh"}}>
         <BoldTitleWithBackButton>Registro</BoldTitleWithBackButton>
         <div className="mt-2"></div>
-        <GreySubtitleWithLink subtitleText='&nbsp;¿Ya tienes una cuenta?' linkText='Inicia Sesión' />
+        <GreySubtitleWithLink subtitleText='&nbsp;¿Ya tienes una cuenta?' linkText='Inicia Sesión' to={"/login"} />
         <div className="mt-2"></div>
+        <Form onFocus={() => setError(false)} submit={handleSignUp}>
         <div className="row">
-            <div className="row col-lg-8 col-md-12">
-                <div className="col-md-6 col-lg-6">
+            <div className="row col-lg-8 col-md-12 fixed-container-sign-up">
+                <div className="col-md-6 col-lg-6 col-sm-12 fixed-container-sign-up">
                     <div className="mt-3"></div>
                     <FieldText
                         label='Nombre completo'
@@ -138,7 +202,7 @@ const SignUp = () => {
                 </div>
 
                 {/* <!-- Segunda Columna --> */}
-                <div className="col-md-6 col-lg-6">
+                <div className="col-md-6 col-lg-6 fixed-container-sign-up">
                     <div className="mt-md-3 mt-sm-0"></div>
                     <FieldText
                         label='Empresa (Opcional)'
@@ -184,23 +248,26 @@ const SignUp = () => {
                 </div>
 
                 <div className="mt-4"></div>
-                <div className="pl-md-6 pr-md-6 pl-sm-1 pr-sm-1">
-                <div className="pl-md-2 pr-md-2 d-flex align-items-center justify-content-center">
-                    <BigPrimaryButton fullWidth={useWindowSize().width < 769}>Registrarse</BigPrimaryButton>
-                </div>
+                <div className="d-flex flex-column align-items-center justify-content-center fixed-container-sign-up">
+                    {error &&
+                        <Typography marginBottom={2} color="error">Hubo un problema, por favor inténtelo de nuevo.</Typography>
+                    }
+                    <BigPrimaryButton loading={loading} onClick={handleSignUp} fullWidth={useWindowSize().width < 769}>Registrarse</BigPrimaryButton>
                 </div>
             </div>
 
             {/* <!-- Tercera Columna (Solo en pantallas grandes) --> */}
             {
-                useWindowSize().width > 1516 && (
+                useWindowSize().width > 1300 && (
                     <div className="col-lg-4 d-none d-xl-block">
                         <SignUpSVG/>
                     </div>
                 )
             }
         </div>
+        </Form>
     </div>
+    </Container>
   )
 }
 

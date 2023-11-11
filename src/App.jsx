@@ -1,9 +1,16 @@
 import { Router, Route, Routes, BrowserRouter } from 'react-router-dom'
 import Splash from './pages/Splash'
+import Home from './pages/Home'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TestComponents from './pages/TestComponents'
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material';
+import LogIn from './pages/LogIn';
+import Dashboard from './pages/Dashboard';
+import { auth } from './utils/firebase-config';
+import { useState } from 'react';
+import {getAuth, onAuthStateChanged} from 'firebase/auth'
+import Error from './pages/Error';
 import SignUp from './pages/SignUp';
 
 const theme = createTheme({
@@ -63,13 +70,28 @@ const theme = createTheme({
 });
 
 const App = () => {
+
+  const [user, setUser]  = useState(null)
+
+  onAuthStateChanged(auth, (fireBaseUser) => {
+      if (fireBaseUser) {
+          setUser(fireBaseUser)
+      } else {
+          setUser(null)
+      }
+  })
+
+
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
-          <Route path='/' Component={Splash} />
+          <Route path='/' Component={Home} />
+          <Route path='/dashboard' Component={user ? Dashboard : LogIn} />
           <Route path='test-components' Component={TestComponents} />
           <Route path='sign-up' Component={SignUp} />
+          <Route path='login' Component={LogIn} />
+          <Route path='error' Component={Error} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

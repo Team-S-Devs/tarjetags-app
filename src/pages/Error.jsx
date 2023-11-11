@@ -21,7 +21,7 @@ const Error = () => {
                 
                 <p>La Pagina que buscas no esta disponible!</p>
                 
-                <BigPrimaryButton children={'Go Home'} onClick={goHome} />
+                <BigPrimaryButton children={'Volver al Inicio'} onClick={goHome} />
             </div>
         </div>
     );

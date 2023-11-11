@@ -92,6 +92,7 @@ const App = () => {
           <Route path='sign-up' Component={SignUp} />
           <Route path='login' Component={LogIn} />
           <Route path='error' Component={Error} />
+          <Route path='*' Component={Error} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

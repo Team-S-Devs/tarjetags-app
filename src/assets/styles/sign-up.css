@@ -1,0 +1,5 @@
+@media (max-width: 768px) {
+    .fixed-container-sign-up{
+        padding-right: 0 !important;
+    }
+}

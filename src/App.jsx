@@ -11,6 +11,7 @@ import { auth } from './utils/firebase-config';
 import { useState } from 'react';
 import {getAuth, onAuthStateChanged} from 'firebase/auth'
 import Error from './pages/Error';
+import SignUp from './pages/SignUp';
 
 const theme = createTheme({
   palette: {
@@ -86,10 +87,12 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path='/' Component={Home} />
-          <Route path='/dashboard' Component={ user ? Dashboard : LogIn} />
+          <Route path='/dashboard' Component={user ? Dashboard : LogIn} />
           <Route path='test-components' Component={TestComponents} />
+          <Route path='sign-up' Component={SignUp} />
           <Route path='login' Component={LogIn} />
           <Route path='error' Component={Error} />
+          <Route path='*' Component={Error} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

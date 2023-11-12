@@ -87,11 +87,11 @@ const LogIn = () => {
             console.log(error.code)
             switch (errorCode) {
                 case 'auth/invalid-email':
-                setEmailErrorMessage("Introduce un email valido porfavor");
+                setEmailErrorMessage("Introduce un email válido porfavor");
                 setEmailError(true)
                 break;
                 case 'auth/user-not-found':
-                setEmailErrorMessage("No existe un usuario con ese email. Por favor Registrate");
+                setEmailErrorMessage("No existe un usuario con ese email. Por favor Regístrate");
                 setEmailError(true)
                 break;
                 case 'auth/invalid-password':
@@ -99,7 +99,7 @@ const LogIn = () => {
                 setPasswordError(true)
                 break;
                 case 'auth/invalid-login-credentials':
-                    setErrorMessage("Credenciales invalidos, introduce los datos correctamente")
+                    setErrorMessage("Credenciales inválidos, introduce los datos correctamente")
                     break;
      
                 default:
@@ -112,11 +112,15 @@ const LogIn = () => {
 
     return (
         <div className='general-background'>
-            
             <div className='d-flex justify-content-center flex-column login-container '> 
 
             <BoldTitleWithBackButton children="Inicio de Sesión"/>
-            <GreySubtitleWithLink linkSize={20} subtitleText='¿Aún no tienes una cuenta?' linkText='Registrate'/>
+            <GreySubtitleWithLink 
+                linkSize={20} 
+                subtitleText='¿Aún no tienes una cuenta?' 
+                linkText='Regístrate'
+                to={"/sign-up"}
+            />
                 
                 <div className='login-secondary-container'>
                         <form id='logForm' className='form-login' onSubmit={submit} onChange={change}>

@@ -76,7 +76,7 @@ const FieldText = ({
       name={name} 
       type={type}  
       label={label} 
-      inputProps={{ maxLength }}
+      inputProps={{ readOnly: readOnly, maxLength }}
       required={required} 
       helperText={error ? errorMessage : helperText}
       placeholder={placeholder} 
@@ -88,9 +88,6 @@ const FieldText = ({
       onBlur={handleBlur}
       onChange={(event) => setValue(event.target.value)}
       error={error}
-      inputProps={
-        { readOnly: readOnly }
-      }
     />
   );
 };

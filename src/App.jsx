@@ -98,6 +98,20 @@ const theme = createTheme({
         },
       },
     },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          fontSize: '15px', // Set your desired font size here
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          fontSize: '17px', // Set your desired font size here
+        },
+      },
+    },
   },
 });
 

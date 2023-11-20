@@ -111,7 +111,7 @@ const NewCardModal = ({ open, setOpen, userId }) => {
                 disabled={errorNewVal || newCardValue.length === 0}
                 onClick={saveNewCard}
                 loading={loading}
-              >Guardar</SmallPrimaryButton>
+              >Crear</SmallPrimaryButton>
             </div>
         </Card>
     </Dialog>

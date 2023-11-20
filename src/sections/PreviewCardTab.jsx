@@ -1,5 +1,4 @@
 import React from 'react'
-import SmallPrimaryButton from '../components/buttons/SmallPrimaryButton'
 import { useNavigate } from 'react-router-dom'
 import MediumPrimaryButton from '../components/buttons/MediumPrimaryButton';
 import useWindowSize from '../hooks/useWindowsSize';

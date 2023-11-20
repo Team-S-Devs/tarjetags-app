@@ -6,6 +6,7 @@ import { LiaIdCardSolid } from "react-icons/lia";
 import LinkComponent from '../components/buttons/LinkComponent'
 import { signOut } from 'firebase/auth';
 import { auth } from '../utils/firebase-config';
+import '../assets/styles/header.css'
 
 const Header = () => {
   const location = useLocation();

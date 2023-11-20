@@ -45,6 +45,9 @@ const FieldText = ({
   errorMessage = "",
   setError = () => {},
   validateMethod = () => {},
+  color = "primary",
+  maxLength,
+  marginTop = 12
 }) => {
   /**
    * Sets the focus on the input field.
@@ -64,13 +67,15 @@ const FieldText = ({
 
   return (
     <TextField 
-      style={{ marginTop: 12 }}
+      style={{ marginTop }}
       id={name}
       variant={variant} 
+      color={color}
       value={value} 
       name={name} 
       type={type}  
       label={label} 
+      inputProps={{ maxLength }}
       required={required} 
       helperText={error ? errorMessage : helperText}
       placeholder={placeholder} 

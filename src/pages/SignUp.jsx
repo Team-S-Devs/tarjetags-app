@@ -47,12 +47,19 @@ const SignUp = () => {
   const validateEmail = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setEmailError(!emailPattern.test(emailValue.trim()));
+    return emailPattern.test(emailValue.trim());
   };
 
   const validatePhone = () => {
     const phonePattern = /^(?:\+\d{1,3})?\s?\(?(\d{1,})\)?[-.\s]?(\d{1,})[-.\s]?(\d{1,})$/;
     setPhoneError(!phonePattern.test(phoneValue.trim()));
+    return phonePattern.test(phoneValue.trim())
   };
+
+  const validatePassword = () => {
+    setPasswordError(passwordValue.length < 6);
+    return passwordValue.length >= 6;
+  }
 
   // State for optional company details
   const [companyValue, setCompanyValue] = useState('');
@@ -85,15 +92,17 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   // Handle sign-up button click
-  const handleSignUp = async () => {
+  const handleSignUp = async (e) => {
+    e.preventDefault();
     // Validate form fields
     setFullnameError(fullname.trim().length < 4);
     validateEmail();
     validatePhone();
+    validatePassword();
     setPasswordError(passwordValue.length < 6);
 
     // If any error, return
-    if (fullnameError || emailError || phoneError || passwordError) {
+    if (!validateEmail() || !validatePhone() || !validatePassword() || fullname.trim().length < 4) {
       return;
     }
 
@@ -104,7 +113,7 @@ const SignUp = () => {
         email: emailValue,
         phone: phoneValue,
         company: companyValue,
-        companySector: companiesSector.filter(c => c.id === companySectorValue)[0].title,
+        companySector: companiesSector.filter(c => c.id === companySectorValue)[0]?.title ? companiesSector.filter(c => c.id === companySectorValue)[0].title : "",
         department: departmentValue,
         discountCode: discountCodeValue,
         license: Timestamp.fromMillis(0),
@@ -118,6 +127,7 @@ const SignUp = () => {
       setLoading(false)
       // Handle successful sign-up, e.g., redirect or show a success message
     } catch (error) {
+        console.log(error)
         setLoading(false);
         if(error.code === 'auth/email-already-in-use') {
             setEmailError(true);
@@ -200,7 +210,7 @@ const SignUp = () => {
                         error={passwordError}
                         setError={setPasswordError}
                         errorMessage={passwordErrorMessage}
-                        validateMethod={() => setPasswordError(passwordValue.length < 6)}
+                        validateMethod={validatePassword}
                     />
                 </div>
 

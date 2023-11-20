@@ -13,7 +13,7 @@ import BigPrimaryButton from '../components/buttons/BigPrimaryButton';
 import { Link, useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import PasswordField from '../components/form/fields/PasswordField';
-
+import '../assets/styles/login.css'
 
 
 const LogIn = () => {

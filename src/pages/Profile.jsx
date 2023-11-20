@@ -18,6 +18,7 @@ import { signOut } from 'firebase/auth';
 import { collection, doc, onSnapshot, query, setDoc } from 'firebase/firestore'
 import BoldTitle from '../components/texts/BoldTitle';
 import SmallPrimaryButton from '../components/buttons/SmallPrimaryButton';
+import Header from '../sections/Header';
 
 const Profile = ({user}) => {
 
@@ -159,12 +160,13 @@ const [userData, setUserData ] = useState(null);
     setEdit(false);
   }
 
+  const { width, height } = useWindowSize();
     return (
         <div className='profile-container'>
+            <Header/>
             
-        <Container style={{background:'var(--back-ligh)'}}>
-            <div className="my-5 my-md-0 d-flex flex-column justify-content-center" style={{ minHeight: "100vh"}}>
-            <BoldTitle variant='h3' textAlign='center'>Perfil De Usuario</BoldTitle>
+            <div className="my-5 my-md-0 d-flex flex-column justify-content-center container cont-profile1" style={{ minHeight: "90vh"}}>
+            <BoldTitle variant={width < 470 ? 'h4': 'h3'} textAlign='center'>Perfil De Usuario</BoldTitle>
             
                 <div className='profile-cont-2'>
 
@@ -285,7 +287,7 @@ const [userData, setUserData ] = useState(null);
                                             <SmallPrimaryButton 
                                                 loading={saveLoader} 
                                                 type='button' 
-                                                onClick={edit ? handleEditProfile : editProfile } fullWidth={useWindowSize().width < 769}>{edit ? 'Guardar' : 'Editar'}
+                                                onClick={edit ? handleEditProfile : editProfile } fullWidth={width < 769}>{edit ? 'Guardar' : 'Editar'}
                                             </SmallPrimaryButton>
                                             <div style={{ width: 12 }}></div>
                                                 <SmallPrimaryButton
@@ -307,7 +309,6 @@ const [userData, setUserData ] = useState(null);
                                 </div>
                 </div>
             </div>
-        </Container>
 
         </div>
     );

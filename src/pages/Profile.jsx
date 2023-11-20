@@ -7,18 +7,17 @@ import { BsPalette, BsBriefcase } from 'react-icons/bs';
 import { HiOutlineBuildingOffice } from 'react-icons/hi2';
 import DropdownIconField from '../components/form/fields/DropdownIconField';
 import DropdownField from '../components/form/fields/DropdownField';
-import BigPrimaryButton from '../components/buttons/BigPrimaryButton';
 import useWindowSize from '../hooks/useWindowsSize';
 import '../assets/styles/sign-up.css';
 import { signUpWithEmailAndPassword } from '../utils/sign-up-methods';
 import { Container, Typography } from '@mui/material';
 import Form from '../components/form/Form';
 import { useNavigate } from 'react-router-dom';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../utils/firebase-config';
-import { Timestamp } from 'firebase/firestore';
+import { auth, db } from '../utils/firebase-config';
 import { signOut } from 'firebase/auth';
+import { collection, doc, onSnapshot, query, setDoc } from 'firebase/firestore'
 import BoldTitle from '../components/texts/BoldTitle';
+import SmallPrimaryButton from '../components/buttons/SmallPrimaryButton';
 
 const Profile = ({user}) => {
     console.log(user.email)
@@ -129,6 +128,27 @@ const Profile = ({user}) => {
 //        } else setError(true)
 //    }
  };
+ 
+ const [userData, setUserData ] = useState(null);
+
+ useEffect(() => {
+    if (!user) {
+        navigate("/login")
+    }
+
+    const unsubscribe = onSnapshot(doc(db, 'users', user.uid), (snapshot) => {
+    const userData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+    }));
+    setUserData(userData);
+}, (error) => {
+    setError(true);
+});
+
+return () => unsubscribe();
+}, [user]);
+
 
   const logOut = () => {
     signOut(auth);
@@ -270,9 +290,10 @@ const Profile = ({user}) => {
                                         <Typography marginBottom={2} color="error">Hubo un problema, por favor inténtelo de nuevo.</Typography>
                                     }
                                     <div className='d-flex align-items-center justify-content-center'>
-                                        <BigPrimaryButton loading={loading} type='button' onClick={edit ? saveEditChanges : editProfile } fullWidth={useWindowSize().width < 769}>{edit ? 'Save Changes' : 'Edit'}</BigPrimaryButton>
-
-                                            <BigPrimaryButton
+                                            <SmallPrimaryButton loading={loading} type='button' onClick={edit ? saveEditChanges : editProfile } fullWidth={useWindowSize().width < 769}>{edit ? 'Save Changes' : 'Edit'}</SmallPrimaryButton>
+                                            <div style={{ width: 12 }}></div>
+                                            <SmallPrimaryButton
+                                            variant='outlined'
                                             loading={loading}
                                             display={ edit ? 'initial': 'none'}
                                             type='button'
@@ -280,7 +301,7 @@ const Profile = ({user}) => {
                                             fullWidth={useWindowSize().width < 769}
                                             >
                                             Cancel
-                                            </BigPrimaryButton>
+                                            </SmallPrimaryButton>
                                     </div>
                                 </div>
                 </div>

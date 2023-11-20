@@ -6,6 +6,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../utils/firebase-config';
 import { GoFileDirectoryFill } from 'react-icons/go'
 import useWindowSize from '../hooks/useWindowsSize';
+import '../assets/styles/header.css'
 
 const Header = () => {
   const location = useLocation();
@@ -18,12 +19,10 @@ const Header = () => {
     setIsOpen(false)
   }, [location]);
   
-  console.log(user+" hoal")
 
   useEffect(() => {
     onAuthStateChanged(auth,(fireBaseUser) => {
       if (fireBaseUser) {
-        console.log("vamosss")
         setUser(fireBaseUser);
       } else {
         setUser(null);

@@ -164,7 +164,7 @@ const LogIn = () => {
                             </Box>
 
                             <div className='link-login'>
-                                <Link style={{textDecorationColor:'var(--prim-purple)'}} to="/">
+                                <Link style={{textDecorationColor:'var(--prim-purple)'}} to="/restorePassword">
                                     <Typography className='general-link'  style={{ fontSize: 17 }} color={"primary"} >¿Ha olvidado su contraseña?</Typography>
                                 </Link>
                                 </div>

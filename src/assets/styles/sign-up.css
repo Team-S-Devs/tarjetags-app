@@ -35,6 +35,21 @@
     align-items: flex-end;
 }
 
+.profile-background {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.prof-2-cont {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
 @media (max-width: 470px) {
     .cont-profile1 {
         padding-top: 2.5rem;

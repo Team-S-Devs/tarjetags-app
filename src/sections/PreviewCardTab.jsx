@@ -23,7 +23,7 @@ const PreviewCardTab = () => {
         }
 
         <div className="mt-4"></div>
-        <div className="text-center">VISTA PREVIA</div>
+        <div className="text-center">AQUÍ IRÁ LA VISTA PREVIA</div>
     </div>
   )
 }

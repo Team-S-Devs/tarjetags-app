@@ -22,7 +22,7 @@ const NewCardModal = ({ open, setOpen, userId }) => {
         if(errorNewVal) setErrorNewVal(false);
         let inputValue = newVal;
         inputValue = inputValue.replace(/\s/g, '_');
-        setNewCardValue(inputValue);
+        setNewCardValue(inputValue.toLowerCase());
         handleValidateVal(inputValue)
     };
 
@@ -49,6 +49,7 @@ const NewCardModal = ({ open, setOpen, userId }) => {
             const newCard = {
                 title: "",
                 userId: userId,
+                urlPage: newCardValue
             };
         
             await setDoc(cardsCollection, newCard);

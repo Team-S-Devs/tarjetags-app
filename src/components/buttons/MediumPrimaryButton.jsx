@@ -1,8 +1,8 @@
 import { Button, CircularProgress } from '@mui/material'
 import React from 'react'
 
-const MediumPrimaryButton = ({ children, onClick, type = "submit", loading = false }) => (
-    <Button style={{ fontSize: 16 }} onClick={onClick} type={type} variant="contained" disabled={loading}>
+const MediumPrimaryButton = ({ children, onClick, type = "submit", loading = false, fullWidth }) => (
+    <Button style={{ fontSize: 16 }} onClick={onClick} type={type} variant="contained" disabled={loading} fullWidth={fullWidth}>
         {children} {loading && <CircularProgress style={{ marginLeft: 18 }} size={20} />}
     </Button>
 )

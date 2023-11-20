@@ -1,17 +1,19 @@
 import { onAuthStateChanged } from 'firebase/auth';
 import { useState, useEffect } from 'react'
 import { auth } from '../utils/firebase-config';
+import { useNavigate } from 'react-router-dom';
+import '../assets/styles/loader.css'
 
-const Splash = () => {
-    const [isUserLogged, setIsUserLogged] = useState(false);
+const Splash = ({ navigateTo = "/login"}) => {
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleAuthStateChange = () => {
           onAuthStateChanged(auth, (user) => {
             if (user) {
-              setIsUserLogged(true);
+              navigate("/dashboard")
             } else {
-              setIsUserLogged(false);
+              navigate(navigateTo)
             }
           });
         };
@@ -20,7 +22,9 @@ const Splash = () => {
       }, []);
     
   return (
-    <div>Splash</div>
+    <div className='container d-flex align-items-center justify-content-center' style={{ height: '100vh' }}>
+      <span className="loader"></span>
+    </div>
   )
 }
 

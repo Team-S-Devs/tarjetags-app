@@ -12,11 +12,15 @@ import { useState } from 'react';
 import {getAuth, onAuthStateChanged} from 'firebase/auth'
 import Error from './pages/Error';
 import SignUp from './pages/SignUp';
+import EditCard from './pages/EditCard';
 
 const theme = createTheme({
   palette: {
     primary: {
       main: '#561AD9',
+    },
+    secondary: {
+      main: '#733EE8',
     },
     grey: {
       main: "#727070"
@@ -66,6 +70,33 @@ const theme = createTheme({
         },
       },
     },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          fontFamily: 'Mulish, sans-serif',
+          textTransform: 'capitalize',
+          letterSpacing: 1.2, 
+          fontSize: 18
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          fontSize: 40
+        },
+      },
+    },
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          '&.Mui-selected': {
+            background: '#561AD9 !important',
+            color: '#fff',
+          },
+        },
+      },
+    },
   },
 });
 
@@ -86,12 +117,13 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
-          <Route path='/' Component={Home} />
-          <Route path='/dashboard' Component={user ? Dashboard : LogIn} />
-          <Route path='test-components' Component={TestComponents} />
-          <Route path='sign-up' Component={SignUp} />
-          <Route path='login' Component={LogIn} />
-          <Route path='error' Component={Error} />
+          <Route path='/' Component={Splash} />
+          <Route path='/dashboard' Component={user ? Dashboard : Splash} />
+          <Route path='/test-components' Component={TestComponents} />
+          <Route path='/editar/:id' Component={EditCard} />
+          <Route path='/sign-up' Component={SignUp} />
+          <Route path='/login' Component={LogIn} />
+          <Route path='/error' Component={Error} />
           <Route path='*' Component={Error} />
         </Routes>
       </BrowserRouter>

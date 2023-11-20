@@ -1,6 +1,7 @@
 import React from 'react';
 import BigPrimaryButton from '../components/buttons/BigPrimaryButton';
 import { useNavigate } from 'react-router-dom';
+import '../assets/styles/404style.css'
 
 
 const Error = () => {

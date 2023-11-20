@@ -1,12 +1,13 @@
 import React from 'react';
 import Header from '../sections/Header';
+import { Container } from '@mui/material';
 
 const Home = () => {
     return (
-        <div>
-            <Header/>
-            Home
-        </div>
+        <Container>
+             <Header/>
+                Home
+        </Container>
     );
 };
 

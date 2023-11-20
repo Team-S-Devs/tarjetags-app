@@ -4,14 +4,14 @@ import { auth } from '../utils/firebase-config';
 import { useNavigate } from 'react-router-dom';
 import '../assets/styles/loader.css'
 
-const Splash = ({ navigateTo = "/login"}) => {
+const Splash = ({ navigateTo = "/login", loggedNavigateTo  = "/dashboard" }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
         const handleAuthStateChange = () => {
           onAuthStateChanged(auth, (user) => {
             if (user) {
-              navigate("/dashboard")
+              navigate(loggedNavigateTo)
             } else {
               navigate(navigateTo)
             }

@@ -2,29 +2,46 @@ import React, { useEffect, useState } from 'react'
 import image from '../assets/images/auth/logo.png'
 import { Link, useLocation } from 'react-router-dom'
 import { BiSolidUser } from "react-icons/bi";
-import { LiaIdCardSolid } from "react-icons/lia";
-import LinkComponent from '../components/buttons/LinkComponent'
-import { signOut } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../utils/firebase-config';
+import { GoFileDirectoryFill } from 'react-icons/go'
+import useWindowSize from '../hooks/useWindowsSize';
 import '../assets/styles/header.css'
 
 const Header = () => {
   const location = useLocation();
-
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const {width} = useWindowSize();
+  const [user, setUser]  = useState(null);
+  const [perfilView, setPerfilView] = useState("ala");
 
   useEffect(() => {
     setIsOpen(false)
   }, [location]);
+  
+
+  useEffect(() => {
+    onAuthStateChanged(auth,(fireBaseUser) => {
+      if (fireBaseUser) {
+        setUser(fireBaseUser);
+      } else {
+        setUser(null);
+      }
+    });
+
+    setPerfilView(!user ?"Iniciar Sesión": user.email)
+  }, [user])
 
   const onClickHeader = () => {
     setIsOpen(!isOpen)
   }
 
-  const conditional = (isOpen) ? 'navigationResponsive' :''
+  const isResponsive = (width <= 1268) ? true : false;
+  const conditional = (isOpen && isResponsive) ? 'navigationResponsive' :''
 
   return (
     <header>
+      <div className='headerContainer container'>
       <div className='logo_img'>
         <Link to='/#home'>
           <div className='logoHeader'>
@@ -34,19 +51,19 @@ const Header = () => {
       </div>
       <nav className={'navigation ' +(conditional)}>
 
-      <LiaIdCardSolid className='icon-header'/>
+      <GoFileDirectoryFill className='icon-header'/>
         <Link to="/"><span className='link'>Ver Tarjetas Creadas</span></Link>
 
         <BiSolidUser className='icon-header'/>
-        <Link onClick={() => signOut(auth)} to="/"><span className='link'>Ver Perfil</span></Link>
-        <Link to="/" ><span className='link mainButton'>Chapo Guzman</span></Link>
+        <Link to={!user ? "/": "/profile"}><span className='link mainButton'>{perfilView}</span></Link>
       </nav>
       <div className='menuButton' onClick={onClickHeader}>
-        <button className="headerButton">
+        <button className={isOpen && isResponsive ? "cancelButton-header" : "headerButton"}>
           <span></span>
           <span></span>
           <span></span>
         </button>
+      </div>
       </div>
     </header>
   )

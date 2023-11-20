@@ -6,7 +6,7 @@ import { Box } from '@mui/system';
 import FieldText from '../components/form/fields/FieldText';
 import {app, auth} from '../utils/firebase-config'
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged} from "firebase/auth";
-import image3 from '../assets/images/auth/person.png'
+import image3 from '../assets/images/login.jpg'
 import BoldTitleWithBackButton from '../components/texts/BoldTitleWithBackButton';
 import GreySubtitleWithLink from '../components/texts/GreySubtitleWithLink';
 import BigPrimaryButton from '../components/buttons/BigPrimaryButton';
@@ -17,6 +17,19 @@ import '../assets/styles/login.css'
 
 
 const LogIn = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const handleAuthStateChange = () => {
+          onAuthStateChanged(auth, (user) => {
+            if (user) {
+              navigate("/")
+            }
+          });
+        };
+    
+        handleAuthStateChange();
+      }, []);
 
         /**
      * State to manage the email value in the sign up
@@ -49,8 +62,6 @@ const LogIn = () => {
 
     const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
-    const navigate = useNavigate()
-    
 
     const change = e => {
         e.preventDefault()
@@ -75,7 +86,6 @@ const LogIn = () => {
     
             .catch((error) => {
             const errorCode = error.code;
-            console.log(error.code)
             switch (errorCode) {
                 case 'auth/invalid-email':
                 setEmailErrorMessage("Introduce un email válido porfavor");
@@ -130,31 +140,27 @@ const LogIn = () => {
                                 disabled={disabledEmail}
                                 fullWidth={true}
                                 required={true}
-                                onFocus={() => console.log("Email Field Focused")}
-                                onBlur={() => console.log("Email Field lost focus")}
                                 validateMethod={validateEmail}
                              />
 
                             </Box>
 
                             <Box className="field-container">
-                            <PasswordField 
-                                variant='outlined'
-                                value={passwordValue}
-                                name='password'
-                                setValue={setPasswordValue}
-                                label={"Contraseña"} 
-                                placeholder='' 
-                                error={passwordError}
-                                setError={setPasswordError}
-                                errorMessage={passwordErrorMessage}
-                                disabled={disabledPassword}
-                                fullWidth={false}
-                                required={true}
-                                onFocus={() => console.log("Password Field Focused")}
-                                onBlur={() => console.log("Password Field lost focus")}
-                                validateMethod={validatePassword}
-                                        />
+                                <PasswordField 
+                                    variant='outlined'
+                                    value={passwordValue}
+                                    name='password'
+                                    setValue={setPasswordValue}
+                                    label={"Contraseña"} 
+                                    placeholder='' 
+                                    error={passwordError}
+                                    setError={setPasswordError}
+                                    errorMessage={passwordErrorMessage}
+                                    disabled={disabledPassword}
+                                    fullWidth={false}
+                                    required={true}
+                                    validateMethod={validatePassword}
+                                />
                             </Box>
 
                             <div className='link-login'>
@@ -170,7 +176,7 @@ const LogIn = () => {
                             }
 
                             <div className='button-log-container' style={{pointerEvents: emailError ? 'none' : ''}}>
-                            <BigPrimaryButton children={"Iniciar Sesión"} />
+                                <BigPrimaryButton loading={loading} children={"Iniciar Sesión"} />
                             </div>
 
                         </form>    

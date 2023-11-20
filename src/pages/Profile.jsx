@@ -9,13 +9,12 @@ import DropdownIconField from '../components/form/fields/DropdownIconField';
 import DropdownField from '../components/form/fields/DropdownField';
 import useWindowSize from '../hooks/useWindowsSize';
 import '../assets/styles/sign-up.css';
-import { signUpWithEmailAndPassword } from '../utils/sign-up-methods';
-import { Container, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import Form from '../components/form/Form';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../utils/firebase-config';
 import { signOut } from 'firebase/auth';
-import { collection, doc, onSnapshot, query, setDoc } from 'firebase/firestore'
+import { doc, onSnapshot, setDoc } from 'firebase/firestore'
 import BoldTitle from '../components/texts/BoldTitle';
 import SmallPrimaryButton from '../components/buttons/SmallPrimaryButton';
 import Header from '../sections/Header';
@@ -237,7 +236,7 @@ const [userData, setUserData ] = useState(null);
                                 </div>
 
                                 {/* <!-- Segunda Columna --> */}
-                                <div className="col-md-6 col-lg-6 fixed-container-sign-up">
+                                <div className="col-md-6 col-lg-6 fixed-container-sign-up" style={{ paddingRight: 0 }}>
                                     <div className="mt-md-3 mt-sm-0"></div>
                                     <FieldText
                                         label='Empresa (Opcional)'
@@ -279,34 +278,39 @@ const [userData, setUserData ] = useState(null);
                         </Form>
 
                         <div className="mt-4"></div>
-                                <div className="d-flex flex-column align-items-center justify-content-center fixed-container-sign-up">
-                                    {error &&
-                                        <Typography marginBottom={2} color="error">Hubo un problema, por favor inténtelo de nuevo.</Typography>
-                                    }
-                                    <div className='d-flex align-items-center justify-content-center'>
-                                            <SmallPrimaryButton 
-                                                loading={saveLoader} 
-                                                type='button' 
-                                                onClick={edit ? handleEditProfile : editProfile } fullWidth={width < 769}>{edit ? 'Guardar' : 'Editar'}
-                                            </SmallPrimaryButton>
-                                            <div style={{ width: 12 }}></div>
-                                                <SmallPrimaryButton
-                                                variant='outlined'
-                                                disabled={loading}
-                                                display={ edit ? 'initial': 'none'}
-                                                type='button'
-                                                onClick={cancelEdit}
-                                                fullWidth={useWindowSize().width < 769}
-                                            >
-                                            Cancelar
-                                            </SmallPrimaryButton>
-                                    </div>
+                        <div className="d-flex flex-column align-items-center justify-content-center fixed-container-sign-up w100 buttons-container" style={{ width: "100%" }}>
+                            {error &&
+                                <Typography marginBottom={2} color="error">
+                                    Hubo un problema, por favor inténtelo de nuevo.
+                                </Typography>
+                            }
+                            <div className='main-buttons-container d-flex align-items-start justify-content-center w100' style={{ width: "100%" }}>
+                                <div className="d-flex">
+                                    <SmallPrimaryButton 
+                                        loading={saveLoader} 
+                                        type='button' 
+                                        onClick={edit ? handleEditProfile : editProfile } fullWidth={useWindowSize().width < 769}
+                                    >
+                                        {edit ? 'Guardar' : 'Editar'}
+                                    </SmallPrimaryButton>
+                                    <div style={{ width: 12 }}></div>
+                                    <SmallPrimaryButton
+                                        variant='outlined'
+                                        disabled={loading}
+                                        display={ edit ? 'initial': 'none'}
+                                        type='button'
+                                        onClick={cancelEdit}
+                                        fullWidth={useWindowSize().width < 769}
+                                    >
+                                        Cancelar
+                                    </SmallPrimaryButton>
                                 </div>
-                                <div className='signOut'>
+                                <div  className="sign-out-button" style={{ flex: 10 }}></div>
                                 <SmallPrimaryButton color='error' variant='outlined' loading={logOutLoader} onClick={logOut}>
                                     Cerrar Sesión
                                 </SmallPrimaryButton>
-                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
 

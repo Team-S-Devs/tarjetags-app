@@ -1,3 +1,7 @@
+.full-container{
+  height: 70vh !important;
+}
+
 .loader {
     color: var(--prim-purple);
     font-size: 45px;

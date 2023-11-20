@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Tab, Tabs, Typography } from '@mui/material'
+import { Box, Tab, Tabs } from '@mui/material'
 import ElementsCardTab from './ElementsCardTab';
 
 function CustomTabPanel(props) {
@@ -29,12 +29,12 @@ function CustomTabPanel(props) {
     };
   }
 
-const EditCardTabs = () => {
+const EditCardTabs = ({ elementsInfo = {title: "", description: ""}, setElementsInfo }) => {
     const [value, setValue] = useState(0)
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
-      };
+      setValue(newValue);
+    };
     
   return (
     <div style={{ flex: 3 }}>
@@ -49,7 +49,7 @@ const EditCardTabs = () => {
             </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-            <ElementsCardTab/>
+            <ElementsCardTab elementsInfo={elementsInfo} setElementsInfo={setElementsInfo}/>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
             Botones

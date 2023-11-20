@@ -1,12 +1,9 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import MediumPrimaryButton from '../components/buttons/MediumPrimaryButton';
 import useWindowSize from '../hooks/useWindowsSize';
 
-const PreviewCardTab = () => {
+const PreviewCardTab = ({ handleSave, loading }) => {
     const { width, height } = useWindowSize();
-
-    const navigate = useNavigate();
   return (
     <div style={{ flex: 2 }}>
         {
@@ -14,8 +11,8 @@ const PreviewCardTab = () => {
                 <div className="d-flex">
                     <div style={{ flex: 10 }}></div>
                     <MediumPrimaryButton
-                        onClick={() => navigate("/")}
-                        disabled={true}
+                        loading={loading}
+                        onClick={handleSave}
                     >Publicar Cambios</MediumPrimaryButton>
                     <div style={{ flex: 10 }}></div>
                 </div>

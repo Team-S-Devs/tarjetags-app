@@ -31,8 +31,8 @@
     margin-top: 1rem;
     width: 100%;
     display: flex;
-    justify-content: right;
     align-items: flex-end;
+    justify-content: flex-end;
 }
 
 @media (max-width: 470px) {
@@ -43,5 +43,29 @@
     .signOut {
         justify-content: center;
         align-items: center;
+    }
+}
+
+.buttons-container{
+    padding: 0 50px;
+}
+
+@media (max-width: 992px) {
+    .buttons-container{
+        padding: 0 20px;
+    }
+}
+
+.main-buttons-container{
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    .main-buttons-container{
+        flex-direction: column;
+    }
+    
+    .sign-out-button{
+        margin-top: 16px;
     }
 }

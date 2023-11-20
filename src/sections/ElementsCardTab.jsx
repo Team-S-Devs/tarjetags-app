@@ -4,7 +4,14 @@ import { FaUser } from 'react-icons/fa'
 import ThinTitle from '../components/texts/ThinTitle'
 import FieldText from '../components/form/fields/FieldText'
 
-const ElementsCardTab = () => {
+const ElementsCardTab = ({ elementsInfo, setElementsInfo }) => {
+
+    const handleChange = (newVal, key) => {
+        const copyEl = {...elementsInfo};
+        copyEl[key] = newVal;
+        setElementsInfo(copyEl)
+    }
+    
   return (
     <>
     <div className="mt-4"></div>
@@ -19,8 +26,8 @@ const ElementsCardTab = () => {
                 <ThinTitle color='primary' variant='h6'>Información de usuario</ThinTitle>
             </div>
             <div className="mt-3"></div>
-            <FieldText label='Título'/>
-            <FieldText label='Descripción' marginTop={2}/>
+            <FieldText maxLength={30} label='Título' value={elementsInfo.title} setValue={newVal => handleChange(newVal, "title")} />
+            <FieldText multiline maxLength={200} label='Descripción' marginTop={2}/>
         </div>
     </StyledCard>
     </>

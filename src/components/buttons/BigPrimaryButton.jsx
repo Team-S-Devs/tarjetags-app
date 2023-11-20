@@ -1,9 +1,9 @@
 import { Button, CircularProgress } from '@mui/material'
 import React from 'react'
 
-const BigPrimaryButton = ({ children, onClick, type = "submit", loading = false, fullWidth }) => (
+const BigPrimaryButton = ({ children, display = 'initial',onClick, type = "submit", loading = false, fullWidth }) => (
     <Button 
-        style={{ fontSize: 22 }} 
+        style={{ fontSize: 22, display:display }} 
         onClick={onClick} 
         type={type} 
         disabled={loading} 

@@ -11,10 +11,27 @@ const Header = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const {width} = useWindowSize();
+  const [user, setUser]  = useState(null);
+  const [perfilView, setPerfilView] = useState("ala");
 
   useEffect(() => {
     setIsOpen(false)
   }, [location]);
+  
+  console.log(user+" hoal")
+
+  useEffect(() => {
+    onAuthStateChanged(auth,(fireBaseUser) => {
+      if (fireBaseUser) {
+        console.log("vamosss")
+        setUser(fireBaseUser);
+      } else {
+        setUser(null);
+      }
+    });
+
+    setPerfilView(!user ?"Iniciar Sesión": user.email)
+  }, [user])
 
   const onClickHeader = () => {
     setIsOpen(!isOpen)
@@ -35,11 +52,11 @@ const Header = () => {
       </div>
       <nav className={'navigation ' +(conditional)}>
 
-      <GoFileDirectoryFill onClick={signOut(auth)} className='icon-header'/>
+      <GoFileDirectoryFill className='icon-header'/>
         <Link to="/"><span className='link'>Ver Tarjetas Creadas</span></Link>
 
         <BiSolidUser className='icon-header'/>
-        <Link to="/"><span className='link mainButton'>{"Iniciar Sesión"}</span></Link>
+        <Link to={!user ? "/": "/profile"}><span className='link mainButton'>{perfilView}</span></Link>
       </nav>
       <div className='menuButton' onClick={onClickHeader}>
         <button className={isOpen && isResponsive ? "cancelButton-header" : "headerButton"}>

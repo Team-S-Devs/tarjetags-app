@@ -39,7 +39,8 @@ const FieldText = ({
   fullWidth = true,
   onFocus = () => {},
   onBlur = () => {}, 
-  multiline = true, 
+  multiline = true,
+  readOnly = false, 
   autoComplete="off", 
   error = false,
   errorMessage = "",
@@ -82,6 +83,9 @@ const FieldText = ({
       onBlur={handleBlur}
       onChange={(event) => setValue(event.target.value)}
       error={error}
+      inputProps={
+        { readOnly: readOnly }
+      }
     />
   );
 };

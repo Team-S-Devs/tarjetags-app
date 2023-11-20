@@ -8,10 +8,11 @@ import { createTheme } from '@mui/material';
 import LogIn from './pages/LogIn';
 import Dashboard from './pages/Dashboard';
 import { auth } from './utils/firebase-config';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {getAuth, onAuthStateChanged} from 'firebase/auth'
 import Error from './pages/Error';
 import SignUp from './pages/SignUp';
+import Profile from './pages/Profile';
 
 const theme = createTheme({
   palette: {
@@ -76,22 +77,38 @@ const App = () => {
   onAuthStateChanged(auth, (fireBaseUser) => {
       if (fireBaseUser) {
           setUser(fireBaseUser)
+          console.log(user)
+          console.log("aca Esta")
       } else {
           setUser(null)
       }
   })
 
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (fireBaseUser) => {
+      if (fireBaseUser) {
+        setUser(fireBaseUser);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup subscription on component unmount
+
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
           <Route path='/' Component={Home} />
-          <Route path='/dashboard' Component={user ? Dashboard : LogIn} />
+          <Route path='dashboard' Component={user!=null ? Dashboard : Error} />
           <Route path='test-components' Component={TestComponents} />
           <Route path='sign-up' Component={SignUp} />
           <Route path='login' Component={LogIn} />
           <Route path='error' Component={Error} />
+          <Route path='profile' Component={() => user ? <Profile user={user}/> : <Error/>}/>
           <Route path='*' Component={Error} />
         </Routes>
       </BrowserRouter>

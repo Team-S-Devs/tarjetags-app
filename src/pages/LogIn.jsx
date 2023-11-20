@@ -51,12 +51,6 @@ const LogIn = () => {
     const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate()
     
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-        if (user) navigate("/dashboard")
-        })
-    }, [])
-    
 
     const change = e => {
         e.preventDefault()
@@ -69,15 +63,12 @@ const LogIn = () => {
             e.preventDefault()
             const email = e.target.email.value;
             const password = e.target.password.value;
-    
-            console.log(email)
-            console.log(password)
             
             signInWithEmailAndPassword(auth, email, password)
     
             .then(() => {
     
-            navigate("/dashboard")
+            navigate("/")
             setLoading(false)
     
             })

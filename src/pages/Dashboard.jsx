@@ -4,7 +4,7 @@ import Header from '../sections/Header';
 const Dashboard = () => {
     return (
         <div>
-            <Header/>
+                HOLSAAA
         </div>
     );
 };

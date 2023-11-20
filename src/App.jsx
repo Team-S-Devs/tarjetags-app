@@ -132,12 +132,13 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path='/' Component={Splash} />
-          <Route path='dashboard' Component={user ? Dashboard : Splash} />
-          <Route path='test-components' Component={TestComponents} />
-          <Route path='sign-up' Component={SignUp} />
-          <Route path='login' Component={LogIn} />
-          <Route path='error' Component={Error} />
-          <Route path='profile' Component={() => user ? <Profile user={user}/> : <Splash loggedNavigateTo='/profile'/>}/>
+          <Route path='/dashboard' Component={user ? Dashboard : Splash} />
+          <Route path='/test-components' Component={TestComponents} />
+          <Route path='/sign-up' Component={SignUp} />
+          <Route path='/login' Component={LogIn} />
+          <Route path='/error' Component={Error} />
+          <Route path='/editar/:cardId' Component={EditCard} />
+          <Route path='/profile' Component={() => user ? <Profile user={user}/> : <Splash loggedNavigateTo='/profile'/>}/>
           <Route path='*' Component={Error} />
         </Routes>
       </BrowserRouter>

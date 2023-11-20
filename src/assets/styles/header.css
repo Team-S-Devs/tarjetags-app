@@ -29,7 +29,6 @@ header a {
   }
 
 header a:hover {
-	color: var(--sec-purple-light);
   }
 
 
@@ -72,16 +71,14 @@ header a:hover {
   }
 
   .link:hover{
-    color: var(--violet-c);
-    border-color: var(--violet-c);
   }
 
   .logo_img{
-    transition: 1.2s;
+    transition: .3s all ease-in-out;
   }
 
   .logo_img:hover {
-    transform: scale(1.01);
+    transform: scale(1.1);
   }
 
 
@@ -211,8 +208,9 @@ transform: rotate(-45deg) translateY(-11px);
       margin-right: 0;
     }
 
-    .icon-header {
-      display: none;
+    .header-link{
+      display: flex;
+      align-items: center;
     }
 
     .menuButton {
@@ -240,7 +238,6 @@ transform: rotate(-45deg) translateY(-11px);
     }
 
     .navigation a:hover {
-      color: var(--prim-319c);
     }
     .logo {
       z-index: 10;
@@ -276,3 +273,11 @@ transform: rotate(-45deg) translateY(-11px);
       font-size: 24px;
     }
   }
+
+.header-link{
+  transition: 0.3s all ease-in-out;
+}
+
+.header-link:hover{
+  scale: 1.1;
+}

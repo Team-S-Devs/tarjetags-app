@@ -43,7 +43,7 @@ const Header = () => {
     <header>
       <div className='headerContainer container'>
       <div className='logo_img'>
-        <Link to='/#home'>
+        <Link to='/'>
           <div className='logoHeader'>
             <img src={image} alt="vetsoft logo"/>
           </div>
@@ -51,11 +51,17 @@ const Header = () => {
       </div>
       <nav className={'navigation ' +(conditional)}>
 
-      <GoFileDirectoryFill className='icon-header'/>
-        <Link to="/"><span className='link'>Ver Tarjetas Creadas</span></Link>
+        <div className={`${conditional !== "navigationResponsive" && "d-flex"}`}>
+        <div className="header-link">
+          <GoFileDirectoryFill className='icon-header'/>
+          <Link to="/"><span className='link'>Ver Tarjetas Creadas</span></Link>
+        </div>
 
-        <BiSolidUser className='icon-header'/>
-        <Link to={!user ? "/": "/profile"}><span className='link mainButton'>{perfilView}</span></Link>
+        <div className="header-link">
+          <BiSolidUser className='icon-header'/>
+          <Link to={!user ? "/": "/profile"}><span className='link mainButton'>{perfilView}</span></Link>
+        </div>
+        </div>
       </nav>
       <div className='menuButton' onClick={onClickHeader}>
         <button className={isOpen && isResponsive ? "cancelButton-header" : "headerButton"}>

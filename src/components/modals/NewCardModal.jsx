@@ -49,7 +49,6 @@ const NewCardModal = ({ open, setOpen, userId }) => {
             const newCard = {
                 title: "",
                 userId: userId,
-                urlPage: newCardValue,
             };
         
             await setDoc(cardsCollection, newCard);
@@ -86,7 +85,6 @@ const NewCardModal = ({ open, setOpen, userId }) => {
                 <ThinTitle variant="h6" color='primary'>tarjetags.com/</ThinTitle>
                 <div style={{ width: width > 768 ? 30 : 15 }}></div>
                 <FieldText 
-                    color="success" 
                     variant='standard' 
                     label='Nombre único' 
                     value={newCardValue} 

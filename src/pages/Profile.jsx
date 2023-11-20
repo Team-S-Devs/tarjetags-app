@@ -20,28 +20,30 @@ import BoldTitle from '../components/texts/BoldTitle';
 import SmallPrimaryButton from '../components/buttons/SmallPrimaryButton';
 
 const Profile = ({user}) => {
-    console.log(user.email)
-    console.log(user.fullname)
+
+const [userData, setUserData ] = useState(null);
 
  // State for user registration form
- const [fullname, setFullname] = useState(user.email);
+ const [fullname, setFullname] = useState('');
  const [fullnameError, setFullnameError] = useState(false);
 
  const [emailValue, setEmailValue] = useState(user.email);
  const [emailError, setEmailError] = useState(false);
  const [emailErrorMessage, setEmailErrorMessage] = useState('Introduce un correo electrónico válido');
 
- const [phoneValue, setPhoneValue] = useState(user.phone);
+ const [phoneValue, setPhoneValue] = useState('');
  const [phoneError, setPhoneError] = useState(false);
 
  const validateEmail = () => {
    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
    setEmailError(!emailPattern.test(emailValue.trim()));
+   return emailPattern.test(emailValue.trim());
  };
 
  const validatePhone = () => {
    const phonePattern = /^(?:\+\d{1,3})?\s?\(?(\d{1,})\)?[-.\s]?(\d{1,})[-.\s]?(\d{1,})$/;
    setPhoneError(!phonePattern.test(phoneValue.trim()));
+   return phonePattern.test(phoneValue.trim());
  };
 
  // State for optional company details
@@ -73,63 +75,9 @@ const Profile = ({user}) => {
  const [loading, setLoading] = useState(false);
  const [error, setError] = useState(false);
 
- const navigate = useNavigate();
+ const [logOutLoader, setlogOutLoader] = useState(false);
+ const [saveLoader, setSaveLoader] = useState(false);
 
- // Handle sign-up button click
- const handleSignUp = async () => {
-    try {
-        setLoading(false)
-        console.log("SUBMITTT")
-    } catch (error) {
-        setLoading(false);
-        if (error.code === 'auth/email-already-in-use') {
-          setEmailError(true);
-          setEmailErrorMessage("Ya existe una cuenta registrada con este email, por favor inicia sesión o introduce un email diferente");
-        } else {
-          setError(true);
-        }
-    }
-//    // Validate form fields
-//    setFullnameError(fullname.trim().length < 4);
-//    validateEmail();
-//    validatePhone();
-//    setPasswordError(passwordValue.length < 6);
-
-//    // If any error, return
-//    if (fullnameError || emailError || phoneError || passwordError) {
-//      return;
-//    }
-
-//    try {
-//    // Create user data in Firestore
-//      const userData = {
-//        fullname,
-//        email: emailValue,
-//        phone: phoneValue,
-//        company: companyValue,
-//        companySector: companiesSector.filter(c => c.id === companySectorValue)[0].title,
-//        department: departmentValue,
-//        discountCode: discountCodeValue,
-//        license: Timestamp.fromMillis(0),
-//        createdAt: Timestamp.now(),
-//      };
-//      setLoading(true);
-
-//      // Perform Firebase sign-up
-//      const userCredential = await signUpWithEmailAndPassword(emailValue, passwordValue, userData);
-//      navigate("/dashboard")
-//      setLoading(false)
-//      // Handle successful sign-up, e.g., redirect or show a success message
-//    } catch (error) {
-//        setLoading(false);
-//        if(error.code === 'auth/email-already-in-use') {
-//            setEmailError(true);
-//            setEmailErrorMessage("Ya existe una cuenta registrada con este email, por favor inicia sesión o introduce un email diferente")
-//        } else setError(true)
-//    }
- };
- 
- const [userData, setUserData ] = useState(null);
 
  useEffect(() => {
     if (!user) {
@@ -137,11 +85,14 @@ const Profile = ({user}) => {
     }
 
     const unsubscribe = onSnapshot(doc(db, 'users', user.uid), (snapshot) => {
-    const userData = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-    }));
+    const userData = snapshot.data();
     setUserData(userData);
+    setFullname(userData.fullname);
+    setPhoneValue(userData.phone);
+    setCompanyValue(userData.company);
+    setCompanySectorValue(userData.companySector === "" ? "" : companiesSector.filter(sector => sector.title === userData.companySector)[0].id);
+    setDepartmentValue(userData.department);
+    setDiscountCodeValue(userData.discountCode)
 }, (error) => {
     setError(true);
 });
@@ -150,20 +101,63 @@ return () => unsubscribe();
 }, [user]);
 
 
-  const logOut = () => {
-    signOut(auth);
-  }
+ const navigate = useNavigate();
 
-  const saveEditChanges = () => {
-    console.log("saved")
-    setEdit(false);
+ // Handle sign-up button click
+ const handleEditProfile = async (e) => {
+    setSaveLoader(true);
+    e.preventDefault();
+
+    // Validate form fields
+    setFullnameError(fullname.trim().length < 4);
+    validateEmail();
+    validatePhone();
+
+    // If any error, return
+    if (!validateEmail() || !validatePhone() || fullname.trim().length < 4) {
+      return;
+    }
+
+    try {
+      const data = {
+        fullname: fullname,
+        email: emailValue,
+        phone: phoneValue,
+        company: companyValue,
+        companySector: companiesSector.filter(c => c.id === companySectorValue)[0]?.title ? companiesSector.filter(c => c.id === companySectorValue)[0].title : "",
+        department: departmentValue,
+        discountCode: discountCodeValue
+      };
+
+      await setDoc(doc(db, 'users', user.uid), data);
+
+      setSaveLoader(false);
+      setEdit(false);
+
+    } catch (error) {
+        console.log(error)
+        setLoading(false);
+        if(error.code === 'auth/email-already-in-use') {
+            setEmailError(true);
+            setEmailErrorMessage("Ya existe una cuenta registrada con este email, por favor inicia sesión o introduce un email diferente")
+        } else setError(true)
+    }
+ };
+
+
+  const logOut = async () => {
+    setlogOutLoader(true);
+    await signOut(auth);
+    setlogOutLoader(false);
   }
 
   const editProfile = () => {
     setEdit(true);
-    console.log("edit profile")
   }
-
+  
+  const cancelEdit = () => {
+    setEdit(false);
+  }
 
     return (
         <div className='profile-container'>
@@ -171,13 +165,10 @@ return () => unsubscribe();
         <Container style={{background:'var(--back-ligh)'}}>
             <div className="my-5 my-md-0 d-flex flex-column justify-content-center" style={{ minHeight: "100vh"}}>
             <BoldTitle variant='h3' textAlign='center'>Perfil De Usuario</BoldTitle>
-            <button style={{marginBottom:'1rem'}} onClick={logOut}>
-                SIGN OUT
-            </button>
             
                 <div className='profile-cont-2'>
 
-                     <Form onFocus={() => setError(false)} submit={handleSignUp}>
+                     <Form onFocus={() => setError(false)} submit={handleEditProfile}>
                         <div className="row" >
                             <div className="row col-lg-12 col-md-12 fixed-container-sign-up">
                                 <div className="col-md-6 col-lg-6 col-sm-12 fixed-container-sign-up">
@@ -202,8 +193,8 @@ return () => unsubscribe();
                                         label='Correo electrónico'
                                         value={emailValue}
                                         setValue={setEmailValue}
-                                        
-                                        readOnly={edit ? false : true}
+                                        disabled={edit}
+                                        readOnly={true}
                                         placeholder='Ej: nombre@ejemplo.com'
                                         fullWidth
                                         required
@@ -227,6 +218,17 @@ return () => unsubscribe();
                                         setError={setPhoneError}
                                         errorMessage='Introduce un número de celular válido'
                                         validateMethod={validatePhone}
+                                    />
+
+                                    <div className="mt-md-3 mt-sm-0"></div>
+                                    <FieldText
+                                        label='Código de descuento (Opcional)'
+                                        value={discountCodeValue}
+                                        setValue={setDiscountCodeValue}
+                                        
+                                        readOnly={edit ? false : true}
+                                        placeholder='Ej: swd789'
+                                        fullWidth
                                     />
 
 
@@ -269,16 +271,6 @@ return () => unsubscribe();
                                         label="Departamento (Opcional)"
                                     />
 
-                                    <div className="mt-md-3 mt-sm-0"></div>
-                                    <FieldText
-                                        label='Código de descuento (Opcional)'
-                                        value={discountCodeValue}
-                                        setValue={setDiscountCodeValue}
-                                        
-                                        readOnly={edit ? false : true}
-                                        placeholder='Ej: swd789'
-                                        fullWidth
-                                    />
                                 </div>
                             </div>
                         </div>
@@ -290,19 +282,28 @@ return () => unsubscribe();
                                         <Typography marginBottom={2} color="error">Hubo un problema, por favor inténtelo de nuevo.</Typography>
                                     }
                                     <div className='d-flex align-items-center justify-content-center'>
-                                            <SmallPrimaryButton loading={loading} type='button' onClick={edit ? saveEditChanges : editProfile } fullWidth={useWindowSize().width < 769}>{edit ? 'Save Changes' : 'Edit'}</SmallPrimaryButton>
+                                            <SmallPrimaryButton 
+                                                loading={saveLoader} 
+                                                type='button' 
+                                                onClick={edit ? handleEditProfile : editProfile } fullWidth={useWindowSize().width < 769}>{edit ? 'Guardar' : 'Editar'}
+                                            </SmallPrimaryButton>
                                             <div style={{ width: 12 }}></div>
-                                            <SmallPrimaryButton
-                                            variant='outlined'
-                                            loading={loading}
-                                            display={ edit ? 'initial': 'none'}
-                                            type='button'
-                                            onClick={saveEditChanges}
-                                            fullWidth={useWindowSize().width < 769}
+                                                <SmallPrimaryButton
+                                                variant='outlined'
+                                                disabled={loading}
+                                                display={ edit ? 'initial': 'none'}
+                                                type='button'
+                                                onClick={cancelEdit}
+                                                fullWidth={useWindowSize().width < 769}
                                             >
-                                            Cancel
+                                            Cancelar
                                             </SmallPrimaryButton>
                                     </div>
+                                </div>
+                                <div className='signOut'>
+                                <SmallPrimaryButton color='error' variant='outlined' loading={logOutLoader} onClick={logOut}>
+                                    Cerrar Sesión
+                                </SmallPrimaryButton>
                                 </div>
                 </div>
             </div>

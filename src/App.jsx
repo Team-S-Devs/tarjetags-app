@@ -108,8 +108,6 @@ const App = () => {
   onAuthStateChanged(auth, (fireBaseUser) => {
       if (fireBaseUser) {
           setUser(fireBaseUser)
-          console.log(user)
-          console.log("aca Esta")
       } else {
           setUser(null)
       }

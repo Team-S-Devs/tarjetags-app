@@ -85,19 +85,19 @@ const [userData, setUserData ] = useState(null);
     }
 
     const unsubscribe = onSnapshot(doc(db, 'users', user.uid), (snapshot) => {
-    const userData = snapshot.data();
-    setUserData(userData);
-    setFullname(userData.fullname);
-    setPhoneValue(userData.phone);
-    setCompanyValue(userData.company);
-    setCompanySectorValue(userData.companySector === "" ? "" : companiesSector.filter(sector => sector.title === userData.companySector)[0].id);
-    setDepartmentValue(userData.department);
-    setDiscountCodeValue(userData.discountCode)
-}, (error) => {
-    setError(true);
-});
+        const userData = snapshot.data();
+        setUserData(userData);
+        setFullname(userData.fullname);
+        setPhoneValue(userData.phone);
+        setCompanyValue(userData.company);
+        setCompanySectorValue(userData.companySector === "" ? "" : companiesSector.filter(sector => sector.title === userData.companySector)[0].id);
+        setDepartmentValue(userData.department);
+        setDiscountCodeValue(userData.discountCode)
+    }, (error) => {
+        setError(true);
+    });
 
-return () => unsubscribe();
+    return () => unsubscribe();
 }, [user]);
 
 

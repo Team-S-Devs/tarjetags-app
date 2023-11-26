@@ -13,6 +13,7 @@ import Error from './pages/Error';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import EditCard from './pages/EditCard';
+import RestorePassword from './pages/RestorePassword';
 
 const theme = createTheme({
   palette: {
@@ -151,6 +152,7 @@ const App = () => {
           <Route path='/login' Component={LogIn} />
           <Route path='/error' Component={Error} />
           <Route path='/editar/:cardId' Component={EditCard} />
+          <Route path='/restorePassword' Component={RestorePassword} />
           <Route path='/profile' Component={() => user ? <Profile user={user}/> : <Splash loggedNavigateTo='/profile'/>}/>
           <Route path='*' Component={Error} />
         </Routes>

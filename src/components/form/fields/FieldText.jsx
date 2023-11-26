@@ -23,6 +23,7 @@ import { TextField } from "@mui/material";
  * @param {string} props.errorMessage - A string containing error message.
  * @param {Function} props.setError - A function to update the error state.
  * @param {Function} props.validateMethod - A function to validate the input field's value.
+ * @param {Number} props.maxLength - The max length of the input
  * @returns {JSX.Element} Returns a JSX element representing the FieldText component.
  */
 const FieldText = ({ 
@@ -47,8 +48,9 @@ const FieldText = ({
   setError = () => {},
   validateMethod = () => {},
   color = "primary",
-  maxLength,
-  marginTop = 12
+  maxLength = 50,
+  marginTop = 12,
+  minRows = 1
 }) => {
   /**
    * Sets the focus on the input field.
@@ -65,6 +67,10 @@ const FieldText = ({
     onBlur();
     validateMethod();
   };
+
+  const handleChange = (event) => {
+    setValue(event.target.value.toString().slice(0, maxLength))
+  }
 
   return (
     <TextField 
@@ -86,8 +92,9 @@ const FieldText = ({
       multiline={multiline}
       onFocus={handleFocus}
       onBlur={handleBlur}
-      onChange={(event) => setValue(event.target.value)}
+      onChange={handleChange}
       error={error}
+      minRows={minRows}
     />
   );
 };

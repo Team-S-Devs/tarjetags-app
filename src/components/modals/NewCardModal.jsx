@@ -87,14 +87,15 @@ const NewCardModal = ({ open, setOpen, userId }) => {
                 <div style={{ width: width > 768 ? 30 : 15 }}></div>
                 <FieldText 
                     variant='standard' 
-                    label='Nombre único' 
+                    label='Nombre único:'
+                    helperText={newCardValue.length === 25 ? "Máximo 25 caracteres" : " "} 
                     value={newCardValue} 
                     setValue={handleInputChange} 
                     error={errorNewVal}
                     setError={setErrorNewVal}
                     errorMessage={errorMsg}
                     validateMethod={handleValidateVal}
-                    maxLength={45}
+                    maxLength={25}
                     multiline={false}
                 />
             </div>

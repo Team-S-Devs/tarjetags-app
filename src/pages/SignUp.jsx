@@ -44,6 +44,9 @@ const SignUp = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('Introduce una contraseña de al menos 6 caracteres');
 
+  const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+
   const validateEmail = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setEmailError(!emailPattern.test(emailValue.trim()));
@@ -59,6 +62,11 @@ const SignUp = () => {
   const validatePassword = () => {
     setPasswordError(passwordValue.length < 6);
     return passwordValue.length >= 6;
+  }
+
+  const validateConfirmPassword = () => {
+    setConfirmPasswordError(passwordValue !== confirmPasswordValue);
+    return passwordValue === confirmPasswordValue;
   }
 
   // State for optional company details
@@ -86,6 +94,7 @@ const SignUp = () => {
   const departmentsOptions = ["La Paz", "Cochabamba", "Santa Cruz", "Beni", "Chuquisaca", "Oruro", "Pando", "Potosí", "Tarija"];
 
   const [discountCodeValue, setDiscountCodeValue] = useState('');
+  const [jobValue, setJobValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -102,7 +111,8 @@ const SignUp = () => {
     setPasswordError(passwordValue.length < 6);
 
     // If any error, return
-    if (!validateEmail() || !validatePhone() || !validatePassword() || fullname.trim().length < 4) {
+    if (!validateEmail() || !validatePhone() || !validatePassword() || !validateConfirmPassword() || 
+      fullname.trim().length < 4) {
       return;
     }
 
@@ -112,6 +122,7 @@ const SignUp = () => {
         fullname,
         email: emailValue,
         phone: phoneValue,
+        job: jobValue,
         company: companyValue,
         companySector: companiesSector.filter(c => c.id === companySectorValue)[0]?.title ? companiesSector.filter(c => c.id === companySectorValue)[0].title : "",
         department: departmentValue,
@@ -196,6 +207,7 @@ const SignUp = () => {
                         setError={setPhoneError}
                         errorMessage='Introduce un número de celular válido'
                         validateMethod={validatePhone}
+                        maxLength={16}
                     />
 
                     <div className="mt-md-3 mt-sm-0"></div>
@@ -212,10 +224,35 @@ const SignUp = () => {
                         errorMessage={passwordErrorMessage}
                         validateMethod={validatePassword}
                     />
+
+                    <div className="mt-md-3 mt-sm-0"></div>
+                    <PasswordField
+                        label='Confirmar contraseña:'
+                        value={confirmPasswordValue}
+                        setValue={setConfirmPasswordValue}
+                        variant='outlined'
+                        placeholder='Vuelve a introducir tu contraseña'
+                        fullWidth
+                        required
+                        error={confirmPasswordError}
+                        setError={setConfirmPasswordError}
+                        errorMessage={"Las contraseñas no coinciden"}
+                        validateMethod={validateConfirmPassword}
+                    />
                 </div>
 
                 {/* <!-- Segunda Columna --> */}
                 <div className="col-md-6 col-lg-6 fixed-container-sign-up">
+                    <div className="mt-md-3 mt-sm-0"></div>
+                    <FieldText
+                        label='Cargo (Opcional)'
+                        value={jobValue}
+                        setValue={setJobValue}
+                        variant='outlined'
+                        placeholder='Ej: Gerente General'
+                        fullWidth
+                    />
+
                     <div className="mt-md-3 mt-sm-0"></div>
                     <FieldText
                         label='Empresa (Opcional)'

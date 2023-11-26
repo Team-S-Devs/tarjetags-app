@@ -1,6 +1,5 @@
-import { Router, Route, Routes, BrowserRouter } from 'react-router-dom'
+import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import Splash from './pages/Splash'
-import Home from './pages/Home'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TestComponents from './pages/TestComponents'
 import { ThemeProvider } from '@emotion/react';

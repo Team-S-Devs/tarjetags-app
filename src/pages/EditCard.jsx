@@ -8,8 +8,9 @@ import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import MediumPrimaryButton from '../components/buttons/MediumPrimaryButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { db } from '../utils/firebase-config';
+import { db, storage } from '../utils/firebase-config';
 import '../assets/styles/loader.css'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 const EditCard = () => {
     const { cardId } = useParams();
@@ -22,17 +23,70 @@ const EditCard = () => {
         if(newValue != nav) setNav(newValue);
     };
 
-    const [elementsInfo, setElementsInfo] = useState({ title: "", description: "" });
+    const [elementsInfo, setElementsInfo] = 
+        useState(
+            { 
+                title: "", 
+                description: "",
+                profilePhoto: {
+                    name: "profilePhoto",
+                    file: null,
+                    url: "",
+                } 
+            }
+        );
     const [loading, setLoading] = useState(false);
     const [loadingGetting, setLoadingGetting] = useState(true);
 
     const handleSave = async (e) => {
         e.preventDefault();
         setLoading(true);
+        const elCopy = await handleImageUpload();
         const docCard = doc(db, 'cards', cardId);
-        await updateDoc(docCard, {...elementsInfo})
+        await updateDoc(docCard, {...elCopy})
         navigate("/")
+        setLoading(false)
     }
+
+    // Function to handle image upload
+    const handleImageUpload = async () => {
+        const { profilePhoto } = elementsInfo;
+      
+        if (profilePhoto.file) {
+          try {
+            const storageRef = ref(storage, `${elementsInfo.userId}/${cardId}/profilePhoto`);
+            // Upload the file to Firebase Cloud Storage
+            await uploadBytes(storageRef, profilePhoto.file);
+      
+            // Get the URL of the uploaded image
+            const url = await getDownloadURL(storageRef);
+      
+            // Update the state with the URL
+            setElementsInfo((prevElementsInfo) => ({
+              ...prevElementsInfo,
+              profilePhoto: {
+                ...profilePhoto,
+                file: "",
+                url,
+              },
+            }));
+      
+      
+            // Optionally, return the updated state or any other data
+            return {
+              ...elementsInfo,
+              profilePhoto: {
+                ...profilePhoto,
+                file: "",
+                url,
+              },
+            };
+          } catch (error) {
+            console.error('Error uploading image:', error);
+            // Handle the error as needed
+          }
+        }
+    };
 
     useEffect(() => {
         const fetchCardData = async () => {
@@ -42,20 +96,22 @@ const EditCard = () => {
                 const cardSnapshot = await getDoc(cardDocRef);
         
                 if (cardSnapshot.exists()) {
-                // Document exists, extract the data
-                const cardFields = cardSnapshot.data();
-                setElementsInfo(cardFields);
+                    const cardFields = cardSnapshot.data();
+                    if(!cardFields.profilePhoto) cardFields["profilePhoto"] = { name: "profilePhoto", url: "", file: null }
+                    setElementsInfo(cardFields);
                 } else {
-                console.log('Document does not exist!');
+                    navigate("/dashboard")
                 }
             } catch (error) {
-                console.error('Error fetching card data:', error);
+                navigate("/dashboard")
             }
             setLoadingGetting(false)
         };
     
         fetchCardData();
       }, []);
+
+ 
 
   return (
     <div className='container' style={{ paddingTop: '90px'}}>

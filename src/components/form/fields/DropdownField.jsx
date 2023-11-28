@@ -44,6 +44,7 @@ const DropdownField = ({
   multiline = true, 
   autoComplete="off", 
   error = false,
+  readOnly= false,
   errorMessage = "",
   setError = () => {},
   validateMethod = () => {},
@@ -83,6 +84,9 @@ const DropdownField = ({
       fullWidth={fullWidth}
       disabled={disabled}
       autoComplete={autoComplete}
+      InputProps={{
+        readOnly: readOnly,
+      }}
       multiline={multiline}
       onFocus={handleFocus}
       onBlur={handleBlur}

@@ -67,7 +67,7 @@ const Header = () => {
 
         <div className="header-link">
           <BiSolidUser className='icon-header'/>
-          <Link to={!user ? "/": "/profile"}><span className='link mainButton'>{fullname}</span></Link>
+          <Link to={!user ? "/": "/profile"}><span className='link mainButton'>{user ? fullname : 'iniciar Sesion'}</span></Link>
         </div>
         </div>
       </nav>

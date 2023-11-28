@@ -2,11 +2,11 @@ import React from 'react'
 import BackButton from '../buttons/BackButton'
 import BoldTitle from './BoldTitle'
 
-const BoldTitleWithBackButton = ({ children, centered = false, variant='h3' }) => {
-    const getTitleStyle = () => centered ? { marginLeft: 16, flex: 10 } : { marginLeft: 16 };
+const BoldTitleWithBackButton = ({ children, centered = false, variant='h3', width='initial' }) => {
+    const getTitleStyle = () => centered ? { marginLeft: 16, flex: 10 } : { marginLeft: 18, width: width };
 
     return (
-        <div className="d-flex align-items-center">
+        <div className="d-flex justify-content-center align-items-center" >
             <div>
                 <BackButton />
             </div>

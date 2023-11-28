@@ -34,6 +34,8 @@ const [userData, setUserData ] = useState(null);
  const [phoneValue, setPhoneValue] = useState('');
  const [phoneError, setPhoneError] = useState(false);
 
+ const [jobValue, setJobValue] = useState('');
+
  const validateEmail = () => {
    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
    setEmailError(!emailPattern.test(emailValue.trim()));
@@ -79,20 +81,47 @@ const [userData, setUserData ] = useState(null);
  const [saveLoader, setSaveLoader] = useState(false);
 
 
+ const updateFields = () => {
+    setUserData(userData);
+        setFullname(userData.fullname);
+        setPhoneValue(userData.phone);
+        setJobValue(userData.job);
+        setCompanyValue(userData.company);
+        setDepartmentValue(userData.department);
+        setDiscountCodeValue(userData.discountCode);
+        if (userData.companySector !== "") {
+            let filtered = companiesSector.filter(sector => sector.title === userData.companySector);
+                
+            if (filtered.length < 1) {
+                setCustomOption(userData.companySector);
+                setCompanySectorValue(companiesSector.length-1);
+            } else setCompanySectorValue(filtered[0].id);
+        }
+ }
+
+
  useEffect(() => {
     if (!user) {
         navigate("/login")
     }
 
     const unsubscribe = onSnapshot(doc(db, 'users', user.uid), (snapshot) => {
-        const userData = snapshot.data();
-        setUserData(userData);
-        setFullname(userData.fullname);
-        setPhoneValue(userData.phone);
-        setCompanyValue(userData.company);
-        setCompanySectorValue(userData.companySector === "" ? "" : companiesSector.filter(sector => sector.title === userData.companySector)[0].id);
-        setDepartmentValue(userData.department);
-        setDiscountCodeValue(userData.discountCode)
+        const userInfo = snapshot.data();
+        setUserData(userInfo);
+        setFullname(userInfo.fullname);
+        setPhoneValue(userInfo.phone);
+        setJobValue(userInfo.job);
+        setCompanyValue(userInfo.company);
+        setDepartmentValue(userInfo.department);
+        setDiscountCodeValue(userInfo.discountCode);
+        if (userInfo.companySector !== "") {
+            let filtered = companiesSector.filter(sector => sector.title === userInfo.companySector);
+                
+            if (filtered.length < 1) {
+                setCustomOption(userInfo.companySector);
+                setCompanySectorValue(companiesSector.length-1);
+            } else setCompanySectorValue(filtered[0].id);
+        }
     }, (error) => {
         setError(true);
     });
@@ -122,9 +151,10 @@ const [userData, setUserData ] = useState(null);
       const data = {
         fullname: fullname,
         email: emailValue,
+        job: jobValue,
         phone: phoneValue,
         company: companyValue,
-        companySector: companiesSector.filter(c => c.id === companySectorValue)[0]?.title ? companiesSector.filter(c => c.id === companySectorValue)[0].title : "",
+        companySector:  companiesSector.filter(c => c.id === companySectorValue)[0]?.title ? companiesSector.filter(c => c.id === companySectorValue)[0].title : "",
         department: departmentValue,
         discountCode: discountCodeValue
       };
@@ -157,6 +187,7 @@ const [userData, setUserData ] = useState(null);
   
   const cancelEdit = () => {
     setEdit(false);
+    updateFields();
   }
 
   const { width, height } = useWindowSize();
@@ -239,6 +270,17 @@ const [userData, setUserData ] = useState(null);
                                 <div className="col-md-6 col-lg-6 fixed-container-sign-up" style={{ paddingRight: 0 }}>
                                     <div className="mt-md-3 mt-sm-0"></div>
                                     <FieldText
+                                        label='Cargo (Opcional)'
+                                        value={jobValue}
+                                        setValue={setJobValue}
+                                        readOnly={edit ? false : true}
+                                        placeholder='Ej: Gerente General'
+                                        fullWidth
+                                    />
+
+                                    <div className="mt-md-3 mt-sm-0"></div>
+
+                                    <FieldText
                                         label='Empresa (Opcional)'
                                         value={companyValue}
                                         setValue={setCompanyValue}
@@ -252,7 +294,6 @@ const [userData, setUserData ] = useState(null);
                                     <DropdownIconField
                                         options={companiesSector}
                                         setOptions={setCompaniesSectors}
-                                        
                                         label='Rubro de empresa (Opcional)'
                                         readOnly={edit ? false : true}
                                         placeholder='Ej: Alimentación y Bebidas'
@@ -265,7 +306,7 @@ const [userData, setUserData ] = useState(null);
 
                                     <div className="mt-md-3 mt-sm-0"></div>
                                     <DropdownField 
-                                        
+                                        readOnly={edit ? false : true}
                                         options={departmentsOptions} 
                                         value={departmentValue} 
                                         setValue={setDepartmentValue}

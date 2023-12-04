@@ -54,6 +54,7 @@ const DropdownIconField = ({
   defaultValue = "",
   options = [{ id: 0, icon: <FaICursor/>, title: "" }],
   setOptions = () => {},
+  readOnly = false,
   forNew = false,
   customOption,
   setCustomOption
@@ -85,6 +86,12 @@ const DropdownIconField = ({
     }
   };
 
+  useEffect(() => {
+    let opts = [...options];
+    opts[opts.length - 1].title = customOption
+    setOptions(opts)
+  }, [customOption, setCustomOption])
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -108,6 +115,9 @@ const DropdownIconField = ({
       disabled={disabled}
       autoComplete={autoComplete}
       multiline={multiline}
+      InputProps={{
+        readOnly: readOnly,
+      }}
       onFocus={handleFocus}
       onBlur={handleBlur}
       onChange={handleOptionChange}

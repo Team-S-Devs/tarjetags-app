@@ -8,7 +8,7 @@ import LogIn from './pages/LogIn';
 import Dashboard from './pages/Dashboard';
 import { auth } from './utils/firebase-config';
 import { useEffect, useState } from 'react';
-import {getAuth, onAuthStateChanged} from 'firebase/auth'
+import {onAuthStateChanged} from 'firebase/auth'
 import Error from './pages/Error';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';

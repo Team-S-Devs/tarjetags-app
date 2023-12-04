@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Box, Tab, Tabs } from '@mui/material'
 import ElementsCardTab from './ElementsCardTab';
+import ButtonsCardTab from './ButtonsCardTab';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -29,7 +30,7 @@ function CustomTabPanel(props) {
     };
   }
 
-const EditCardTabs = ({ elementsInfo = {title: "", description: ""}, setElementsInfo }) => {
+const EditCardTabs = ({ elementsInfo = {title: "", description: "", socialLinks: [] }, setElementsInfo }) => {
     const [value, setValue] = useState(0)
 
     const handleChange = (event, newValue) => {
@@ -52,7 +53,7 @@ const EditCardTabs = ({ elementsInfo = {title: "", description: ""}, setElements
             <ElementsCardTab elementsInfo={elementsInfo} setElementsInfo={setElementsInfo}/>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-            Botones
+            <ButtonsCardTab elementsInfo={elementsInfo} setElementsInfo={setElementsInfo} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
             Servicios

@@ -41,7 +41,7 @@ const NewCardModal = ({ open, setOpen, userId }) => {
             const cardDoc = await getDoc(cardsCollection);
             if (cardDoc.exists()) {
                 setErrorNewVal(true);
-                setErrorMsg("Enlace no disponible, por favor introduce otro.")
+                setErrorMsg("Enlace ya en uso, por favor introduce otro.")
                 setLoading(false)
                 return;
             }
@@ -65,7 +65,6 @@ const NewCardModal = ({ open, setOpen, userId }) => {
     <Dialog
      open={open} onClose={() => setOpen(false)}
      sx={{
-        // 👇 Another option to style Paper
         "& .MuiDialog-paper": {
           borderRadius: "16px",
         },

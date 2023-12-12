@@ -140,6 +140,30 @@ const DropdownIconField = ({
       ))
       : "" }
     </TextField>
+    <Dialog open={isModalOpen} onClose={handleCloseModal}>
+        <DialogTitle>Ingrese el rubro de empresa: </DialogTitle>
+        <DialogContent>
+          <FieldText
+            label="Rubro de empresa"
+            variant="outlined"
+            fullWidth
+            value={customOption}
+            setValue={setCustomOption}
+          />
+          <div className="mt-2"></div>
+          <div className="d-flex">
+            <SmallPrimaryButton onClick={() => {
+                setIsModalOpen(false);
+                let opts = [...options];
+                opts[opts.length - 1].title = customOption
+                setOptions(opts)
+            }}>Guardar</SmallPrimaryButton>
+            <div className="ml-2">
+                <SmallPrimaryButton variant="outlined" onClick={handleCloseModal}>Cancelar</SmallPrimaryButton>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
       </>
   );
 };

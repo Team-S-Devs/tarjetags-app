@@ -14,7 +14,7 @@ import Form from '../components/form/Form';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../utils/firebase-config';
 import { signOut } from 'firebase/auth';
-import { doc, onSnapshot, setDoc } from 'firebase/firestore'
+import { doc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore'
 import BoldTitle from '../components/texts/BoldTitle';
 import SmallPrimaryButton from '../components/buttons/SmallPrimaryButton';
 import Header from '../sections/Header';
@@ -159,7 +159,7 @@ const [userData, setUserData ] = useState(null);
         discountCode: discountCodeValue
       };
 
-      await setDoc(doc(db, 'users', user.uid), data);
+      await updateDoc(doc(db, 'users', user.uid), data);
 
       setSaveLoader(false);
       setEdit(false);

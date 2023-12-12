@@ -61,6 +61,7 @@ const InfoCard = ({ cardId, user }) => {
       doc(db, "users", user.uid),
       (snapshot) => {
         const userInfo = snapshot.data();
+        console.log(userInfo)
         setIsPro(getDateFromTimestamp(userInfo.license) >= new Date());
         setLicense(getStringDateFromTimestamp(userInfo.license));
       },

@@ -6,6 +6,7 @@ import BigPrimaryButton from '../components/buttons/BigPrimaryButton'
 import { sendPasswordResetEmail } from 'firebase/auth'
 import { auth } from '../utils/firebase-config'
 import useWindowSize from '../hooks/useWindowsSize'
+import Header from '../sections/Header'
 
 const RestorePassword = () => {
 

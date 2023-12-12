@@ -217,7 +217,7 @@ const [userData, setUserData ] = useState(null);
     if (user.email != emailValue) {
         await handleOpen();
     } 
-    updateUserData
+    updateUserData();
  };
 
 
@@ -395,7 +395,7 @@ const [userData, setUserData ] = useState(null);
                                         forNew
                                         customOption={customOption}
                                         setCustomOption={setCustomOption}
-                                        defaultValue={edit ? undefined : (customOption !== "Otro" ? customOption : filteredCompany.title)}
+                                        defaultValue={edit ? undefined : (filteredCompany == [] ? customOption : filteredCompany.title)}
                                         value={edit ? companySectorValue : undefined}
                                         setValue={setCompanySectorValue}
                                     />
@@ -446,6 +446,13 @@ const [userData, setUserData ] = useState(null);
                                 </SmallPrimaryButton>
                             </div>
                             <div  className="sign-out-button" style={{ flex: 10 }}></div>
+                            <div className='mr-3'>
+                                <Link to="/restorePassword" style={{textDecoration:'none'}}>
+                                     <SmallPrimaryButton variant='outlined' loading={logOutLoader}>
+                                             Cambiar Contraseña
+                                     </SmallPrimaryButton>
+                                </Link>
+                                </div>
                             <SmallPrimaryButton color='error' variant='outlined' loading={logOutLoader} onClick={logOut}>
                                 Cerrar Sesión
                             </SmallPrimaryButton>

@@ -13,6 +13,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import PasswordField from '../components/form/fields/PasswordField';
 import '../assets/styles/login.css'
+import { doc, updateDoc } from 'firebase/firestore';
 
 
 const LogIn = () => {
@@ -69,21 +70,21 @@ const LogIn = () => {
     
 
     const submit = e => {
-            setLoading(true)
-            e.preventDefault()
-            const email = e.target.email.value;
-            const password = e.target.password.value;
-            
-            signInWithEmailAndPassword(auth, email, password)
+
+        setLoading(true)
+        e.preventDefault()
+        const email = e.target.email.value;
+        const password = e.target.password.value;
     
-            .then(() => {
-    
+        signInWithEmailAndPassword(auth, email, password)
+        .then(async () => {
+
             navigate("/")
             setLoading(false)
-    
-            })
-    
-            .catch((error) => {
+
+        })
+
+        .catch((error) => {
             const errorCode = error.code;
             switch (errorCode) {
                 case 'auth/invalid-email':
@@ -101,12 +102,12 @@ const LogIn = () => {
                 case 'auth/invalid-login-credentials':
                     setErrorMessage("Credenciales inválidos, introduce los datos correctamente")
                     break;
-     
+        
                 default:
                 setErrorMessage(error.message);
             }
             setLoading(false)
-            });
+        });
        
     }
 

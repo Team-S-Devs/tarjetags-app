@@ -35,7 +35,9 @@ const DropdownField = ({
   label, 
   setValue = () => {},
   placeholder = "", 
+  focused=false,
   helperText = " ", 
+  select=true,
   required = false, 
   disabled = false, 
   fullWidth = true,
@@ -71,12 +73,13 @@ const DropdownField = ({
     <TextField 
       style={{ marginTop: 12 }}
       id={name}
-      select
+      select={select}
       defaultValue={defaultValue}
       variant={variant} 
       value={value} 
       name={name} 
-      type={type}  
+      type={type}
+      focused={focused}
       label={label} 
       required={required} 
       helperText={error ? errorMessage : helperText}
@@ -93,11 +96,11 @@ const DropdownField = ({
       onChange={(event) => setValue(event.target.value)}
       error={error}
     >
-        {options.map((option) => (
+        { options.map((option) => (
             <MenuItem key={option} value={option}>
               {option}
             </MenuItem>
-          ))}
+          )) }
     </TextField>
   );
 };

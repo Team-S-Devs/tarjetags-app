@@ -6,6 +6,7 @@ import BigPrimaryButton from '../components/buttons/BigPrimaryButton'
 import { sendPasswordResetEmail } from 'firebase/auth'
 import { auth } from '../utils/firebase-config'
 import useWindowSize from '../hooks/useWindowsSize'
+import Header from '../sections/Header'
 
 const RestorePassword = () => {
 
@@ -43,14 +44,14 @@ const RestorePassword = () => {
   const {width} = useWindowSize();
 
   return (
-    <div className="container">
-      <div className='profile-background'>
-        <div className='prof-2-cont'>
-          <BoldTitleWithBackButton centered variant={ width < 400 ? 'h':'h3'}>Restablecer contraseña</BoldTitleWithBackButton>
-                <br/>
-                <div className='container'>
-                <GreySubtitle variant='h6' textAlign={"center"} paddingHorizontal={40}>Introduce el email con el que te registraste y se te enviará un enlace a tu correo electrónico para  cambiar tu contraseña, entra al link para restablecer la contraseña y vuelve a iniciar sesión</GreySubtitle>
-                </div>
+    <div className='profile-background container'>
+      <Header/>
+      <div className='prof-2-cont'>
+      <BoldTitleWithBackButton centered variant={ width < 400 ? 'h4':'h3'}>Restablecer contraseña</BoldTitleWithBackButton>
+            <br/>
+            <div className='container'>
+            <GreySubtitle variant='h6' textAlign={"center"} paddingHorizontal={40}>Introduce el email con el que te registraste y se te enviará un enlace a tu correo electrónico para  cambiar tu contraseña, entra al link para restablecer la contraseña y vuelve a iniciar sesión</GreySubtitle>
+            </div>
 
                 <div className='mt-4 mb-3'>
                 <FieldText
@@ -73,7 +74,6 @@ const RestorePassword = () => {
           </div>
         </div>
       </div>
-    </div>
   )
 }
 

@@ -40,7 +40,9 @@ const DropdownIconField = ({
   setValue = () => {},
   placeholder = "", 
   helperText = " ", 
-  required = false, 
+  required = false,
+  select=true,
+  focused=false,
   disabled = false, 
   fullWidth = true,
   onFocus = () => {},
@@ -101,13 +103,14 @@ const DropdownIconField = ({
     <TextField 
       style={{ marginTop: 12 }}
       id={name}
-      select
+      select={select}
       defaultValue={defaultValue}
       variant={variant} 
       value={value} 
       name={name} 
       type={type}  
       label={label} 
+      focused={focused}
       required={required} 
       helperText={error ? errorMessage : helperText}
       placeholder={placeholder} 
@@ -122,19 +125,20 @@ const DropdownIconField = ({
       onBlur={handleBlur}
       onChange={handleOptionChange}
       error={error}
-    >
-        {options.map((option, index) => (
-            <MenuItem key={option.id} value={option.id} onClick={() => {
-                if (option.id === options[options.length - 1].id) {
-                    setIsModalOpen(true);
-                  }
-            }}>
-              <div className="d-flex">
-                {React.cloneElement(option.icon, { size: 20, style: { marginRight: 10 }, color: (index == options.length - 1 && forNew) ? '#561AD9' : "black" })}
-                {option.title}
-              </div>
-            </MenuItem>
-          ))}
+    > { select ? 
+      options.map((option, index) => (
+        <MenuItem key={option.id} value={option.id} onClick={() => {
+            if (option.id === options[options.length - 1].id) {
+                setIsModalOpen(true);
+              }
+        }}>
+          <div className="d-flex">
+            {React.cloneElement(option.icon, { size: 20, style: { marginRight: 10 }, color: (index == options.length - 1 && forNew) ? '#561AD9' : "black" })}
+            {option.title}
+          </div>
+        </MenuItem>
+      ))
+      : "" }
     </TextField>
     <Dialog open={isModalOpen} onClose={handleCloseModal}>
         <DialogTitle>Ingrese el rubro de empresa: </DialogTitle>

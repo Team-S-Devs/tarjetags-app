@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import FieldText from '../components/form/fields/FieldText';
 import { LiaLaptopCodeSolid, LiaChalkboardTeacherSolid, LiaMoneyBillWaveSolid, LiaLeafSolid, LiaBroadcastTowerSolid, LiaHospitalSolid, LiaUmbrellaBeachSolid, LiaPlusSolid } from 'react-icons/lia';
+import { IoInformationCircleOutline } from "react-icons/io5";
 import { LuUtensilsCrossed } from 'react-icons/lu';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { BsPalette, BsBriefcase } from 'react-icons/bs';
@@ -9,15 +10,17 @@ import DropdownIconField from '../components/form/fields/DropdownIconField';
 import DropdownField from '../components/form/fields/DropdownField';
 import useWindowSize from '../hooks/useWindowsSize';
 import '../assets/styles/sign-up.css';
-import { Typography } from '@mui/material';
+import { Box, Modal, Typography } from '@mui/material';
 import Form from '../components/form/Form';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../utils/firebase-config';
 import { signOut } from 'firebase/auth';
 import { doc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore'
 import BoldTitle from '../components/texts/BoldTitle';
 import SmallPrimaryButton from '../components/buttons/SmallPrimaryButton';
 import Header from '../sections/Header';
+import '../assets/styles/login.css';
+import LogModal from '../components/profile/LogModal';
 
 const Profile = ({ user }) => {
 
@@ -27,7 +30,7 @@ const [userData, setUserData ] = useState(null);
  const [fullname, setFullname] = useState('');
  const [fullnameError, setFullnameError] = useState(false);
 
- const [emailValue, setEmailValue] = useState(user.email);
+ const [emailValue, setEmailValue] = useState("");
  const [emailError, setEmailError] = useState(false);
  const [emailErrorMessage, setEmailErrorMessage] = useState('Introduce un correo electrónico válido');
 
@@ -69,6 +72,8 @@ const [userData, setUserData ] = useState(null);
    { id: 12, icon: <LiaPlusSolid/>, title: 'Otro' }
  ]);
 
+ const [filteredCompany, setFilteredCompany] = useState([]);
+
  const [departmentValue, setDepartmentValue] = useState('');
  const departmentsOptions = ["La Paz", "Cochabamba", "Santa Cruz", "Beni", "Chuquisaca", "Oruro", "Pando", "Potosí", "Tarija"];
 
@@ -80,10 +85,29 @@ const [userData, setUserData ] = useState(null);
  const [logOutLoader, setlogOutLoader] = useState(false);
  const [saveLoader, setSaveLoader] = useState(false);
 
+ const [open, setOpen] = useState(false);
+ const handleOpen = () => setOpen(true);
+ const navigate = useNavigate();
+
+
+ const [infoOpen, setInfoOpen] = useState(false);
+ const handleInfoClose = () => setInfoOpen(false);
+ const handleInfoOpen = () => setInfoOpen(true);
+
+
+ const handleClose = () => {
+    cancelEdit()
+    setSaveLoader(false);
+    setEdit(false);
+    setOpen(false);
+ }
+
 
  const updateFields = () => {
-    setUserData(userData);
+    if (userData) {
+        setUserData(userData);
         setFullname(userData.fullname);
+        setEmailValue(userData.email);
         setPhoneValue(userData.phone);
         setJobValue(userData.job);
         setCompanyValue(userData.company);
@@ -95,8 +119,12 @@ const [userData, setUserData ] = useState(null);
             if (filtered.length < 1) {
                 setCustomOption(userData.companySector);
                 setCompanySectorValue(companiesSector.length-1);
-            } else setCompanySectorValue(filtered[0].id);
-        }
+            } else {
+                setFilteredCompany(filtered[0]);
+                setCompanySectorValue(filtered[0].id);
+            } 
+        }   
+    }
  }
 
 
@@ -108,19 +136,24 @@ const [userData, setUserData ] = useState(null);
     const unsubscribe = onSnapshot(doc(db, 'users', user.uid), (snapshot) => {
         const userInfo = snapshot.data();
         setUserData(userInfo);
+        setEmailValue(userInfo.email);
         setFullname(userInfo.fullname);
         setPhoneValue(userInfo.phone);
         setJobValue(userInfo.job);
         setCompanyValue(userInfo.company);
         setDepartmentValue(userInfo.department);
         setDiscountCodeValue(userInfo.discountCode);
+
         if (userInfo.companySector !== "") {
             let filtered = companiesSector.filter(sector => sector.title === userInfo.companySector);
                 
             if (filtered.length < 1) {
                 setCustomOption(userInfo.companySector);
                 setCompanySectorValue(companiesSector.length-1);
-            } else setCompanySectorValue(filtered[0].id);
+            } else {
+                setFilteredCompany(filtered[0]);
+                setCompanySectorValue(filtered[0].id);
+            } 
         }
     }, (error) => {
         setError(true);
@@ -129,8 +162,42 @@ const [userData, setUserData ] = useState(null);
     return () => unsubscribe();
 }, [user]);
 
+ 
+ useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+        setUserData(authUser);
+    });
 
- const navigate = useNavigate();
+    return () => unsubscribe();
+  }, []);
+
+
+  const updateUserData = async () => {
+    try {
+        const data = {
+          fullname: fullname,
+          job: jobValue,
+          phone: phoneValue,
+          company: companyValue,
+          companySector:  companiesSector.filter(c => c.id === companySectorValue)[0]?.title ? companiesSector.filter(c => c.id === companySectorValue)[0].title : "",
+          department: departmentValue,
+          discountCode: discountCodeValue
+        };
+  
+        await updateDoc(doc(db, 'users', user.uid), data);
+  
+        setSaveLoader(false);
+        setEdit(false);
+  
+      } catch (error) {
+          console.log(error)
+          setLoading(false);
+          if(error.code === 'auth/email-already-in-use') {
+              setEmailError(true);
+              setEmailErrorMessage("Ya existe una cuenta registrada con este email, por favor inicia sesión o introduce un email diferente")
+          } else setError(true)
+      }
+  }
 
  // Handle sign-up button click
  const handleEditProfile = async (e) => {
@@ -147,31 +214,10 @@ const [userData, setUserData ] = useState(null);
       return;
     }
 
-    try {
-      const data = {
-        fullname: fullname,
-        email: emailValue,
-        job: jobValue,
-        phone: phoneValue,
-        company: companyValue,
-        companySector:  companiesSector.filter(c => c.id === companySectorValue)[0]?.title ? companiesSector.filter(c => c.id === companySectorValue)[0].title : "",
-        department: departmentValue,
-        discountCode: discountCodeValue
-      };
-
-      await updateDoc(doc(db, 'users', user.uid), data);
-
-      setSaveLoader(false);
-      setEdit(false);
-
-    } catch (error) {
-        console.log(error)
-        setLoading(false);
-        if(error.code === 'auth/email-already-in-use') {
-            setEmailError(true);
-            setEmailErrorMessage("Ya existe una cuenta registrada con este email, por favor inicia sesión o introduce un email diferente")
-        } else setError(true)
-    }
+    if (user.email != emailValue) {
+        await handleOpen();
+    } 
+    updateUserData();
  };
 
 
@@ -190,7 +236,42 @@ const [userData, setUserData ] = useState(null);
     updateFields();
   }
 
+  const styleModal = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    bgcolor: 'background.paper',
+    border:'none',
+    width: '90%',
+    maxWidth: 400, 
+    boxShadow: 24,
+    borderRadius: '15px',
+    p: 4,
+  };
+
   const { width, height } = useWindowSize();
+
+  const getEmailInfoModal = 
+    <Modal
+    readOnly
+    open={infoOpen}
+    onClose={handleInfoClose}
+    sx={{borderRadius:'25px', border:'none'}}
+    aria-labelledby="modal-modal-title"
+    aria-describedby="modal-modal-description"
+  >
+    <Box sx={styleModal}>
+      <Typography id="modal-modal-title" color='primary' variant="h5" sx={{fontWeight:'900', textAlign:'center'}} component="h2">
+        Información importante
+      </Typography>
+      <Typography id="modal-modal-description" sx={{ mt: 2, mb:1, textAlign:'center' }}>
+      Verifique su último correo electrónico para actualizarlo porfavor. (Haga click en el link del mensaje enviado a su correo electronico para verificarlo)
+      </Typography>
+    </Box>
+ </Modal>
+ ;
+
     return (
         <div className='profile-container'>
             <Header/>
@@ -209,8 +290,8 @@ const [userData, setUserData ] = useState(null);
                                         label='Nombre completo'
                                         value={fullname}
                                         setValue={setFullname}
-                                        
                                         readOnly={edit ? false : true}
+                                        focused={edit ? false : true}
                                         placeholder='Ej: Andŕes Pérez Ríos'
                                         fullWidth
                                         required
@@ -218,31 +299,42 @@ const [userData, setUserData ] = useState(null);
                                         error={fullnameError}
                                         setError={setFullnameError}
                                         errorMessage='Introduce un nombre de al menos 4 letras.'
+                                        style= {{
+                                              color: 'inherit', // This keeps the text color the same
+                                              opacity: 1,       // This keeps the text fully visible
+                                              cursor: 'text',   // This keeps the cursor style as text
+                                            }}
                                     />
 
+
                                     <div className="mt-md-3 mt-sm-0"></div>
-                                    <FieldText
-                                        label='Correo electrónico'
-                                        value={emailValue}
-                                        setValue={setEmailValue}
-                                        disabled={edit}
-                                        readOnly={true}
-                                        placeholder='Ej: nombre@ejemplo.com'
-                                        fullWidth
-                                        required
-                                        error={emailError}
-                                        setError={setEmailError}
-                                        errorMessage={emailErrorMessage}
-                                        validateMethod={validateEmail}
-                                    />
+                                    <Box sx={{display:'flex'}}>
+                                        <FieldText
+                                            label='Correo electrónico'
+                                            value={emailValue}
+                                            setValue={setEmailValue}
+                                            readOnly={edit ? false : true}
+                                            focused={edit ? false : true}
+                                            placeholder='Ej: nombre@ejemplo.com'
+                                            fullWidth
+                                            required
+                                            error={emailError}
+                                            setError={setEmailError}
+                                            errorMessage={emailErrorMessage}
+                                            validateMethod={validateEmail}
+                                        />
+                                        <IoInformationCircleOutline onClick={handleInfoOpen} />
+                                    </Box>
+                                    {getEmailInfoModal}
+                                    <LogModal handleClose={handleClose} open={open} user={user} newEmail={emailValue} setEmailValue={setEmailValue} />
 
                                     <div className="mt-md-3 mt-sm-0"></div>
                                     <FieldText
                                         label='Teléfono celular'
                                         value={phoneValue}
-                                        setValue={setPhoneValue}
-                                        
+                                        setValue={setPhoneValue}    
                                         readOnly={edit ? false : true}
+                                        focused={edit ? false : true}
                                         placeholder='Ej: 76543218'
                                         fullWidth
                                         required
@@ -257,7 +349,7 @@ const [userData, setUserData ] = useState(null);
                                         label='Código de descuento (Opcional)'
                                         value={discountCodeValue}
                                         setValue={setDiscountCodeValue}
-                                        
+                                        focused={edit ? false : true}
                                         readOnly={edit ? false : true}
                                         placeholder='Ej: swd789'
                                         fullWidth
@@ -273,6 +365,7 @@ const [userData, setUserData ] = useState(null);
                                         label='Cargo (Opcional)'
                                         value={jobValue}
                                         setValue={setJobValue}
+                                        focused={edit ? false : true}
                                         readOnly={edit ? false : true}
                                         placeholder='Ej: Gerente General'
                                         fullWidth
@@ -284,7 +377,7 @@ const [userData, setUserData ] = useState(null);
                                         label='Empresa (Opcional)'
                                         value={companyValue}
                                         setValue={setCompanyValue}
-                                        
+                                        focused={edit ? false : true}
                                         readOnly={edit ? false : true}
                                         placeholder='Ej: Epic Games'
                                         fullWidth
@@ -296,19 +389,25 @@ const [userData, setUserData ] = useState(null);
                                         setOptions={setCompaniesSectors}
                                         label='Rubro de empresa (Opcional)'
                                         readOnly={edit ? false : true}
+                                        focused={edit ? false : true}
+                                        select={edit}
                                         placeholder='Ej: Alimentación y Bebidas'
                                         forNew
                                         customOption={customOption}
                                         setCustomOption={setCustomOption}
-                                        value={companySectorValue}
+                                        defaultValue={edit ? undefined : (filteredCompany == [] ? customOption : filteredCompany.title)}
+                                        value={edit ? companySectorValue : undefined}
                                         setValue={setCompanySectorValue}
                                     />
 
                                     <div className="mt-md-3 mt-sm-0"></div>
                                     <DropdownField 
                                         readOnly={edit ? false : true}
-                                        options={departmentsOptions} 
-                                        value={departmentValue} 
+                                        options={departmentsOptions}
+                                        select={edit}
+                                        defaultValue={edit ? undefined : departmentValue}
+                                        value={edit ? departmentValue : undefined}
+                                        focused={edit ? false : true}
                                         setValue={setDepartmentValue}
                                         label="Departamento (Opcional)"
                                     />
@@ -347,6 +446,13 @@ const [userData, setUserData ] = useState(null);
                                 </SmallPrimaryButton>
                             </div>
                             <div  className="sign-out-button" style={{ flex: 10 }}></div>
+                            <div className='mr-3'>
+                                <Link to="/restorePassword" style={{textDecoration:'none'}}>
+                                     <SmallPrimaryButton variant='outlined' loading={logOutLoader}>
+                                             Cambiar Contraseña
+                                     </SmallPrimaryButton>
+                                </Link>
+                                </div>
                             <SmallPrimaryButton color='error' variant='outlined' loading={logOutLoader} onClick={logOut}>
                                 Cerrar Sesión
                             </SmallPrimaryButton>

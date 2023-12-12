@@ -15,14 +15,14 @@ import Form from '../components/form/Form';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../utils/firebase-config';
 import { signOut } from 'firebase/auth';
-import { doc, onSnapshot, setDoc } from 'firebase/firestore'
+import { doc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore'
 import BoldTitle from '../components/texts/BoldTitle';
 import SmallPrimaryButton from '../components/buttons/SmallPrimaryButton';
 import Header from '../sections/Header';
 import '../assets/styles/login.css';
 import LogModal from '../components/profile/LogModal';
 
-const Profile = ({user}) => {
+const Profile = ({ user }) => {
 
 const [userData, setUserData ] = useState(null);
 
@@ -184,7 +184,7 @@ const [userData, setUserData ] = useState(null);
           discountCode: discountCodeValue
         };
   
-        await setDoc(doc(db, 'users', user.uid), data);
+        await updateDoc(doc(db, 'users', user.uid), data);
   
         setSaveLoader(false);
         setEdit(false);
@@ -281,7 +281,7 @@ const [userData, setUserData ] = useState(null);
             
                 <div className='profile-cont-2'>
 
-                     <Form  onFocus={() => setError(false)} submit={handleEditProfile}>
+                    <Form onFocus={() => setError(false)} submit={handleEditProfile}>
                         <div className="row" >
                             <div className="row col-lg-12 col-md-12 fixed-container-sign-up">
                                 <div className="col-md-6 col-lg-6 col-sm-12 fixed-container-sign-up">
@@ -415,49 +415,42 @@ const [userData, setUserData ] = useState(null);
                                 </div>
                             </div>
                         </div>
-                        </Form>
+                    </Form>
 
-                        <div className="mt-4"></div>
-                        <div className="d-flex flex-column align-items-center justify-content-center fixed-container-sign-up w100 buttons-container" style={{ width: "100%" }}>
-                            {error &&
-                                <Typography marginBottom={2} color="error">
-                                    Hubo un problema, por favor inténtelo de nuevo.
-                                </Typography>
-                            }
-                            <div className='main-buttons-container d-flex align-items-start justify-content-center w100' style={{ width: "100%" }}>
-                                <div className="d-flex">
-                                    <SmallPrimaryButton 
-                                        loading={saveLoader} 
-                                        type='button' 
-                                        onClick={edit ? handleEditProfile : editProfile } fullWidth={useWindowSize().width < 769}
-                                    >
-                                        {edit ? 'Guardar' : 'Editar'}
-                                    </SmallPrimaryButton>
-                                    <div style={{ width: 12 }}></div>
-                                    <SmallPrimaryButton
-                                        variant='outlined'
-                                        disabled={loading}
-                                        display={ edit ? 'initial': 'none'}
-                                        type='button'
-                                        onClick={cancelEdit}
-                                        fullWidth={useWindowSize().width < 769}
-                                    >
-                                        Cancelar
-                                    </SmallPrimaryButton>
-                                </div>
-                                <div  className="sign-out-button" style={{ flex: 10 }}></div>
-                                <div className='mr-3'>
-                                <Link to="/restorePassword" style={{textDecoration:'none'}}>
-                                     <SmallPrimaryButton variant='outlined' loading={logOutLoader}>
-                                             Cambiar Contraseña
-                                     </SmallPrimaryButton>
-                                </Link>
-                                </div>
-                                <SmallPrimaryButton color='error' variant='outlined' loading={logOutLoader} onClick={logOut}>
-                                    Cerrar Sesión
+                    <div className="mt-4"></div>
+                    <div className="d-flex flex-column align-items-center justify-content-center fixed-container-sign-up w100 buttons-container" style={{ width: "100%" }}>
+                        {error &&
+                            <Typography marginBottom={2} color="error">
+                                Hubo un problema, por favor inténtelo de nuevo.
+                            </Typography>
+                        }
+                        <div className='main-buttons-container d-flex align-items-start justify-content-center w100' style={{ width: "100%" }}>
+                            <div className="d-flex">
+                                <SmallPrimaryButton 
+                                    loading={saveLoader} 
+                                    type='button' 
+                                    onClick={edit ? handleEditProfile : editProfile } fullWidth={useWindowSize().width < 769}
+                                >
+                                    {edit ? 'Guardar' : 'Editar'}
+                                </SmallPrimaryButton>
+                                <div style={{ width: 12 }}></div>
+                                <SmallPrimaryButton
+                                    variant='outlined'
+                                    disabled={loading}
+                                    display={ edit ? 'initial': 'none'}
+                                    type='button'
+                                    onClick={cancelEdit}
+                                    fullWidth={useWindowSize().width < 769}
+                                >
+                                    Cancelar
                                 </SmallPrimaryButton>
                             </div>
+                            <div  className="sign-out-button" style={{ flex: 10 }}></div>
+                            <SmallPrimaryButton color='error' variant='outlined' loading={logOutLoader} onClick={logOut}>
+                                Cerrar Sesión
+                            </SmallPrimaryButton>
                         </div>
+                    </div>
                 </div>
             </div>
 

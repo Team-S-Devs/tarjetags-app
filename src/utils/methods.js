@@ -21,11 +21,20 @@ export const truncateString = (inputString) => {
 }
 
 export const removeBlobPrefix = (url) => {
-    // Check if the url starts with "blob:"
     if (url.startsWith('blob:')) {
-      // Remove the "blob:" prefix
       return url.slice(5);
     }
-    // If the url doesn't start with "blob:", return it unchanged
     return url;
+}
+
+export const getStringDateFromTimestamp = (timestamp) => {
+  const date = new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1e6);
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const formattedDate = date.toLocaleDateString('es-ES', options);
+  return formattedDate;
+}
+
+export const getDateFromTimestamp = (timestamp) => {
+  const date = new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1e6);
+  return date
 }

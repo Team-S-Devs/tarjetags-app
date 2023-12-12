@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import image from '../assets/images/auth/logo.png'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { BiSolidUser } from "react-icons/bi";
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../utils/firebase-config';
 import { GoFileDirectoryFill } from 'react-icons/go'
 import useWindowSize from '../hooks/useWindowsSize';
@@ -19,8 +19,6 @@ const Header = () => {
     setIsOpen(false)
   }, [location]);
   
-
-  const navigate = useNavigate()
   const [fullname, setFullname] = useState("");
 
   useEffect(() => {
@@ -31,11 +29,11 @@ const Header = () => {
             const userData = snapshot.data();
             setFullname(userData.fullname);
         }, (error) => {
-            setFullname("Profile")
+            setFullname("Perfil")
         });
         return unsubscribe;
       } else {
-        setUser("Profile");
+        setUser("Perfil");
       }
     });
   }, [user])
@@ -62,12 +60,12 @@ const Header = () => {
         <div className={`${conditional !== "navigationResponsive" && "d-flex"}`}>
         <div className="header-link">
           <GoFileDirectoryFill className='icon-header'/>
-          <Link to="/"><span className='link'>Ver Tarjetas Creadas</span></Link>
+          <Link to="/"><span className='link ml-1'>Ver Mi Tarjeta</span></Link>
         </div>
 
         <div className="header-link">
           <BiSolidUser className='icon-header'/>
-          <Link to={!user ? "/": "/profile"}><span className='link mainButton'>{user ? fullname : 'iniciar Sesion'}</span></Link>
+          <Link to={!user ? "/": "/profile"}><span className='link mainButton ml-1'>{user ? fullname : 'Iniciar Sesion'}</span></Link>
         </div>
         </div>
       </nav>

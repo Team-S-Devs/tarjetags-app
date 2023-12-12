@@ -32,6 +32,11 @@ const EditCard = () => {
                     name: "profilePhoto",
                     file: null,
                     url: "",
+                },
+                coverPhoto: {
+                    name: "coverPhoto",
+                    file: null,
+                    url: "",
                 } 
             }
         );
@@ -41,16 +46,33 @@ const EditCard = () => {
     const handleSave = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const elCopy = await handleImageUpload();
+        let elCopy = {...elementsInfo} 
+        if(elCopy.profilePhoto.file != null && elCopy.coverPhoto != null){
+            elCopy = await handleImageUpload()
+        } else if(elCopy.profilePhoto.file == null) {
+            delete elCopy.profilePhoto
+        } else {
+            delete elCopy.coverPhoto
+        }
         const docCard = doc(db, 'cards', cardId);
-        await updateDoc(docCard, {...elCopy})
-        navigate("/")
+
+        try {
+            await updateDoc(docCard, {...elCopy})
+            navigate(`/details/${cardId}`)
+        } catch (error) {
+            alert("Hubo un error, por favor inténtalo de nuevo")
+        }
+
         setLoading(false)
     }
 
     // Function to handle image upload
     const handleImageUpload = async () => {
-        const { profilePhoto } = elementsInfo;
+        const { profilePhoto, coverPhoto } = elementsInfo;
+
+        const returnOBject = {
+            ...elementsInfo
+        }
       
         if (profilePhoto.file) {
           try {
@@ -61,31 +83,40 @@ const EditCard = () => {
             // Get the URL of the uploaded image
             const url = await getDownloadURL(storageRef);
       
-            // Update the state with the URL
-            setElementsInfo((prevElementsInfo) => ({
-              ...prevElementsInfo,
-              profilePhoto: {
+            returnOBject["profilePhoto"] = {
                 ...profilePhoto,
                 file: "",
                 url,
-              },
-            }));
-      
-      
-            // Optionally, return the updated state or any other data
-            return {
-              ...elementsInfo,
-              profilePhoto: {
-                ...profilePhoto,
-                file: "",
-                url,
-              },
-            };
+            } 
           } catch (error) {
             console.error('Error uploading image:', error);
             // Handle the error as needed
           }
         }
+
+        if (coverPhoto.file) {
+            try {
+              const storageRef = ref(storage, `${elementsInfo.userId}/${cardId}/coverPhoto`);
+              // Upload the file to Firebase Cloud Storage
+              await uploadBytes(storageRef, coverPhoto.file);
+        
+              // Get the URL of the uploaded image
+              const url = await getDownloadURL(storageRef);
+          
+              // Optionally, return the updated state or any other data
+                returnOBject["coverPhoto"] = {
+                    ...coverPhoto,
+                    file: "",
+                    url,
+                }    
+            } catch (error) {
+              console.error('Error uploading image:', error);
+            }
+          }
+          
+          setElementsInfo(returnOBject)
+        
+          return returnOBject;
     };
 
     useEffect(() => {
@@ -98,6 +129,11 @@ const EditCard = () => {
                 if (cardSnapshot.exists()) {
                     const cardFields = cardSnapshot.data();
                     if(!cardFields.profilePhoto) cardFields["profilePhoto"] = { name: "profilePhoto", url: "", file: null }
+                    if(!cardFields.coverPhoto) cardFields["coverPhoto"] = { name: "coverPhoto", url: "", file: null }
+                    if(!cardFields.socialLinks) cardFields["socialLinks"] = []
+                    if(!cardFields.contactLinks) cardFields["contactLinks"] = []
+                    if(!cardFields.theme) cardFields["theme"] = "light"
+                    if(!cardFields.color) cardFields["color"] = "#561AD9"
                     setElementsInfo(cardFields);
                 } else {
                     navigate("/dashboard")
@@ -109,9 +145,7 @@ const EditCard = () => {
         };
     
         fetchCardData();
-      }, []);
-
- 
+    }, []);
 
   return (
     <div className='container' style={{ paddingTop: '90px'}}>
@@ -156,7 +190,7 @@ const EditCard = () => {
                         </div>
                     </>
                 )
-        }
+            }
         </>
                 )
             }

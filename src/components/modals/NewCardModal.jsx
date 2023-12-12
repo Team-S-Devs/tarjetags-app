@@ -5,7 +5,7 @@ import ThinTitle from '../texts/ThinTitle'
 import FieldText from '../form/fields/FieldText'
 import useWindowSize from '../../hooks/useWindowsSize'
 import SmallPrimaryButton from '../buttons/SmallPrimaryButton'
-import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { Timestamp, doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../../utils/firebase-config'
 import { useNavigate } from 'react-router-dom'
 
@@ -33,15 +33,17 @@ const NewCardModal = ({ open, setOpen, userId }) => {
         }
     }
 
+    const reservedWords = ["dashboard", "login", "sign-up", "profile", "edit", "error", "details"]
+
     const saveNewCard = async () => {
       setLoading(true);
         try {
             const cardsCollection = doc(db, 'cards', newCardValue);
         
             const cardDoc = await getDoc(cardsCollection);
-            if (cardDoc.exists()) {
+            if (cardDoc.exists() || reservedWords.includes(newCardValue)) {
                 setErrorNewVal(true);
-                setErrorMsg("Enlace no disponible, por favor introduce otro.")
+                setErrorMsg("Enlace ya en uso, por favor introduce otro.")
                 setLoading(false)
                 return;
             }
@@ -49,11 +51,12 @@ const NewCardModal = ({ open, setOpen, userId }) => {
             const newCard = {
                 title: "",
                 userId: userId,
-                urlPage: newCardValue
+                urlPage: newCardValue,
+                createdAt: Timestamp.now(),
             };
         
             await setDoc(cardsCollection, newCard);
-            navigate(`/editar/${newCardValue}`)
+            navigate(`/edit/${newCardValue}`)
         } catch (error) {
             setError(true);
             setErrorMsg("Hubo un error al crear la tarjeta, por favor inténtalo de nuevo.")
@@ -65,7 +68,6 @@ const NewCardModal = ({ open, setOpen, userId }) => {
     <Dialog
      open={open} onClose={() => setOpen(false)}
      sx={{
-        // 👇 Another option to style Paper
         "& .MuiDialog-paper": {
           borderRadius: "16px",
         },

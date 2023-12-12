@@ -6,7 +6,7 @@ const BoldTitleWithBackButton = ({ children, centered = false, variant='h3', wid
     const getTitleStyle = () => centered ? { marginLeft: 16, flex: 10 } : { marginLeft: 18, width: width };
 
     return (
-        <div className="d-flex justify-content-center align-items-center" >
+        <div className={"d-flex " + (centered ? "align-items-center justify-content-center" : "")} >
             <div>
                 <BackButton />
             </div>

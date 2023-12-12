@@ -1,12 +1,11 @@
 import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-const StyledCard = ({ children }) => {
+const StyledCard = ({ children, style }) => {
   return (
     <Card>
-        <CardContent>
+        <CardContent style={style}>
             {children}
         </CardContent>
     </Card>

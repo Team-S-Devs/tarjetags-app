@@ -8,15 +8,28 @@ import LogIn from './pages/LogIn';
 import Dashboard from './pages/Dashboard';
 import { auth, db } from './utils/firebase-config';
 import { useEffect, useState } from 'react';
-import {getAuth, onAuthStateChanged} from 'firebase/auth'
+import {onAuthStateChanged} from 'firebase/auth'
 import Error from './pages/Error';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import EditCard from './pages/EditCard';
 import RestorePassword from './pages/RestorePassword';
 import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import CardDetails from './pages/CardDetails';
+import Plans from './pages/Plans';
+import Card from './pages/Card';
 
 const theme = createTheme({
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        '::selection': {
+          color: '#561AD9',
+          background: '#fff',
+        },
+      },
+    },
+  },
   palette: {
     primary: {
       main: '#561AD9',
@@ -68,7 +81,7 @@ const theme = createTheme({
           paddingLeft: "50px",
           paddingRight: "50px",
           borderRadius: "12px",
-          textTransform: 'none', // Set textTransform to capitalize
+          textTransform: 'none',
         },
       },
     },
@@ -176,14 +189,17 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path='/' Component={Splash} />
+          <Route path='/:cardId' Component={Card} />
           <Route path='/dashboard' Component={user ? Dashboard : Splash} />
           <Route path='/test-components' Component={TestComponents} />
           <Route path='/sign-up' Component={SignUp} />
           <Route path='/login' Component={LogIn} />
           <Route path='/error' Component={Error} />
-          <Route path='/editar/:cardId' Component={EditCard} />
+          <Route path='/edit/:cardId' Component={EditCard} />
           <Route path='/restorePassword' Component={RestorePassword} />
           <Route path='/profile' Component={() => user ? <Profile user={user}/> : <Splash loggedNavigateTo='/profile'/>}/>
+          <Route path='/details/:cardId' Component={() => user ? <CardDetails user={user}/> : <Splash loggedNavigateTo='/dashboard'/>} />
+          <Route path='/plans' Component={() => user ? <Plans user={user}/> : <Splash loggedNavigateTo='/plans'/>} />
           <Route path='*' Component={Error} />
         </Routes>
       </BrowserRouter>

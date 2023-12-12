@@ -50,13 +50,13 @@ const EditCardTabs = ({ elementsInfo = {title: "", description: "", socialLinks:
             </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-            <ElementsCardTab elementsInfo={elementsInfo} setElementsInfo={setElementsInfo}/>
+          <ElementsCardTab elementsInfo={elementsInfo} setElementsInfo={setElementsInfo}/>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-            <ButtonsCardTab elementsInfo={elementsInfo} setElementsInfo={setElementsInfo} />
+          <ButtonsCardTab elementsInfo={elementsInfo} setElementsInfo={setElementsInfo} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
-            Servicios
+          Servicios
         </CustomTabPanel>
     </div>
   )

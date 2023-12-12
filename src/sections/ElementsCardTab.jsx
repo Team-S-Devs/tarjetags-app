@@ -1,139 +1,160 @@
-import React, { useState } from 'react'
-import StyledCard from '../components/card/StyledCard'
-import { FaUser } from 'react-icons/fa'
-import ThinTitle from '../components/texts/ThinTitle'
-import FieldText from '../components/form/fields/FieldText'
-import useWindowSize from '../hooks/useWindowsSize'
-import ImageUploader from '../components/form/fields/ImageUploader'
-import { BsStars } from 'react-icons/bs'
-import ThemeSelector from '../components/form/ThemeSelector'
-import ColorThemeDialog from '../components/form/ColorSelector'
-import SmallPrimaryButton from '../components/buttons/SmallPrimaryButton'
+import React, { useState } from "react";
+import StyledCard from "../components/card/StyledCard";
+import { FaUser } from "react-icons/fa";
+import ThinTitle from "../components/texts/ThinTitle";
+import FieldText from "../components/form/fields/FieldText";
+import useWindowSize from "../hooks/useWindowsSize";
+import ImageUploader from "../components/form/fields/ImageUploader";
+import { BsStars } from "react-icons/bs";
+import ThemeSelector from "../components/form/ThemeSelector";
+import ColorThemeDialog from "../components/form/ColorSelector";
+import SmallPrimaryButton from "../components/buttons/SmallPrimaryButton";
+import { TextField } from "@mui/material";
 
-const ElementsCardTab = ({ elementsInfo = { 
-    title: "", 
+const ElementsCardTab = ({
+  elementsInfo = {
+    title: "",
     description: "",
     profilePhoto: {
-        name: "",
-        url: "",
-        file: null
+      name: "",
+      url: "",
+      file: null,
     },
     coverPhoto: {
-        name: "",
-        url: "",
-        file: null
-    }
-}, setElementsInfo }) => {
+      name: "",
+      url: "",
+      file: null,
+    },
+  },
+  setElementsInfo,
+}) => {
+  const handleChange = (newVal, key) => {
+    const copyEl = { ...elementsInfo };
+    copyEl[key] = newVal;
+    setElementsInfo(copyEl);
+  };
 
-    const handleChange = (newVal, key) => {
-        const copyEl = {...elementsInfo};
-        copyEl[key] = newVal;
-        setElementsInfo(copyEl)
-    }
+  const handleTwoChange = (newVal, key, newKey) => {
+    const copyEl = { ...elementsInfo };
+    copyEl[key][newKey] = newVal;
+    setElementsInfo(copyEl);
+  };
 
-    const handleTwoChange = (newVal, key, newKey) => {
-        const copyEl = {...elementsInfo};
-        copyEl[key][newKey] = newVal;
-        setElementsInfo(copyEl)
-    }
+  const { width } = useWindowSize();
 
-    const { width } = useWindowSize();
+  const [openColorTheme, setOpenColorTheme] = useState(false);
 
-    const [openColorTheme, setOpenColorTheme] = useState(false)
+  return (
+    <>
+      <div className="mt-4"></div>
+      <StyledCard>
+        <div
+          style={{
+            paddingLeft: width > 768 ? 32 : 16,
+            paddingRight: width > 768 ? 32 : 16,
+            paddingTop: 20,
+            paddingBottom: 16,
+          }}
+        >
+          <div className="d-flex align-items-center">
+            <FaUser color="#561AD9" size={20} style={{ marginRight: 8 }} />
+            <ThinTitle color="primary" variant="h6">
+              Información de usuario
+            </ThinTitle>
+          </div>
+          <div className="mt-3"></div>
+          <FieldText
+            maxLength={80}
+            label="Título"
+            value={elementsInfo.title}
+            setValue={(newVal) => handleChange(newVal, "title")}
+          />
+          <FieldText
+            multiline
+            maxLength={150}
+            value={elementsInfo.description}
+            label="Sobre el usuario:"
+            marginTop={2}
+            minRows={3}
+            setValue={(newVal) => handleChange(newVal, "description")}
+            placeholder="Describa brevemente su funciones o cargo dentro de su empresa."
+          />
+          <FieldText
+            multiline
+            maxLength={220}
+            value={elementsInfo.companyDescription}
+            label="Sobre su empresa:"
+            marginTop={2}
+            minRows={3}
+            setValue={(newVal) => handleChange(newVal, "companyDescription")}
+            placeholder="Describa brevemente la información importante acerca de su empresa."
+          />
+          <ImageUploader
+            file={elementsInfo.profilePhoto?.file}
+            setFile={(newVal) =>
+              handleTwoChange(newVal, "profilePhoto", "file")
+            }
+            imageUrl={elementsInfo.profilePhoto?.url}
+            setImageUrl={(newVal) =>
+              handleTwoChange(newVal, "profilePhoto", "url")
+            }
+            handleErrorMsg={() => {}}
+            productData={elementsInfo.profilePhoto}
+            label="Foto de perfil o logotipo: "
+          />
 
-    return (
-        <>
-        <div className="mt-4"></div>
-        <StyledCard>
-            <div
-                style={{ paddingLeft: width > 768 ? 32 : 16, paddingRight: width > 768 ? 32 : 16, paddingTop: 20, paddingBottom: 16 }}
-            >
-                <div 
-                    className="d-flex align-items-center" 
-                >
-                    <FaUser color='#561AD9' size={20} style={{ marginRight: 8 }}/>
-                    <ThinTitle color='primary' variant='h6'>Información de usuario</ThinTitle>
-                </div>
-                <div className="mt-3"></div>
-                <FieldText 
-                    maxLength={80} label='Título' value={elementsInfo.title} setValue={newVal => handleChange(newVal, "title")} 
-                />
-                <FieldText 
-                    multiline 
-                    maxLength={150} 
-                    value={elementsInfo.description} 
-                    label='Sobre el usuario:' marginTop={2} minRows={3}
-                    setValue={newVal => handleChange(newVal, "description")} 
-                    placeholder='Describa brevemente su funciones o cargo dentro de su empresa.'
-                />
-                <FieldText 
-                    multiline 
-                    maxLength={220} 
-                    value={elementsInfo.companyDescription} 
-                    label='Sobre su empresa:' marginTop={2} minRows={3}
-                    setValue={newVal => handleChange(newVal, "companyDescription")} 
-                    placeholder='Describa brevemente la información importante acerca de su empresa.'
-                />
-                <ImageUploader 
-                    file={elementsInfo.profilePhoto?.file} 
-                    setFile={newVal => handleTwoChange(newVal, "profilePhoto", "file")} 
-                    imageUrl={elementsInfo.profilePhoto?.url} 
-                    setImageUrl={newVal => handleTwoChange(newVal, "profilePhoto", "url")} 
-                    handleErrorMsg={() => {}}
-                    productData={elementsInfo.profilePhoto}
-                    label="Foto de perfil o logotipo: "
-                />
+          <ImageUploader
+            file={elementsInfo.coverPhoto?.file}
+            setFile={(newVal) => handleTwoChange(newVal, "coverPhoto", "file")}
+            imageUrl={elementsInfo.coverPhoto?.url}
+            setImageUrl={(newVal) =>
+              handleTwoChange(newVal, "coverPhoto", "url")
+            }
+            handleErrorMsg={() => {}}
+            productData={elementsInfo.coverPhoto}
+            label="Foto de portada: "
+          />
+          <br />
+          <div className="d-flex align-items-center">
+            <BsStars color="#561AD9" size={24} />
+            <div className="ml-2"></div>
+            <ThinTitle variant="h6" color="primary" textAlign="center">
+              Diseño
+            </ThinTitle>
+          </div>
 
-                <ImageUploader 
-                    file={elementsInfo.coverPhoto?.file} 
-                    setFile={newVal => handleTwoChange(newVal, "coverPhoto", "file")} 
-                    imageUrl={elementsInfo.coverPhoto?.url} 
-                    setImageUrl={newVal => handleTwoChange(newVal, "coverPhoto", "url")} 
-                    handleErrorMsg={() => {}}
-                    productData={elementsInfo.coverPhoto}
-                    label="Foto de portada: "
-                />
-                <br />
-                <div className="d-flex align-items-center">
-                    <BsStars color='#561AD9' size={24}/>
-                    <div className="ml-2"></div>
-                    <ThinTitle variant='h6' color='primary' textAlign='center'>Diseño</ThinTitle>
-                </div>
+          <div className="mt-2"></div>
+          <ThinTitle variant="subtitle1" color="primary" textAlign="left">
+            Fondo
+          </ThinTitle>
+          <ThemeSelector
+            elementsInfo={elementsInfo}
+            setElementsInfo={setElementsInfo}
+          />
 
-                <div className="mt-2"></div>
-                <ThinTitle variant='subtitle1' color='primary' textAlign='left'>Fondo</ThinTitle>
-                <ThemeSelector elementsInfo={elementsInfo} setElementsInfo={setElementsInfo}/>
+          <div className="mt-2"></div>
+          <ThinTitle variant="subtitle1" color="primary" textAlign="left">
+            Color principal
+          </ThinTitle>
+          <div className="mt-3"></div>
+          <TextField
+            label={"Seleccionar color"}
+            fullWidth
+            type="color"
+            value={elementsInfo.color}
+            onChange={(e) =>
+              setElementsInfo({ ...elementsInfo, color: e.target.value })
+            }
+          />
 
-                <div className="mt-2"></div>
-                <ThinTitle variant='subtitle1' color='primary' textAlign='left'>Color principal</ThinTitle>
-                <div className="mt-3"></div>
-                <ColorThemeDialog 
-                    open={openColorTheme}
-                    onClose={() => setOpenColorTheme(false)}
-                    elementsInfo={elementsInfo} 
-                    setElementsInfo={setElementsInfo}
-                />
-                <div className="d-flex align-items-center">
-                    <div 
-                        style={{
-                            backgroundColor: elementsInfo.color,
-                            width: '36px',
-                            height: '36px',
-                            borderRadius: '8px',
-                        }}>
-                    </div>
-                    <div className="ml-3"></div>
-                    <SmallPrimaryButton 
-                        variant='outlined'
-                        onClick={() => setOpenColorTheme(true)}
-                    >Seleccionar otro color</SmallPrimaryButton>
-                </div>
+          <br />
+          <br />
+          <br />
+          <br />
+        </div>
+      </StyledCard>
+    </>
+  );
+};
 
-                <br /><br /><br /><br />
-            </div>
-        </StyledCard>
-        </>
-    )
-}
-
-export default ElementsCardTab
+export default ElementsCardTab;

@@ -82,6 +82,11 @@
     color: red;
 }
 
+.changePswd p {
+    text-decoration: none;
+    outline: none;
+}
+
 
 @media (max-width: 950px) {
 

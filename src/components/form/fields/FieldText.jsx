@@ -36,6 +36,7 @@ const FieldText = ({
   placeholder = "", 
   helperText = " ", 
   required = false, 
+  focused=false,
   disabled = false, 
   fullWidth = true,
   onFocus = () => {},
@@ -47,6 +48,7 @@ const FieldText = ({
   errorMessage = "",
   setError = () => {},
   validateMethod = () => {},
+  style={},
   color = "primary",
   maxLength = 50,
   marginTop = 12,
@@ -77,17 +79,18 @@ const FieldText = ({
       style={{ marginTop }}
       id={name}
       variant={variant} 
+      focused={focused}
       color={color}
       value={value} 
       name={name} 
       type={type}  
       label={label} 
-      inputProps={{ readOnly: readOnly, maxLength }}
+      disabled={disabled}
+      inputProps={{ readOnly: readOnly, maxLength, style: {style}}}
       required={required} 
       helperText={error ? errorMessage : helperText}
       placeholder={placeholder} 
       fullWidth={fullWidth}
-      disabled={disabled}
       autoComplete={autoComplete}
       multiline={multiline}
       onFocus={handleFocus}

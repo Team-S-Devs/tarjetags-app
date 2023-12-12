@@ -47,7 +47,7 @@ const RestorePassword = () => {
   const {width, height} = useWindowSize();
 
   return (
-    <div className='profile-background'>
+    <div className='profile-background container'>
       <Header/>
       <div className='prof-2-cont'>
       <BoldTitleWithBackButton centered variant={ width < 400 ? 'h4':'h3'}>Restablecer contraseña</BoldTitleWithBackButton>

@@ -6,7 +6,7 @@ import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material';
 import LogIn from './pages/LogIn';
 import Dashboard from './pages/Dashboard';
-import { auth } from './utils/firebase-config';
+import { auth, db } from './utils/firebase-config';
 import { useEffect, useState } from 'react';
 import {getAuth, onAuthStateChanged} from 'firebase/auth'
 import Error from './pages/Error';
@@ -14,6 +14,7 @@ import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import EditCard from './pages/EditCard';
 import RestorePassword from './pages/RestorePassword';
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 
 const theme = createTheme({
   palette: {
@@ -119,9 +120,38 @@ const App = () => {
 
   const [user, setUser]  = useState(null)
 
-  onAuthStateChanged(auth, (fireBaseUser) => {
+  onAuthStateChanged(auth, (fireBaseUser) =>  {
       if (fireBaseUser) {
           setUser(fireBaseUser)
+          
+          var userStoredEmail = "";
+            
+          onSnapshot(doc(db, 'users', fireBaseUser.uid), (snapshot) => {
+                  const userInfo = snapshot.data();
+                  userStoredEmail = userInfo.email
+        
+                  const updateStoreEmail = async () => {
+                      const userDocRef = doc(db, 'users', auth.currentUser.uid);
+                      const data = {
+                          email: fireBaseUser.email,
+                      };
+                  
+                      try {
+                          await updateDoc(userDocRef, data);
+                          console.log('Email updated successfully in Firestore');
+                          
+                      } catch (error) {
+                          console.error('Error updating email in Firestore:', error);
+                      }
+                  } 
+                  
+                  if (fireBaseUser.email != userStoredEmail) {
+                      updateStoreEmail()
+                  }
+        
+              }
+          );
+
       } else {
           setUser(null)
       }

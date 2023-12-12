@@ -40,7 +40,9 @@ const DropdownIconField = ({
   setValue = () => {},
   placeholder = "", 
   helperText = " ", 
-  required = false, 
+  required = false,
+  select=false,
+  focused=false,
   disabled = false, 
   fullWidth = true,
   onFocus = () => {},
@@ -101,13 +103,14 @@ const DropdownIconField = ({
     <TextField 
       style={{ marginTop: 12 }}
       id={name}
-      select
+      select={select}
       defaultValue={defaultValue}
       variant={variant} 
       value={value} 
       name={name} 
       type={type}  
       label={label} 
+      focused={focused}
       required={required} 
       helperText={error ? errorMessage : helperText}
       placeholder={placeholder} 
@@ -122,44 +125,21 @@ const DropdownIconField = ({
       onBlur={handleBlur}
       onChange={handleOptionChange}
       error={error}
-    >
-        {options.map((option, index) => (
-            <MenuItem key={option.id} value={option.id} onClick={() => {
-                if (option.id === options[options.length - 1].id) {
-                    setIsModalOpen(true);
-                  }
-            }}>
-              <div className="d-flex">
-                {React.cloneElement(option.icon, { size: 20, style: { marginRight: 10 }, color: (index == options.length - 1 && forNew) ? '#561AD9' : "black" })}
-                {option.title}
-              </div>
-            </MenuItem>
-          ))}
-    </TextField>
-    <Dialog open={isModalOpen} onClose={handleCloseModal}>
-        <DialogTitle>Ingrese el rubro de empresa: </DialogTitle>
-        <DialogContent>
-          <FieldText
-            label="Rubro de empresa"
-            variant="outlined"
-            fullWidth
-            value={customOption}
-            setValue={setCustomOption}
-          />
-          <div className="mt-2"></div>
+    > { select ? 
+      options.map((option, index) => (
+        <MenuItem key={option.id} value={option.id} onClick={() => {
+            if (option.id === options[options.length - 1].id) {
+                setIsModalOpen(true);
+              }
+        }}>
           <div className="d-flex">
-            <SmallPrimaryButton onClick={() => {
-                setIsModalOpen(false);
-                let opts = [...options];
-                opts[opts.length - 1].title = customOption
-                setOptions(opts)
-            }}>Guardar</SmallPrimaryButton>
-            <div className="ml-2">
-                <SmallPrimaryButton variant="outlined" onClick={handleCloseModal}>Cancelar</SmallPrimaryButton>
-            </div>
+            {React.cloneElement(option.icon, { size: 20, style: { marginRight: 10 }, color: (index == options.length - 1 && forNew) ? '#561AD9' : "black" })}
+            {option.title}
           </div>
-        </DialogContent>
-      </Dialog>
+        </MenuItem>
+      ))
+      : "" }
+    </TextField>
       </>
   );
 };

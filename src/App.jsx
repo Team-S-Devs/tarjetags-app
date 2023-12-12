@@ -16,6 +16,7 @@ import EditCard from './pages/EditCard';
 import RestorePassword from './pages/RestorePassword';
 import CardDetails from './pages/CardDetails';
 import Plans from './pages/Plans';
+import Card from './pages/Card';
 
 const theme = createTheme({
   overrides: {
@@ -158,6 +159,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path='/' Component={Splash} />
+          <Route path='/:cardId' Component={Card} />
           <Route path='/dashboard' Component={user ? Dashboard : Splash} />
           <Route path='/test-components' Component={TestComponents} />
           <Route path='/sign-up' Component={SignUp} />

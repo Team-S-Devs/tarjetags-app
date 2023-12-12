@@ -30,7 +30,7 @@ const UserCardDisplay = ({ userCards = [] }) => {
                     <FullSmallPrimaryButton onClick={() => navigate(`/edit/${userCard.id}`)}>Editar</FullSmallPrimaryButton>
                   </Grid>
                   <Grid item xs={4}>
-                    <FullSmallPrimaryButton>Visitar</FullSmallPrimaryButton>
+                    <FullSmallPrimaryButton onClick={() => navigate(`/${userCard.id}`)}>Visitar</FullSmallPrimaryButton>
                   </Grid>
                   <Grid item xs={4}>
                     <FullSmallPrimaryButton onClick={() => navigate(`/details/${userCard.id}`)}>Detalles</FullSmallPrimaryButton>

@@ -29,11 +29,11 @@ const Header = () => {
             const userData = snapshot.data();
             setFullname(userData.fullname);
         }, (error) => {
-            setFullname("Profile")
+            setFullname("Perfil")
         });
         return unsubscribe;
       } else {
-        setUser("Profile");
+        setUser("Perfil");
       }
     });
   }, [user])

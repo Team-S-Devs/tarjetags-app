@@ -101,25 +101,25 @@ figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
-  }
-  
-  h1 {
-	font-family: var(--font-family-headline);
-  }
+}
 
-  .title {
+h1 {
 	font-family: var(--font-family-headline);
-  }
+}
 
-  .subtitle {
+.title {
+	font-family: var(--font-family-headline);
+}
+
+.subtitle {
 	font-family: var(--font-family-subtitle);
-  }
+}
 
-  .general-link:hover {
+.general-link:hover {
 	transform: scale(1.03);
-  }
+}
 
-  @media (max-width: 500px) {
+@media (max-width: 500px) {
 	.resp-grey-subtitle-link {
 		flex-direction: column;
 	}
@@ -128,4 +128,24 @@ time, mark, audio, video {
 		font-size: 2rem;
 		margin-top: .5rem;
 	}
-  }
+}
+
+.button {
+	cursor: pointer;
+	transition: .2s all ease-in-out;
+}
+
+.button:hover{
+	scale: 1.1;
+}
+
+.card-content-container {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	align-items: stretch;
+}  
+
+.card-content-container > *{
+	flex-grow: 1;
+}

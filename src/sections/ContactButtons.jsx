@@ -8,11 +8,12 @@ import {
     FaTelegram,
 } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6'
-import { GoTrash } from 'react-icons/go'
+import { GoGlobe, GoTrash } from 'react-icons/go'
 import { LiaEditSolid } from 'react-icons/lia'
 import SmallPrimaryButton from '../components/buttons/SmallPrimaryButton';
 import ContactMethodsDialog from '../components/modals/ContactMethodsDialog';
 import { IoLogoWhatsapp, IoMail } from 'react-icons/io5';
+import { SiGooglemaps } from "react-icons/si";
 
 export const contactButtonsOptions = [
     { 
@@ -21,12 +22,9 @@ export const contactButtonsOptions = [
     },
     { name: 'E-mail', icon: <IoMail size={40} />, color: '#E42300', placeholder: 'usuario@ejemplo.com', type: "mail" },
     { name: 'WhatsApp', icon: <IoLogoWhatsapp size={40} />, 
-        color: '#25D366', placeholder: 'https://twitter.com/tuperfil', type: "tel" },
-    { name: 'Messenger', icon: <FaFacebookMessenger size={40} />, 
-        color: '#0078ff', placeholder: 'https://www.linkedin.com/in/tuperfil', type: "text" },
-    { name: 'Telegram', 
-        icon: <FaTelegram size={40} />, 
-        color: '#0088cc', placeholder: 'https://www.youtube.com/c/tucanal', type: "tel" },
+        color: '#25D366', placeholder: '76543218', type: "tel" },
+    { name: 'Sitio Web', icon: <GoGlobe size={40} />, color: '#4BC6F0', placeholder: 'https://tupagina.com', type: "text" },
+    { name: 'Google Maps', icon: <SiGooglemaps size={40} />, color: '#119047', placeholder: 'https://maps.app.goo.gl/tudireccion', type: "text" },
 ];
 
 const ContactButtons = ({ elementsInfo = {title: "", description: "", contactLinks: [] }, setElementsInfo }) => {

@@ -23,17 +23,17 @@ const UserCardDisplay = ({ userCards = [] }) => {
                 <img src={(userCard.profilePhoto?.url && userCard.profilePhoto?.url !== "") ? userCard.profilePhoto.url : lightPurpleSvg} alt={`${userCard.title}`} className='profile-card-img' />
                 <ThinTitle variant='h4'>{userCard.title === "" ? "Tarjeta" : userCard.title}</ThinTitle>
                 <div className="mt-3"></div>
-                <AccentButton>{`https://tarjetag.com/${userCard.urlPage}`}</AccentButton>
+                <AccentButton href={`/${userCard.urlPage}`}>{`https://tarjetag.com/${userCard.urlPage}`}</AccentButton>
                 <div className="mt-4"></div>
                 <Grid container spacing={2} justifyContent="center">
                   <Grid item xs={4}>
-                    <FullSmallPrimaryButton onClick={() => navigate(`/editar/${userCard.id}`)}>Editar</FullSmallPrimaryButton>
+                    <FullSmallPrimaryButton onClick={() => navigate(`/edit/${userCard.id}`)}>Editar</FullSmallPrimaryButton>
                   </Grid>
                   <Grid item xs={4}>
                     <FullSmallPrimaryButton>Visitar</FullSmallPrimaryButton>
                   </Grid>
                   <Grid item xs={4}>
-                    <FullSmallPrimaryButton>Detalles</FullSmallPrimaryButton>
+                    <FullSmallPrimaryButton onClick={() => navigate(`/details/${userCard.id}`)}>Detalles</FullSmallPrimaryButton>
                   </Grid>
                 </Grid>
               </div>

@@ -18,6 +18,7 @@ import {
     FaXing,
     FaFlickr,
     FaVimeo,
+    FaTelegram,
 } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6'
 import { GoTrash } from 'react-icons/go'
@@ -36,12 +37,12 @@ export const socialMediaOptions = [
     { name: 'Pinterest', icon: <FaPinterest size={40} />, color: '#bd081c', placeholder: 'https://www.pinterest.com/tuperfil' },
     { name: 'Reddit', icon: <FaReddit size={40} />, color: '#ff4500', placeholder: 'https://www.reddit.com/user/tunombredeusuario' },
     { name: 'Snapchat', icon: <FaSnapchat size={40} />, color: '#fffc00', placeholder: 'https://www.snapchat.com/add/tunombredeusuario' },
+    { name: 'Telegram', icon: <FaTelegram size={40} />, color: '#0088cc', placeholder: 'https://t.me/tunombredeusuario' },
     { name: 'Twitch', icon: <FaTwitch size={40} />, color: '#6441a5', placeholder: 'https://www.twitch.tv/tucanal' },
     { name: 'Discord', icon: <FaDiscord size={40} />, color: '#5865f2', placeholder: 'https://discord.gg/yourserver' },
     { name: 'Spotify', icon: <FaSpotify size={40} />, color: '#1db954', placeholder: 'https://open.spotify.com/user/tunombredeusuario' },
     { name: 'Flickr', icon: <FaFlickr size={40} />, color: '#ff0084', placeholder: 'https://www.flickr.com/photos/tunombredeusuario' },
     { name: 'Vimeo', icon: <FaVimeo size={40} />, color: '#1ab7ea', placeholder: 'https://vimeo.com/tunombredeusuario' },
-    { name: 'Xing', icon: <FaXing size={40} />, color: '#006567', placeholder: 'https://www.xing.com/profile/tuperfil' },
 ];
 
 const SocialMediaButtons = ({ elementsInfo = {title: "", description: "", socialLinks: [] }, setElementsInfo }) => {

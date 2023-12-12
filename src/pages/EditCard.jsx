@@ -58,7 +58,7 @@ const EditCard = () => {
 
         try {
             await updateDoc(docCard, {...elCopy})
-            navigate("/")
+            navigate(`/details/${cardId}`)
         } catch (error) {
             alert("Hubo un error, por favor inténtalo de nuevo")
         }
@@ -147,7 +147,6 @@ const EditCard = () => {
     
         fetchCardData();
     }, []);
-
 
   return (
     <div className='container' style={{ paddingTop: '90px'}}>

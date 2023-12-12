@@ -14,8 +14,20 @@ import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import EditCard from './pages/EditCard';
 import RestorePassword from './pages/RestorePassword';
+import CardDetails from './pages/CardDetails';
+import Plans from './pages/Plans';
 
 const theme = createTheme({
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        '::selection': {
+          color: '#561AD9',
+          background: '#fff',
+        },
+      },
+    },
+  },
   palette: {
     primary: {
       main: '#561AD9',
@@ -67,7 +79,7 @@ const theme = createTheme({
           paddingLeft: "50px",
           paddingRight: "50px",
           borderRadius: "12px",
-          textTransform: 'none', // Set textTransform to capitalize
+          textTransform: 'none',
         },
       },
     },
@@ -151,9 +163,11 @@ const App = () => {
           <Route path='/sign-up' Component={SignUp} />
           <Route path='/login' Component={LogIn} />
           <Route path='/error' Component={Error} />
-          <Route path='/editar/:cardId' Component={EditCard} />
+          <Route path='/edit/:cardId' Component={EditCard} />
           <Route path='/restorePassword' Component={RestorePassword} />
           <Route path='/profile' Component={() => user ? <Profile user={user}/> : <Splash loggedNavigateTo='/profile'/>}/>
+          <Route path='/details/:cardId' Component={() => user ? <CardDetails user={user}/> : <Splash loggedNavigateTo='/dashboard'/>} />
+          <Route path='/plans' Component={() => user ? <Plans user={user}/> : <Splash loggedNavigateTo='/plans'/>} />
           <Route path='*' Component={Error} />
         </Routes>
       </BrowserRouter>

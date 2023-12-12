@@ -7,7 +7,7 @@ import { auth } from '../../utils/firebase-config';
 
 
 /**
- * React component for editing the stock of a product using a modal.
+ * React component for re-authenticate the user using a modal.
  *
  * @component
  * @param {Object} props - The component props.
@@ -62,7 +62,7 @@ const LogModal = ({ open, handleClose, user={}, newEmail, setEmailValue}) => {
 
   
   /**
- * Handles the form submission for updating the stock of the product.
+ * Handles the form submission
  *
  * @async
  * @param {Event} e - The event object.

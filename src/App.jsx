@@ -18,6 +18,7 @@ import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import CardDetails from './pages/CardDetails';
 import Plans from './pages/Plans';
 import Card from './pages/Card';
+import Admin from './pages/Admin';
 
 const theme = createTheme({
   overrides: {
@@ -195,6 +196,7 @@ const App = () => {
           <Route path='/sign-up' Component={SignUp} />
           <Route path='/login' Component={LogIn} />
           <Route path='/error' Component={Error} />
+          <Route path='/admin' Component={Admin} />
           <Route path='/edit/:cardId' Component={EditCard} />
           <Route path='/restorePassword' Component={RestorePassword} />
           <Route path='/profile' Component={() => user ? <Profile user={user}/> : <Splash loggedNavigateTo='/profile'/>}/>

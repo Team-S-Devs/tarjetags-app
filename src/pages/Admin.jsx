@@ -2,40 +2,71 @@ import { Container } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Header from '../sections/Header';
 import BoldTitle from '../components/texts/BoldTitle';
-import { collection, query, where, getDocs, limit } from "firebase/firestore";
+import { collection, query, getDocs, limit, orderBy, startAfter} from "firebase/firestore";
 import { db } from '../utils/firebase-config';
 import '../assets/styles/admin.css'
 import UserRow from '../components/admin/UserRow';
-import UserDataManager from '../components/admin/UserDataManager';
 
 
 const Admin = () => {
 
     const [usersArray, setUsersArray] = useState([]);
+    const [pageNum, setPageNum] = useState(0);
+    const [firstDocRefArray, setDocRefArray] = useState([]);
 
-    const getUsers = async () => {
-        const q = query(collection(db, "users"), limit(14));
+    const getUsersInRange = async (documentId = 0, limitN) => {
+        const q = documentId != 0 ? query(
+            collection(db, "users"),
+            orderBy('__name__'),
+            startAfter("lJhgNLL3ikYGrJSpQuhFLpYA0NU2"),
+            limit(limitN)
+        ) : query(
+            collection(db, "users"),
+            orderBy('__name__'),
+            limit(limitN)
+            );
+    
         const querySnapshot = await getDocs(q);
         setUsersArray(querySnapshot.docs.map((doc) => doc.data()));
+
+        const setNonRepeatedDocRef = () => {
+            for (let i = 0; i < firstDocRefArray.length; i++) {
+                if (firstDocRefArray[i] == querySnapshot.docs[0].id) return;
+            } setDocRefArray([...firstDocRefArray, querySnapshot.docs[0].id])
+        }
+
+        setNonRepeatedDocRef();
     };
 
-    useEffect(() => {
-        getUsers();
-    }, []);
+    const increasePaginationData = () => {
+        setPageNum(pageNum+1)
+    }
 
+    const decreasePaginationData = () => {
+        setPageNum(pageNum-1)
+    }
+    
     const mountUsersTable = () => (
         <tbody>
             {usersArray.map((userData, index) => (
                 <UserRow key={index} 
                 name={userData.fullname} 
                 email={userData.email} 
-                phone={userData.phone} 
                 registerDate={userData.createdAt} 
                 limitDate={userData.license}
-                discountCode={userData.discountCode} />
-            ))}
+                licenseType={userData.licenseType}
+                discountCode={userData.discountCode}
+                city={userData.department}
+                company={userData.company}
+                companySector={userData.companySector}
+                />
+                ))}
         </tbody>
     );
+    
+    useEffect(() => {
+        getUsersInRange(pageNum != 0 ? firstDocRefArray[pageNum-1]:0,10);
+    }, [pageNum]);
 
 
     return (
@@ -51,7 +82,6 @@ const Admin = () => {
                             <tr>
                                 <th scope="col">Nombre</th>
                                 <th>Email</th>
-                                <th>Celular</th>
                                 <th>Fecha de Registro</th>
                                 <th>Fecha limite de licencia</th>
                                 <th>Tipo de Licencia</th>
@@ -61,6 +91,11 @@ const Admin = () => {
                         </thead>
                         {mountUsersTable()}
                         </table>
+                </div>
+                <div className='paginationOptions'>
+                    <button onClick={decreasePaginationData} disabled={pageNum < 1} >{"<"}</button>
+                    <p>{pageNum}</p>
+                    <button onClick={increasePaginationData} disabled= {usersArray.length < 10} >{">"}</button>
                 </div>
             </div>
 

@@ -14,12 +14,20 @@ const Admin = () => {
     const [firstDocRefArray, setDocRefArray] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const getUsersInRange = async (documentId = 0, limitN) => {
+    const setNonRepeatedDocRef = (querySnapshot) => {
+            for (let i = 0; i < firstDocRefArray.length; i++) {
+                if (firstDocRefArray[i] == querySnapshot.docs[querySnapshot.docs.length-1].id) return;
+            } 
+            if (querySnapshot.docs.length >= 10) setDocRefArray([...firstDocRefArray, querySnapshot.docs[querySnapshot.docs.length-1].id])
+    }
+    
+
+    const getUsersInRange = async (limitN) => {
         setLoading(true);
-        const q = documentId != 0 ? query(
+        const q = pageNum != 0 ?  query(
             collection(db, "users"),
             orderBy('__name__'),
-            startAfter("lJhgNLL3ikYGrJSpQuhFLpYA0NU2"),
+            startAfter(firstDocRefArray[pageNum-1]),
             limit(limitN)
         ) : query(
             collection(db, "users"),
@@ -34,16 +42,9 @@ const Admin = () => {
             id: doc.id,
             ...doc.data()
         })));
-
-        setLoading(false)
-
-        const setNonRepeatedDocRef = () => {
-            for (let i = 0; i < firstDocRefArray.length; i++) {
-                if (firstDocRefArray[i] == querySnapshot.docs[0].id) return;
-            } setDocRefArray([...firstDocRefArray, querySnapshot.docs[0].id])
-        }
-
-        setNonRepeatedDocRef();
+        
+        setNonRepeatedDocRef(querySnapshot);
+        setLoading(false);
     };
 
     const increasePaginationData = () => {
@@ -76,7 +77,7 @@ const Admin = () => {
     );
     
     useEffect(() => {
-        getUsersInRange(pageNum != 0 ? firstDocRefArray[pageNum-1] : 0, 10);
+        getUsersInRange(10);
     }, [pageNum]);
 
 

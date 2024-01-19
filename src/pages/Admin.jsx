@@ -1,4 +1,3 @@
-import { Container } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Header from '../sections/Header';
 import BoldTitle from '../components/texts/BoldTitle';
@@ -13,8 +12,10 @@ const Admin = () => {
     const [usersArray, setUsersArray] = useState([]);
     const [pageNum, setPageNum] = useState(0);
     const [firstDocRefArray, setDocRefArray] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const getUsersInRange = async (documentId = 0, limitN) => {
+        setLoading(true);
         const q = documentId != 0 ? query(
             collection(db, "users"),
             orderBy('__name__'),
@@ -27,7 +28,14 @@ const Admin = () => {
             );
     
         const querySnapshot = await getDocs(q);
-        setUsersArray(querySnapshot.docs.map((doc) => doc.data()));
+
+        // Update the users array to include both data and document IDs
+        setUsersArray(querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data()
+        })));
+
+        setLoading(false)
 
         const setNonRepeatedDocRef = () => {
             for (let i = 0; i < firstDocRefArray.length; i++) {
@@ -47,25 +55,28 @@ const Admin = () => {
     }
     
     const mountUsersTable = () => (
-        <tbody>
-            {usersArray.map((userData, index) => (
-                <UserRow key={index} 
-                name={userData.fullname} 
-                email={userData.email} 
-                registerDate={userData.createdAt} 
-                limitDate={userData.license}
-                licenseType={userData.licenseType}
-                discountCode={userData.discountCode}
-                city={userData.department}
-                company={userData.company}
-                companySector={userData.companySector}
+        <tbody>{
+            usersArray.map((userData, index) => (
+                <UserRow 
+                    key={index}
+                    userId={userData.id}
+                    name={userData.fullname} 
+                    email={userData.email}
+                    phone={userData.phone} 
+                    registerDate={userData.createdAt} 
+                    limitDate={userData.license}
+                    licenseType={userData.licenseType}
+                    discountCode={userData.discountCode}
+                    city={userData.department}
+                    company={userData.company}
+                    companySector={userData.companySector}
                 />
                 ))}
         </tbody>
     );
     
     useEffect(() => {
-        getUsersInRange(pageNum != 0 ? firstDocRefArray[pageNum-1]:0,10);
+        getUsersInRange(pageNum != 0 ? firstDocRefArray[pageNum-1] : 0, 10);
     }, [pageNum]);
 
 
@@ -77,7 +88,13 @@ const Admin = () => {
                 <BoldTitle variant='h3' textAlign='center'>ADMINISTRADOR</BoldTitle>
 
                 <div className='bg-white adminTable'>
-                    <table className="table table-hover">
+                    {loading ? 
+                        <div className="d-flex mt-4 mb-2 align-items-center justify-content-center loader_style">
+                            <span className="loader"></span>
+                        </div> 
+                        :
+
+                        <table className="table table-hover">
                         <thead>
                             <tr>
                                 <th scope="col">Nombre</th>
@@ -91,6 +108,7 @@ const Admin = () => {
                         </thead>
                         {mountUsersTable()}
                         </table>
+                }
                 </div>
                 <div className='paginationOptions'>
                     <button onClick={decreasePaginationData} disabled={pageNum < 1} >{"<"}</button>

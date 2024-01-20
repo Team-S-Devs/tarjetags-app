@@ -18,6 +18,10 @@ import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import CardDetails from './pages/CardDetails';
 import Plans from './pages/Plans';
 import Card from './pages/Card';
+import Admin from './pages/Admin';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+
 
 const theme = createTheme({
   overrides: {
@@ -186,23 +190,26 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' Component={Splash} />
-          <Route path='/:cardId' Component={Card} />
-          <Route path='/dashboard' Component={user ? Dashboard : Splash} />
-          <Route path='/test-components' Component={TestComponents} />
-          <Route path='/sign-up' Component={SignUp} />
-          <Route path='/login' Component={LogIn} />
-          <Route path='/error' Component={Error} />
-          <Route path='/edit/:cardId' Component={EditCard} />
-          <Route path='/restorePassword' Component={RestorePassword} />
-          <Route path='/profile' Component={() => user ? <Profile user={user}/> : <Splash loggedNavigateTo='/profile'/>}/>
-          <Route path='/details/:cardId' Component={() => user ? <CardDetails user={user}/> : <Splash loggedNavigateTo='/dashboard'/>} />
-          <Route path='/plans' Component={() => user ? <Plans user={user}/> : <Splash loggedNavigateTo='/plans'/>} />
-          <Route path='*' Component={Error} />
-        </Routes>
-      </BrowserRouter>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' Component={Splash} />
+            <Route path='/:cardId' Component={Card} />
+            <Route path='/dashboard' Component={user ? Dashboard : Splash} />
+            <Route path='/test-components' Component={TestComponents} />
+            <Route path='/sign-up' Component={SignUp} />
+            <Route path='/login' Component={LogIn} />
+            <Route path='/error' Component={Error} />
+            <Route path='/admin' Component={Admin} />
+            <Route path='/edit/:cardId' Component={EditCard} />
+            <Route path='/restorePassword' Component={RestorePassword} />
+            <Route path='/profile' Component={() => user ? <Profile user={user}/> : <Splash loggedNavigateTo='/profile'/>}/>
+            <Route path='/details/:cardId' Component={() => user ? <CardDetails user={user}/> : <Splash loggedNavigateTo='/dashboard'/>} />
+            <Route path='/plans' Component={() => user ? <Plans user={user}/> : <Splash loggedNavigateTo='/plans'/>} />
+            <Route path='*' Component={Error} />
+          </Routes>
+        </BrowserRouter>
+      </LocalizationProvider>
     </ThemeProvider>
   )
 }

@@ -1,0 +1,109 @@
+.adminTable table {
+    text-align: center;
+    vertical-align:middle;
+    font-size: .96rem;
+}
+
+.adminTable table th {
+    text-align: center;
+    padding-right: 1rem;
+    vertical-align:middle;
+}
+
+.adminTable table td {
+    text-align:start;
+    padding-right: 1rem;
+    cursor:default;
+    vertical-align:middle;
+}
+
+.adminTable {
+    background-color: red;
+    border-radius: 15px;
+    padding: 1rem;
+    padding-top: 0;
+    margin-top: 1rem;
+    margin-top: 1rem;
+}
+
+.optionsAdmin {
+    display: flex;
+}
+
+.optionsAdmin div {
+    margin-inline: .2rem;
+    border-radius: 7px;
+    font-size: 1.05rem;
+    color: white;
+    padding-inline: .4rem;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-weight: 600;
+    transition: transform 50ms ease-in;
+    cursor: pointer;
+}
+.optionsAdmin div:hover {
+    transform: scale(1.06)
+}
+
+.optionsAdmin div:nth-child(1) {
+    background-color:#561AD9;
+    display: flex;
+    align-items: center;
+}
+
+.optionsAdmin span {
+    margin-left: .4rem;
+}
+
+/* .optionsAdmin button {
+    display: flex;
+    align-items: center;
+}
+
+.optionsAdmin button {
+    
+} */
+
+.optionsAdmin div:nth-child(2) {
+    background-color:rgb(175, 26, 26);
+}
+
+.paginationOptions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2vw;
+    margin-bottom: 1rem;
+}
+
+.paginationOptions button {
+    margin-inline: .2rem;
+    padding: .1rem;
+    padding-inline: .4rem;
+    font-size: 1.2rem;
+    background-color: rgb(255, 255, 255);
+    border-radius: 15px;
+    cursor:pointer;
+
+}
+
+.paginationOptions button:hover {
+    transform: scale(1.08);
+}
+
+.personal-info-style{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align:middle;
+    max-width: max-content;
+    margin-top: 1rem;
+}
+
+.personal-info-style table tbody td {
+    padding: .8rem;
+}
+
+.personal-info-style table tr td:nth-child(1) {
+    font-weight: 600;
+}

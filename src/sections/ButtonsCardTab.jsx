@@ -1,9 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import ThinTitle from '../components/texts/ThinTitle'
-import StyledCard from '../components/card/StyledCard'
-import SmallPrimaryButton from '../components/buttons/SmallPrimaryButton'
-import SocialMediaDialog from '../components/modals/SocialMediaDialog'
-import { IconButton, Typography } from '@mui/material'
 import SocialMediaButtons from './SocialMediaButtons'
 import ContactButtons from './ContactButtons'
 

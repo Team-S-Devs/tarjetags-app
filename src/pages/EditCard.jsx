@@ -132,6 +132,8 @@ const EditCard = () => {
                     if(!cardFields.coverPhoto) cardFields["coverPhoto"] = { name: "coverPhoto", url: "", file: null }
                     if(!cardFields.socialLinks) cardFields["socialLinks"] = []
                     if(!cardFields.contactLinks) cardFields["contactLinks"] = []
+                    if(!cardFields.productCategories) cardFields["productCategories"] = []
+                    if(!cardFields.products) cardFields["products"] = []
                     if(!cardFields.theme) cardFields["theme"] = "light"
                     if(!cardFields.color) cardFields["color"] = "#561AD9"
                     setElementsInfo(cardFields);

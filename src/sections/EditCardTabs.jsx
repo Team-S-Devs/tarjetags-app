@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Box, Tab, Tabs } from '@mui/material'
 import ElementsCardTab from './ElementsCardTab';
 import ButtonsCardTab from './ButtonsCardTab';
+import ProductsServicesTab from './ProductsServicesTab';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -56,7 +57,7 @@ const EditCardTabs = ({ elementsInfo = {title: "", description: "", socialLinks:
           <ButtonsCardTab elementsInfo={elementsInfo} setElementsInfo={setElementsInfo} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
-          Servicios
+          <ProductsServicesTab elementsInfo={elementsInfo} setElementsInfo={setElementsInfo} />
         </CustomTabPanel>
     </div>
   )

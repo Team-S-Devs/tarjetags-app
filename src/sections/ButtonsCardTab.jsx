@@ -2,6 +2,7 @@ import React from 'react'
 import ThinTitle from '../components/texts/ThinTitle'
 import SocialMediaButtons from './SocialMediaButtons'
 import ContactButtons from './ContactButtons'
+import ExtraButtons from './ExtraButtons'
 
 const ButtonsCardTab = ({ elementsInfo = {title: "", description: "", socialLinks: [] }, setElementsInfo }) => {
     return (
@@ -18,6 +19,13 @@ const ButtonsCardTab = ({ elementsInfo = {title: "", description: "", socialLink
             </div>
             <div className="mt-3">
                 <ContactButtons elementsInfo={elementsInfo} setElementsInfo={setElementsInfo} />
+            </div>
+            <br />
+            <div className="mt-4" style={{ marginTop: 400 }}>
+                <ThinTitle variant='h5' color='primary' textAlign='center'>Agrega botones extra</ThinTitle>
+            </div>
+            <div className="mt-3">
+                <ExtraButtons elementsInfo={elementsInfo} setElementsInfo={setElementsInfo} />
             </div>
             <br />
             <br />

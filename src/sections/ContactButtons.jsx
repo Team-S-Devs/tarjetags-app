@@ -58,7 +58,7 @@ const ContactButtons = ({
   const [indexEditContactLink, setIndexEditContactLink] = useState(-1);
 
   const deletedContactLinkByIndex = (index) => {
-    let contactLinksCopy = [...elementsInfo.ContactLinks];
+    let contactLinksCopy = [...elementsInfo.contactLinks];
     contactLinksCopy.splice(index, 1);
     setElementsInfo({ ...elementsInfo, contactLinks: contactLinksCopy });
   };

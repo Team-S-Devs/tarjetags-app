@@ -7,12 +7,13 @@ const PreviewCardTab = ({ handleSave, loading }) => {
   return (
     <div style={{ flex: 2 }}>
         {
-            width > 968 && (
-                <div className="d-flex">
+            width > 986 && (
+                <div className="d-flex" style={{ position: "fixed", marginLeft: 120 }}>
                     <div style={{ flex: 10 }}></div>
                     <MediumPrimaryButton
                         loading={loading}
                         onClick={handleSave}
+                        fontSize={21}
                     >Publicar Cambios</MediumPrimaryButton>
                     <div style={{ flex: 10 }}></div>
                 </div>
@@ -20,7 +21,7 @@ const PreviewCardTab = ({ handleSave, loading }) => {
         }
 
         <div className="mt-4"></div>
-        <div className="text-center">AQUÍ IRÁ LA VISTA PREVIA</div>
+        <div className="text-center" style={{ marginTop: 100 }}>AQUÍ IRÁ LA VISTA PREVIA</div>
     </div>
   )
 }

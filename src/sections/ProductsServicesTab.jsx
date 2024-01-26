@@ -1,6 +1,7 @@
 import React from "react";
 import ThinTitle from "../components/texts/ThinTitle";
 import ProductsServicesCategories from "./ProductsServicesCategories";
+import ProductsServicesList from "./ProductsServicesList";
 
 const ProductsServicesTab = ({
   elementsInfo = {
@@ -8,9 +9,12 @@ const ProductsServicesTab = ({
     description: "",
     socialLinks: [],
     productCategories: [],
+    products: [],
   },
   setElementsInfo,
+  cardId
 }) => {
+
   return (
     <div>
       <div className="mt-4">
@@ -31,10 +35,11 @@ const ProductsServicesTab = ({
         </ThinTitle>
       </div>
       <div className="mt-3">
-        {/* <ContactButtons
+        <ProductsServicesList
           elementsInfo={elementsInfo}
           setElementsInfo={setElementsInfo}
-        /> */}
+          cardId={cardId}
+        />
       </div>
       <br />
       <br />

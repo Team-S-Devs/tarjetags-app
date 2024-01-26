@@ -31,7 +31,7 @@ function CustomTabPanel(props) {
     };
   }
 
-const EditCardTabs = ({ elementsInfo = {title: "", description: "", socialLinks: [] }, setElementsInfo }) => {
+const EditCardTabs = ({ elementsInfo = {title: "", description: "", socialLinks: [] }, setElementsInfo, cardId = "" }) => {
     const [value, setValue] = useState(0)
 
     const handleChange = (event, newValue) => {
@@ -57,7 +57,7 @@ const EditCardTabs = ({ elementsInfo = {title: "", description: "", socialLinks:
           <ButtonsCardTab elementsInfo={elementsInfo} setElementsInfo={setElementsInfo} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
-          <ProductsServicesTab elementsInfo={elementsInfo} setElementsInfo={setElementsInfo} />
+          <ProductsServicesTab elementsInfo={elementsInfo} setElementsInfo={setElementsInfo} cardId={cardId} />
         </CustomTabPanel>
     </div>
   )

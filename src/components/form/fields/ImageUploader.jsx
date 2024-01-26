@@ -1,11 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Button, Box, Typography, IconButton } from "@mui/material";
-import { IoCloudUploadOutline, IoCloseSharp, IoImageOutline } from "react-icons/io5";
+import {
+  IoCloudUploadOutline,
+  IoCloseSharp,
+  IoImageOutline,
+} from "react-icons/io5";
 import { truncateString } from "../../../utils/methods";
 import useWindowSize from "../../../hooks/useWindowsSize";
 import { PiImageThin } from "react-icons/pi";
 
-const allowedFormats = ['image/bmp', 'image/tiff', 'image/jpeg', 'image/gif', 'image/png', 'image/svg', 'image/webp'];
+const allowedFormats = [
+  "image/bmp",
+  "image/tiff",
+  "image/jpeg",
+  "image/gif",
+  "image/png",
+  "image/svg",
+  "image/webp",
+];
 const maxSize = 5 * 1024 * 1024;
 
 /**
@@ -14,35 +26,46 @@ const maxSize = 5 * 1024 * 1024;
  * @param {Object} props - The component props.
  * @param {File} props.file - The currently selected image file.
  * @param {function} props.setFile - The callback function to set the image file.
+ * @param {function} props.imageUrl - The callback function to set the image file.
+ * @param {function} props.setImageUrl - The callback function to set the image file.
  * @param {string} [props.text="Selected image:"] - The text to display when an image is selected.
  * @param {string} props.errorMsg - The error message to display.
  * @param {function} props.handleErrorMsg - The callback function to handle error messages.
  * @returns {JSX.Element} - The rendered ImageUploader component.
  */
-const ImageUploader = ({ 
-    file, setFile, imageUrl, setImageUrl, text = "Imagen seleccionada:", errorMsg, handleErrorMsg, productData, edit,
-    label
+const ImageUploader = ({
+  file,
+  setFile,
+  imageUrl,
+  setImageUrl,
+  text = "Imagen seleccionada:",
+  errorMsg = "",
+  handleErrorMsg = () => {},
+  label,
 }) => {
-  useEffect(() => {
-    if(edit) setImageUrl(productData.url ? productData.url : null)
-  }, [productData])
-  
+
   /**
    * Validates the selected image file based on allowed formats and maximum size.
    * @param {File} file - The selected image file.
    * @returns {boolean} - True if the file is valid, false otherwise.
    */
   const validateImage = (file) => {
-    if(!file) return true;
+    if (!file) return true;
     if (!allowedFormats.includes(file.type)) {
-      handleErrorMsg("image", "Invalid image file format, allowed formats are: BMP, TIFF, JPEG, GIF, PNG, SVG and WEBP");
+      handleErrorMsg(
+        "image",
+        "Invalid image file format, allowed formats are: BMP, TIFF, JPEG, GIF, PNG, SVG and WEBP"
+      );
       return false;
     } else if (file.size > maxSize) {
-      handleErrorMsg("image", "Invalid image file size, maximum size allowed is 5MB");
+      handleErrorMsg(
+        "image",
+        "Invalid image file size, maximum size allowed is 5MB"
+      );
       return false;
     }
     return true;
-  }
+  };
 
   /**
    * Handles the drop event for the image file.
@@ -82,7 +105,7 @@ const ImageUploader = ({
     e.preventDefault();
     if (file !== "") return;
     setBorderColor("#561AD9");
-  }
+  };
 
   /**
    * Handles the drag-out event.
@@ -91,7 +114,7 @@ const ImageUploader = ({
   const handleOnDragOut = (e) => {
     e.preventDefault();
     setBorderColor("#ccc");
-  }
+  };
 
   /**
    * Deletes the currently selected image.
@@ -99,21 +122,23 @@ const ImageUploader = ({
   const deleteImage = () => {
     setFile("");
     setImageUrl(null);
-    handleErrorMsg("imgUrl", "")
-  }
+    handleErrorMsg("imgUrl", "");
+  };
 
-  const { width } = useWindowSize(); 
+  const { width } = useWindowSize();
 
   return (
     <div>
-      <Typography 
-        marginLeft={.4} 
-        variant="subtitle1" 
-        color={"#666"} 
-        fontSize={"1.07em"} 
+      <Typography
+        marginLeft={0.4}
+        variant="subtitle1"
+        color={"#666"}
+        fontSize={"1.07em"}
         marginTop={2}
         marginBottom={0.3}
-      >{label}</Typography>
+      >
+        {label}
+      </Typography>
       <Box
         onDrop={handleDrop}
         onDragOver={handleOnDragOver}
@@ -129,18 +154,20 @@ const ImageUploader = ({
           paddingBottom: 24,
           borderRadius: "6px",
           borderColor: borderColor,
-          borderStyle: "dashed"
+          borderStyle: "dashed",
         }}
       >
         {imageUrl ? (
           <>
             <Box mb={2}>
-              <Typography>{text} {file.name && truncateString(file.name)}</Typography>
+              <Typography>
+                {text} {file.name && truncateString(file.name)}
+              </Typography>
             </Box>
-            <img 
-                src={imageUrl} 
-                alt={label} 
-                style={{ maxHeight: 200, width: 'auto', maxWidth: '100%' }} 
+            <img
+              src={imageUrl}
+              alt={label}
+              style={{ maxHeight: 200, width: "auto", maxWidth: "100%" }}
             />
             <IconButton onClick={deleteImage}>
               <IoCloseSharp />
@@ -149,16 +176,16 @@ const ImageUploader = ({
         ) : (
           <>
             <Box mb={2} mt={2}>
-                        <PiImageThin size={64} color={"#561AD9"} />
-                {
-                    width > 1200 && (
-                        <>
-                            <Typography color={"#333"}>Arrastra y suelta tu imagen aquí</Typography>
-                            <Typography color={"#333"}>o</Typography>
-                        </>
-                    )
-                }
-            </Box>  
+              <PiImageThin size={64} color={"#561AD9"} />
+              {width > 1200 && (
+                <>
+                  <Typography color={"#333"}>
+                    Arrastra y suelta tu imagen aquí
+                  </Typography>
+                  <Typography color={"#333"}>o</Typography>
+                </>
+              )}
+            </Box>
             <input
               accept="image/*"
               id="contained-button-file"
@@ -175,11 +202,16 @@ const ImageUploader = ({
         )}
       </Box>
       <br />
-      {
-        errorMsg !== "" && (
-          <Typography marginLeft={6} color={"error"} variant="body2" textAlign={"left"}>{errorMsg}</Typography>
-        )
-      }
+      {errorMsg !== "" && (
+        <Typography
+          marginLeft={6}
+          color={"error"}
+          variant="body2"
+          textAlign={"left"}
+        >
+          {errorMsg}
+        </Typography>
+      )}
     </div>
   );
 };

@@ -4,7 +4,7 @@ import SocialMediaButtons from './SocialMediaButtons'
 import ContactButtons from './ContactButtons'
 import ExtraButtons from './ExtraButtons'
 
-const ButtonsCardTab = ({ elementsInfo = {title: "", description: "", socialLinks: [] }, setElementsInfo }) => {
+const ButtonsCardTab = ({ elementsInfo = {title: "", description: "", socialLinks: [] }, setElementsInfo, cardId }) => {
     return (
         <div>
             <div className="mt-4">
@@ -25,7 +25,7 @@ const ButtonsCardTab = ({ elementsInfo = {title: "", description: "", socialLink
                 <ThinTitle variant='h5' color='primary' textAlign='center'>Agrega botones extra</ThinTitle>
             </div>
             <div className="mt-3">
-                <ExtraButtons elementsInfo={elementsInfo} setElementsInfo={setElementsInfo} />
+                <ExtraButtons elementsInfo={elementsInfo} setElementsInfo={setElementsInfo} cardId={cardId} />
             </div>
             <br />
             <br />

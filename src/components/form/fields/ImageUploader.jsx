@@ -43,7 +43,6 @@ const ImageUploader = ({
   handleErrorMsg = () => {},
   label,
 }) => {
-
   /**
    * Validates the selected image file based on allowed formats and maximum size.
    * @param {File} file - The selected image file.
@@ -159,11 +158,13 @@ const ImageUploader = ({
       >
         {imageUrl ? (
           <>
-            <Box mb={2}>
-              <Typography>
-                {text} {file.name && truncateString(file.name)}
-              </Typography>
-            </Box>
+            {file && (
+              <Box mb={2}>
+                <Typography>
+                  {text} {file.name && truncateString(file.name)}
+                </Typography>
+              </Box>
+            )}
             <img
               src={imageUrl}
               alt={label}

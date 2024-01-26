@@ -78,7 +78,7 @@ const ProductsServicesList = ({
                 src={
                   product.imgs.length > 0 ? product.imgs[0].url : GREY_RECTANGLE
                 }
-                style={{ maxWidth: 160, flex: 20 }}
+                style={{ maxWidth: 100, flex: 20 }}
               />
 
               <Typography

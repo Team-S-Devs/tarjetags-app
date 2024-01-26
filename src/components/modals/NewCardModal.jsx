@@ -50,6 +50,8 @@ const NewCardModal = ({ open, setOpen, userId }) => {
         
             const newCard = {
                 title: "",
+                showShareButton: true,
+                description: "",
                 userId: userId,
                 urlPage: newCardValue,
                 createdAt: Timestamp.now(),

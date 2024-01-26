@@ -1,9 +1,4 @@
-import {
-  CircularProgress,
-  Dialog,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { CircularProgress, Dialog, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import useWindowSize from "../../hooks/useWindowsSize";
 import { handleUploadImage } from "../../utils/methods";
@@ -34,7 +29,7 @@ const ExtraButtonModal = ({
   const handleSaveProduct = async () => {
     let userInf = { ...userInfoCop };
     setLoading(true);
-    console.log(file)
+    console.log(file);
     if (file) {
       try {
         let imageStatus = await handleUploadImage(
@@ -47,7 +42,7 @@ const ExtraButtonModal = ({
         if (!imageStatus.success) {
           alert("No se pudo subir una imagen, intenta de nuevo.");
         } else {
-            userInf.extraButtons[index].imgUrl = imageStatus.url
+          userInf.extraButtons[index].imgUrl = imageStatus.url;
         }
       } catch (error) {
         setLoading(false);

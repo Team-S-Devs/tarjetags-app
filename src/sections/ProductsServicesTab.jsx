@@ -19,7 +19,7 @@ const ProductsServicesTab = ({
     <div>
       <div className="mt-4">
         <ThinTitle variant="h5" color="primary" textAlign="center">
-          Introduce categorías para tus servicios o productos.
+          División de productos
         </ThinTitle>
       </div>
       <div className="mt-3">

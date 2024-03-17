@@ -136,6 +136,7 @@ const theme = createTheme({
 const App = () => {
 
   const [user, setUser]  = useState(null)
+  const [isAdmin, setIsAdmin] = useState(false);
 
   onAuthStateChanged(auth, (fireBaseUser) =>  {
       if (fireBaseUser) {
@@ -146,6 +147,7 @@ const App = () => {
           onSnapshot(doc(db, 'users', fireBaseUser.uid), (snapshot) => {
                   const userInfo = snapshot.data();
                   userStoredEmail = userInfo.email
+                  setIsAdmin(userInfo.admin)
         
                   const updateStoreEmail = async () => {
                       const userDocRef = doc(db, 'users', auth.currentUser.uid);
@@ -154,9 +156,7 @@ const App = () => {
                       };
                   
                       try {
-                          await updateDoc(userDocRef, data);
-                          console.log('Email updated successfully in Firestore');
-                          
+                          await updateDoc(userDocRef, data);                          
                       } catch (error) {
                           console.error('Error updating email in Firestore:', error);
                       }
@@ -200,7 +200,7 @@ const App = () => {
             <Route path='/sign-up' Component={SignUp} />
             <Route path='/login' Component={LogIn} />
             <Route path='/error' Component={Error} />
-            <Route path='/admin' Component={Admin} />
+            <Route path='/admin' Component={isAdmin ? Admin : Error}/>
             <Route path='/edit/:cardId' Component={EditCard} />
             <Route path='/restorePassword' Component={RestorePassword} />
             <Route path='/profile' Component={() => user ? <Profile user={user}/> : <Splash loggedNavigateTo='/profile'/>}/>

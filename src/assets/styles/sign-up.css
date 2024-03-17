@@ -50,9 +50,17 @@
     align-items: center;
 }
 
+.cont-profile1:nth-last-child(1)  {
+    padding-top: 5rem;
+}
+
 @media (max-width: 470px) {
     .cont-profile1 {
         padding-top: 2.5rem;
+    }
+
+    .cont-profile1:nth-last-child(1)  {
+        padding-top: 3rem;
     }
 
     .signOut {

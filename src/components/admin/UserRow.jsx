@@ -156,7 +156,7 @@ const UserRow = ({userId="", name="", email="", phone=0, registerDate={}, limitD
                 <Typography id="modal-modal-title" color='primary' variant="h5" sx={{fontWeight:'900', textAlign:'center'}} component="h2">
                     Información Personal
                 </Typography>
-                    <div className='personal-info-style'>
+                    <div className='personal-info-style table-responsive'>
                         <table className="table table-active">
                             <tbody>
                                 <tr>

@@ -10,6 +10,9 @@ const LICENSE_TYPES = {
   FREE: "Gratis",
   STANDARD: "Estándar",
   PROFESSIONAL: "Profesional",
+  GOLD: "Oro",
+  SILVER: "Plata",
+  BRONZE: "Bronce",
 };
 
 const UserRow = ({
@@ -32,6 +35,9 @@ const UserRow = ({
     LICENSE_TYPES.FREE,
     LICENSE_TYPES.STANDARD,
     LICENSE_TYPES.PROFESSIONAL,
+    LICENSE_TYPES.BRONZE,
+    LICENSE_TYPES.SILVER,
+    LICENSE_TYPES.GOLD,
   ];
   const [licenseValue, setLicenseType] = useState(licenseType);
   const [editUser, setEditUser] = useState(false);

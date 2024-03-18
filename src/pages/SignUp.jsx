@@ -173,7 +173,7 @@ const SignUp = () => {
       // Create user data in Firestore
       const userData = {
         fullname,
-        email: emailValue,
+        email: emailValue.toLocaleLowerCase(),
         phone: phoneValue,
         job: jobValue,
         company: companyValue,

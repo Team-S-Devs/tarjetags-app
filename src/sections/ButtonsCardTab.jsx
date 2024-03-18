@@ -4,6 +4,7 @@ import SocialMediaButtons from "./SocialMediaButtons";
 import ContactButtons from "./ContactButtons";
 import ExtraButtons from "./ExtraButtons";
 import ShareButtonSwitch from "./ShareButtonSwitch";
+import AdminSection from "./AdminSection";
 
 const ButtonsCardTab = ({
   elementsInfo = { title: "", description: "", socialLinks: [] },
@@ -53,6 +54,18 @@ const ButtonsCardTab = ({
           elementsInfo={elementsInfo}
           setElementsInfo={setElementsInfo}
           cardId={cardId}
+        />
+      </div>
+      <br />
+      <div className="mt-4" style={{ marginTop: 400 }}>
+        <ThinTitle variant="h5" color="primary" textAlign="center">
+          Administrador
+        </ThinTitle>
+      </div>
+      <div className="mt-3">
+        <AdminSection
+          elementsInfo={elementsInfo}
+          setElementsInfo={setElementsInfo}
         />
       </div>
       <br />

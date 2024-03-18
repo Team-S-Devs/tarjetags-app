@@ -146,13 +146,12 @@ const ElementsCardTab = ({
               setElementsInfo({ ...elementsInfo, color: e.target.value })
             }
           />
-
-          <br />
-          <br />
-          <br />
-          <br />
         </div>
       </StyledCard>
+      <br />
+      <br />
+      <br />
+      <br />
     </>
   );
 };

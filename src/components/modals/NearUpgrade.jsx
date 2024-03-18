@@ -20,7 +20,9 @@ const NearUpgrade = ({ open, setOpen, licenseType, limitDate }) => {
         }}
       >
         <Typography variant="h5" color={"primary"}>
-          Licencia a punto de expirar
+          {licenseType === LICENSE_TYPES.FREE && limitDate < new Date()
+            ? "Licencia expirada"
+            : "Licencia a punto de expirar"}
         </Typography>
       </div>
       {licenseType === LICENSE_TYPES.FREE && limitDate < new Date() ? (

@@ -159,67 +159,55 @@ const UserRow = ({
         </td>
       </tr>
       <Modal
-        readOnly
-        disableAutoFocus
-        open={open}
-        onClose={handleClose}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-        sx={{
-          borderRadius: "25px",
-          border: "none",
-          display: "flex",
-          justifyContent: "center",
-          alignContent: "center",
-        }}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={styleModal}>
-          <Typography
-            id="modal-modal-title"
-            color="primary"
-            variant="h5"
-            sx={{ fontWeight: "900", textAlign: "center" }}
-            component="h2"
-          >
-            Información Personal
-          </Typography>
-          <div className="personal-info-style">
-            <table className="table table-active">
-              <tbody>
-                <tr>
-                  <td>Nombre:</td>
-                  <td>{name}</td>
-                </tr>
-                <tr>
-                  <td>Email:</td>
-                  <td>{email}</td>
-                </tr>
-                <tr>
-                  <td>Teléfono:</td>
-                  <td>{phone}</td>
-                </tr>
-                <tr>
-                  <td>Ciudad:</td>
-                  <td>{city}</td>
-                </tr>
-                <tr>
-                  <td>Rubro:</td>
-                  <td>{companySector}</td>
-                </tr>
-                <tr>
-                  <td>Compañia:</td>
-                  <td>{company}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </Box>
-      </Modal>
+            readOnly
+            disableAutoFocus
+            open={open}
+            onClose={handleClose}
+            style={{display:'flex',alignItems:'center',justifyContent:'center'}}
+            sx={{
+                borderRadius:'25px',
+                border:'none', display:'flex', 
+                justifyContent:'center', 
+                alignContent:'center'}}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+        >
+            <Box sx={styleModal}>
+            <Typography id="modal-modal-title" color='primary' variant="h5" sx={{fontWeight:'900', textAlign:'center'}} component="h2">
+                Información Personal
+            </Typography>
+                <div className='personal-info-style table-responsive'>
+                    <table className="table table-active">
+                        <tbody>
+                            <tr>
+                                <td>Nombre:</td>
+                                <td>{name}</td>
+                            </tr>
+                            <tr>
+                                <td>Email:</td>
+                                <td>{email}</td>
+                            </tr>
+                            <tr>
+                                <td>Teléfono:</td>
+                                <td>{phone}</td>
+                            </tr>
+                            <tr>
+                                <td>Ciudad:</td>
+                                <td>{city}</td>
+                            </tr>
+                            <tr>
+                                <td>Rubro:</td>
+                                <td>{companySector}</td>
+                            </tr>
+                            <tr>
+                                <td>Compañia:</td>
+                                <td>{company}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </Box>
+        </Modal>
     </>
   );
 };

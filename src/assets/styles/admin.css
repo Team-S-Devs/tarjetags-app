@@ -92,16 +92,13 @@
 }
 
 .personal-info-style{
-    display: flex;
-    justify-content: center;
-    align-items: center;
     vertical-align:middle;
     max-width: max-content;
     margin-top: 1rem;
 }
 
 .personal-info-style table tbody td {
-    padding: .8rem;
+    padding: .4rem;
 }
 
 .personal-info-style table tr td:nth-child(1) {

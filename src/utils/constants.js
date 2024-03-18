@@ -15,7 +15,7 @@ export const LICENSE_TYPES = {
 
 export const licenseLimits = {
   [LICENSE_TYPES.FREE]: {
-    maxProducts: 1,
+    maxProducts: 10,
     admin: false,
     excludedButtons: ["WhatsApp", "Google Maps"],
     productsDivision: false

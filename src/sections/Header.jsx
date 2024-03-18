@@ -5,6 +5,8 @@ import { BiSolidUser } from "react-icons/bi";
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../utils/firebase-config';
 import { GoFileDirectoryFill } from 'react-icons/go'
+import { FaUsersCog } from "react-icons/fa";
+
 import useWindowSize from '../hooks/useWindowsSize';
 import '../assets/styles/header.css'
 import { doc, onSnapshot } from 'firebase/firestore';
@@ -20,6 +22,7 @@ const Header = () => {
   }, [location]);
   
   const [fullname, setFullname] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth,(fireBaseUser) => {
@@ -28,6 +31,7 @@ const Header = () => {
         const unsubscribe = onSnapshot(doc(db, 'users', fireBaseUser.uid), (snapshot) => {
             const userData = snapshot.data();
             setFullname(userData.fullname);
+            setIsAdmin(userData.admin);
         }, (error) => {
             setFullname("Perfil")
         });
@@ -58,6 +62,13 @@ const Header = () => {
       <nav className={'navigation ' +(conditional)}>
 
         <div className={`${conditional !== "navigationResponsive" && "d-flex"}`}>
+        { isAdmin ? 
+          <div className="header-link">
+            <FaUsersCog className='icon-header'/>
+            <Link to="/admin"><span className='link ml-1'>Admin Panel</span></Link>
+          </div> : <></>
+        }
+
         <div className="header-link">
           <GoFileDirectoryFill className='icon-header'/>
           <Link to="/"><span className='link ml-1'>Ver Mi Tarjeta</span></Link>

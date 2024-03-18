@@ -12,6 +12,7 @@ import {
 import { db } from "../utils/firebase-config";
 import "../assets/styles/admin.css";
 import UserRow from "../components/admin/UserRow";
+import useWindowSize from "../hooks/useWindowsSize";
 
 const Admin = () => {
   const [usersArray, setUsersArray] = useState([]);
@@ -54,7 +55,6 @@ const Admin = () => {
         ...doc.data(),
       }))
     );
-
     setNonRepeatedDocRef(querySnapshot);
     setLoading(false);
   };
@@ -67,6 +67,8 @@ const Admin = () => {
     setPageNum(pageNum - 1);
   };
 
+  
+                    
   const mountUsersTable = () => (
     <tbody>
       {usersArray.map((userData, index) => (
@@ -92,17 +94,15 @@ const Admin = () => {
     getUsersInRange(10);
   }, [pageNum]);
 
-  return (
-    <div className="profile-container">
-      <Header />
+  const { width, height } = useWindowSize();
 
-      <div
-        className="my-5 my-md-0 d-flex flex-column justify-content-center container cont-profile1"
-        style={{ minHeight: "100vh" }}
-      >
-        <BoldTitle variant="h3" textAlign="center">
-          ADMINISTRADOR
-        </BoldTitle>
+
+  return (
+      <div className='profile-container'>
+           <Header/>
+          
+          <div className="my-5 my-md-0 d-flex flex-column justify-content-center container cont-profile1" style={{ minHeight: "100vh"}}>
+              <BoldTitle variant={ width > 500 ? 'h3' : 'h5'} textAlign='center'>ADMINISTRADOR</BoldTitle>
 
         <div className="bg-white adminTable">
           {loading ? (
@@ -110,20 +110,22 @@ const Admin = () => {
               <span className="loader"></span>
             </div>
           ) : (
-            <table className="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">Nombre</th>
-                  <th>Email</th>
-                  <th>Fecha de Registro</th>
-                  <th>Fecha limite de licencia</th>
-                  <th>Tipo de Licencia</th>
-                  <th>Codigo de descuento</th>
-                  <th>Opciones</th>
-                </tr>
-              </thead>
-              {mountUsersTable()}
-            </table>
+            <div className="table-responsive">
+                <table className="table table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">Nombre</th>
+                    <th>Email</th>
+                    <th>Fecha de Registro</th>
+                    <th>Fecha limite de licencia</th>
+                    <th>Tipo de Licencia</th>
+                    <th>Codigo de descuento</th>
+                    <th>Opciones</th>
+                    </tr>
+                </thead>
+                {mountUsersTable()}
+                </table>
+            </div>
           )}
         </div>
         <div className="paginationOptions">

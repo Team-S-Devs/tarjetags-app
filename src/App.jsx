@@ -133,7 +133,45 @@ const theme = createTheme({
 });
 
 const App = () => {
-  const [user, setUser] = useState(null);
+
+  const [user, setUser]  = useState(null)
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  onAuthStateChanged(auth, (fireBaseUser) =>  {
+      if (fireBaseUser) {
+          setUser(fireBaseUser)
+          
+          var userStoredEmail = "";
+            
+          onSnapshot(doc(db, 'users', fireBaseUser.uid), (snapshot) => {
+                  const userInfo = snapshot.data();
+                  userStoredEmail = userInfo.email
+                  setIsAdmin(userInfo.admin)
+        
+                  const updateStoreEmail = async () => {
+                      const userDocRef = doc(db, 'users', auth.currentUser.uid);
+                      const data = {
+                          email: fireBaseUser.email,
+                      };
+                  
+                      try {
+                          await updateDoc(userDocRef, data);                          
+                      } catch (error) {
+                          console.error('Error updating email in Firestore:', error);
+                      }
+                  } 
+                  
+                  if (fireBaseUser.email != userStoredEmail) {
+                      updateStoreEmail()
+                  }
+        
+              }
+          );
+
+      } else {
+          setUser(null)
+      }
+  })
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (fireBaseUser) => {
@@ -159,7 +197,7 @@ const App = () => {
             <Route path="/sign-up" Component={SignUp} />
             <Route path="/login" Component={LogIn} />
             <Route path="/error" Component={Error} />
-            <Route path="/admin" Component={Admin} />
+            <Route path='/admin' Component={isAdmin ? Admin : Error}/>
             <Route path="/edit/:cardId" Component={EditCard} />
             <Route path="/restorePassword" Component={RestorePassword} />
             <Route

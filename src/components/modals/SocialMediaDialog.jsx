@@ -95,7 +95,7 @@ const SocialMediaDialog = (
             error !== "" && <Typography variant='body2' color="error">{error}</Typography>
         }
       </DialogContent>
-      <DialogActions>
+      <DialogActions style={{ marginBottom: 16, marginRight: 8 }}>
         <Button onClick={onClose}>Cancelar</Button>
         <Button onClick={handleSave} variant="contained" color="primary">
           Guardar

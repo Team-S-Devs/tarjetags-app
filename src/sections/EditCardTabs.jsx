@@ -31,6 +31,8 @@ const EditCardTabs = ({
   elementsInfo = { title: "", description: "", socialLinks: [] },
   setElementsInfo,
   cardId = "",
+  licenseType = "",
+  setOpenUpdate
 }) => {
   const [value, setValue] = useState(0);
 
@@ -64,6 +66,8 @@ const EditCardTabs = ({
           elementsInfo={elementsInfo}
           setElementsInfo={setElementsInfo}
           cardId={cardId}
+          licenseType={licenseType}
+          setOpenUpdate={setOpenUpdate}
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
@@ -71,6 +75,8 @@ const EditCardTabs = ({
           elementsInfo={elementsInfo}
           setElementsInfo={setElementsInfo}
           cardId={cardId}
+          licenseType={licenseType}
+          setOpenUpdate={setOpenUpdate}
         />
       </CustomTabPanel>
     </div>

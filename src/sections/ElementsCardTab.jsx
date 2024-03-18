@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import StyledCard from "../components/card/StyledCard";
 import { FaUser } from "react-icons/fa";
 import ThinTitle from "../components/texts/ThinTitle";
@@ -7,8 +7,6 @@ import useWindowSize from "../hooks/useWindowsSize";
 import ImageUploader from "../components/form/fields/ImageUploader";
 import { BsStars } from "react-icons/bs";
 import ThemeSelector from "../components/form/ThemeSelector";
-import ColorThemeDialog from "../components/form/ColorSelector";
-import SmallPrimaryButton from "../components/buttons/SmallPrimaryButton";
 import { TextField } from "@mui/material";
 
 const ElementsCardTab = ({
@@ -42,8 +40,6 @@ const ElementsCardTab = ({
 
   const { width } = useWindowSize();
 
-  const [openColorTheme, setOpenColorTheme] = useState(false);
-
   return (
     <>
       <div className="mt-4"></div>
@@ -71,7 +67,7 @@ const ElementsCardTab = ({
           />
           <FieldText
             multiline
-            maxLength={150}
+            maxLength={220}
             value={elementsInfo.description}
             label="Sobre el usuario:"
             marginTop={2}

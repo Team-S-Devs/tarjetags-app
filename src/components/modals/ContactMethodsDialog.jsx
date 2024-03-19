@@ -30,7 +30,7 @@ const ContactMethodsDialog = ({
 
   const handleIconClick = (name) => {
     if (licenseLimits[licenseType].excludedButtons.includes(name)) {
-      setOpenUpdate(LICENSE_TYPES.STANDARD + " o " + LICENSE_TYPES.PROFESSIONAL);
+      setOpenUpdate(LICENSE_TYPES.STANDARD + " o " + LICENSE_TYPES.PREMIUM);
       return;
     }
     setError("");

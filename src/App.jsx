@@ -21,6 +21,7 @@ import Card from "./pages/Card";
 import Admin from "./pages/Admin";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import Store from "./pages/Store";
 
 const theme = createTheme({
   overrides: {
@@ -133,45 +134,21 @@ const theme = createTheme({
 });
 
 const App = () => {
-
-  const [user, setUser]  = useState(null)
+  const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  onAuthStateChanged(auth, (fireBaseUser) =>  {
-      if (fireBaseUser) {
-          setUser(fireBaseUser)
-          
-          var userStoredEmail = "";
-            
-          onSnapshot(doc(db, 'users', fireBaseUser.uid), (snapshot) => {
-                  const userInfo = snapshot.data();
-                  userStoredEmail = userInfo.email
-                  setIsAdmin(userInfo.admin)
-        
-                  const updateStoreEmail = async () => {
-                      const userDocRef = doc(db, 'users', auth.currentUser.uid);
-                      const data = {
-                          email: fireBaseUser.email,
-                      };
-                  
-                      try {
-                          await updateDoc(userDocRef, data);                          
-                      } catch (error) {
-                          console.error('Error updating email in Firestore:', error);
-                      }
-                  } 
-                  
-                  if (fireBaseUser.email != userStoredEmail) {
-                      updateStoreEmail()
-                  }
-        
-              }
-          );
+  onAuthStateChanged(auth, (fireBaseUser) => {
+    if (fireBaseUser) {
+      setUser(fireBaseUser);
 
-      } else {
-          setUser(null)
-      }
-  })
+      onSnapshot(doc(db, "users", fireBaseUser.uid), (snapshot) => {
+        const userInfo = snapshot.data();
+        setIsAdmin(userInfo.admin);
+      });
+    } else {
+      setUser(null);
+    }
+  });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (fireBaseUser) => {
@@ -197,7 +174,8 @@ const App = () => {
             <Route path="/sign-up" Component={SignUp} />
             <Route path="/login" Component={LogIn} />
             <Route path="/error" Component={Error} />
-            <Route path='/admin' Component={isAdmin ? Admin : Error}/>
+            <Route path="/store" Component={isAdmin ? Store : Error} />
+            <Route path="/admin" Component={isAdmin ? Admin : Error} />
             <Route path="/edit/:cardId" Component={EditCard} />
             <Route path="/restorePassword" Component={RestorePassword} />
             <Route

@@ -7,7 +7,7 @@ export const URL_NAME = "tarjetag.com/"
 export const LICENSE_TYPES = {
   FREE: "Gratis",
   STANDARD: "Estándar",
-  PROFESSIONAL: "Profesional",
+  PREMIUM: "Premium",
   GOLD: "Oro",
   SILVER: "Plata",
   BRONZE: "Bronce",
@@ -26,7 +26,7 @@ export const licenseLimits = {
     excludedButtons: [],
     productsDivision: false
   },
-  [LICENSE_TYPES.PROFESSIONAL]: {
+  [LICENSE_TYPES.PREMIUM]: {
     maxProducts: 250,
     admin: true,
     excludedButtons: [],

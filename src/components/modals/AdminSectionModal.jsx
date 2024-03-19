@@ -82,7 +82,7 @@ const AdminSectionModal = ({ open, elementsInfo, index, setOpen }) => {
       try {
         const docSnap = await getDoc(doc(db, "users", cardCop.userId));
         const user = docSnap.data();
-        if (user.licenseType === LICENSE_TYPES.PROFESSIONAL) {
+        if (user.licenseType === LICENSE_TYPES.PREMIUM) {
           setError("");
           setCard({ ...cardCop });
           return true;

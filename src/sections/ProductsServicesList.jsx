@@ -30,8 +30,11 @@ const ProductsServicesList = ({
       licenseLimits[licenseType].maxProducts <= elementsInfo.products.length
     ) {
       setOpenUpdate(
-        licenseType === LICENSE_TYPES.PROFESSIONAL
-          ? "products" + LICENSE_TYPES.PROFESSIONAL
+        licenseType === LICENSE_TYPES.PREMIUM ||
+          licenseType === LICENSE_TYPES.BRONZE ||
+          licenseType === LICENSE_TYPES.SILVER ||
+          licenseType === LICENSE_TYPES.GOLD
+          ? "products" + licenseType
           : "products"
       );
       return;

@@ -65,7 +65,7 @@ const ButtonsCardTab = ({
       <br />
       <div
         onClick={() => {
-          if (!licenseLimits[licenseType].admin) setOpenUpdate(LICENSE_TYPES.PROFESSIONAL);
+          if (!licenseLimits[licenseType].admin) setOpenUpdate(LICENSE_TYPES.PREMIUM);
         }}
       >
         <div className="mt-4" style={{ marginTop: 400 }}>

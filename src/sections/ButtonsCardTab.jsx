@@ -5,16 +5,20 @@ import ContactButtons from "./ContactButtons";
 import ExtraButtons from "./ExtraButtons";
 import ShareButtonSwitch from "./ShareButtonSwitch";
 import AdminSection from "./AdminSection";
+import { LICENSE_TYPES, licenseLimits } from "../utils/constants";
+import { FaLock } from "react-icons/fa";
 
 const ButtonsCardTab = ({
   elementsInfo = { title: "", description: "", socialLinks: [] },
   setElementsInfo,
   cardId,
+  licenseType = "",
+  setOpenUpdate,
 }) => {
   return (
     <div>
-        <br />
-        <br />
+      <br />
+      <br />
       <ShareButtonSwitch
         elementsInfo={elementsInfo}
         setElementsInfo={setElementsInfo}
@@ -41,6 +45,8 @@ const ButtonsCardTab = ({
         <ContactButtons
           elementsInfo={elementsInfo}
           setElementsInfo={setElementsInfo}
+          licenseType={licenseType}
+          setOpenUpdate={setOpenUpdate}
         />
       </div>
       <br />
@@ -57,16 +63,31 @@ const ButtonsCardTab = ({
         />
       </div>
       <br />
-      <div className="mt-4" style={{ marginTop: 400 }}>
-        <ThinTitle variant="h5" color="primary" textAlign="center">
-          Administrador
-        </ThinTitle>
-      </div>
-      <div className="mt-3">
-        <AdminSection
-          elementsInfo={elementsInfo}
-          setElementsInfo={setElementsInfo}
-        />
+      <div
+        onClick={() => {
+          if (!licenseLimits[licenseType].admin) setOpenUpdate(LICENSE_TYPES.PREMIUM);
+        }}
+      >
+        <div className="mt-4" style={{ marginTop: 400 }}>
+          <ThinTitle
+            variant="h5"
+            color={!licenseLimits[licenseType].admin ? "gray" : "primary"}
+            textAlign="center"
+          >
+            Administrador
+            {!licenseLimits[licenseType].admin && (
+              <FaLock style={{ marginLeft: 20, cursor: "pointer" }} />
+            )}
+          </ThinTitle>
+        </div>
+        <div className="mt-3">
+          <AdminSection
+            elementsInfo={elementsInfo}
+            setElementsInfo={setElementsInfo}
+            licenseType={licenseType}
+            disabled={!licenseLimits[licenseType].admin}
+          />
+        </div>
       </div>
       <br />
       <br />

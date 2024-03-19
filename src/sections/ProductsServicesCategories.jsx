@@ -4,10 +4,14 @@ import ThinTitle from "../components/texts/ThinTitle";
 import SmallPrimaryButton from "../components/buttons/SmallPrimaryButton";
 import { IconButton, TextField } from "@mui/material";
 import { GoTrash } from "react-icons/go";
+import { licenseLimits } from "../utils/constants";
+import { FaLock } from "react-icons/fa";
 
 const ProductsServicesCategories = ({
   elementsInfo = { title: "", description: "", socialLinks: [] },
   setElementsInfo,
+  licenseType = "",
+  disabled,
 }) => {
   const deletedSocialLinkByIndex = (index) => {
     const elementsInfoCopy = { ...elementsInfo };
@@ -34,7 +38,15 @@ const ProductsServicesCategories = ({
     <StyledCard style={{ padding: 30 }}>
       {elementsInfo.productCategories.length === 0 ? (
         <>
-          <ThinTitle variant="subtitle1" color="secondary" textAlign="center">
+          <ThinTitle
+            variant="subtitle1"
+            color={
+              !licenseLimits[licenseType].productsDivision
+                ? "gray"
+                : "secondary"
+            }
+            textAlign="center"
+          >
             Agrega diferentes categorías para la organización de tus productos o
             servicios
           </ThinTitle>
@@ -60,6 +72,7 @@ const ProductsServicesCategories = ({
               <IconButton
                 color="error"
                 onClick={() => deletedSocialLinkByIndex(index)}
+                disabled={disabled}
               >
                 <GoTrash />
               </IconButton>
@@ -69,7 +82,13 @@ const ProductsServicesCategories = ({
       )}
       <div className="mt-4"></div>
       <div className="d-flex align-items-center justify-content-center">
-        <SmallPrimaryButton onClick={handleAddCategory}>
+        <SmallPrimaryButton
+          disabled={!licenseLimits[licenseType].productsDivision}
+          onClick={handleAddCategory}
+          endIcon={
+            !licenseLimits[licenseType].productsDivision ? <FaLock /> : <></>
+          }
+        >
           Agregar Categoría
         </SmallPrimaryButton>
       </div>

@@ -4,20 +4,39 @@ import BoldTitle from "../components/texts/BoldTitle";
 import EditCardTabs from "../sections/EditCardTabs";
 import PreviewCardTab from "../sections/PreviewCardTab";
 import useWindowSize from "../hooks/useWindowsSize";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import {
+  ToggleButton,
+  ToggleButtonGroup,
+  Dialog,
+  Button,
+  DialogActions,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+} from "@mui/material";
 import MediumPrimaryButton from "../components/buttons/MediumPrimaryButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db, storage } from "../utils/firebase-config";
 import "../assets/styles/loader.css";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { LICENSE_TYPES } from "../utils/constants";
+import { verificarLicencia } from "../utils/methods";
+import UpdateLicenseModal from "../components/modals/UpdateLicenseModal";
+import { FaStar } from "react-icons/fa";
 
 const EditCard = () => {
   const { cardId } = useParams();
-  const { width, height } = useWindowSize();
+  const { width } = useWindowSize();
   const [nav, setNav] = useState("edit");
   const navigate = useNavigate();
   const [idCard, setIdCard] = useState("");
+  const [licenseType, setLicenseType] = useState("");
+  const [validLicense, setValidLicense] = useState(true);
+  const [openUpdate, setOpenUpdate] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [loadingGetting, setLoadingGetting] = useState(true);
 
   const handleChange = (event, newValue) => {
     if (newValue == null) return;
@@ -38,8 +57,25 @@ const EditCard = () => {
       url: "",
     },
   });
-  const [loading, setLoading] = useState(false);
-  const [loadingGetting, setLoadingGetting] = useState(true);
+
+  const simpleSave = async () => {
+    setLoading(true);
+    let elCopy = { ...elementsInfo };
+    if (elCopy.profilePhoto.file != null && elCopy.coverPhoto != null) {
+      elCopy = await handleImageUpload();
+    } else if (elCopy.profilePhoto.file == null) {
+      delete elCopy.profilePhoto;
+    } else {
+      delete elCopy.coverPhoto;
+    }
+    const docCard = doc(db, "cards", cardId);
+
+    try {
+      await updateDoc(docCard, { ...elCopy });
+    } catch (error) {}
+
+    setLoading(false);
+  };
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -78,10 +114,7 @@ const EditCard = () => {
           storage,
           `${elementsInfo.userId}/${cardId}/profilePhoto`
         );
-        // Upload the file to Firebase Cloud Storage
         await uploadBytes(storageRef, profilePhoto.file);
-
-        // Get the URL of the uploaded image
         const url = await getDownloadURL(storageRef);
 
         returnOBject["profilePhoto"] = {
@@ -90,8 +123,7 @@ const EditCard = () => {
           url,
         };
       } catch (error) {
-        alert("Error subiendo imagen: " + error);
-        // Handle the error as needed
+        alert("Error subiendo imagen, inténtalo de nuevo.");
       }
     }
 
@@ -101,20 +133,17 @@ const EditCard = () => {
           storage,
           `${elementsInfo.userId}/${cardId}/coverPhoto`
         );
-        // Upload the file to Firebase Cloud Storage
         await uploadBytes(storageRef, coverPhoto.file);
 
-        // Get the URL of the uploaded image
         const url = await getDownloadURL(storageRef);
 
-        // Optionally, return the updated state or any other data
         returnOBject["coverPhoto"] = {
           ...coverPhoto,
           file: "",
           url,
         };
       } catch (error) {
-        alert("Error subiendo imagen: " + error);
+        alert("Error subiendo imagen, inténtalo de nuevo.");
       }
     }
 
@@ -151,9 +180,21 @@ const EditCard = () => {
             cardFields["productCategories"] = [];
           if (!cardFields.products) cardFields["products"] = [];
           if (!cardFields.extraButtons) cardFields["extraButtons"] = [];
+          if (!cardFields.adminCards) cardFields["adminCards"] = [];
           if (!cardFields.theme) cardFields["theme"] = "light";
           if (!cardFields.color) cardFields["color"] = "#561AD9";
           setElementsInfo(cardFields);
+
+          const docSnap = await getDoc(doc(db, "users", cardFields.userId));
+          const user = docSnap.data();
+
+          const userLimitDate = user.limitDate;
+          setLicenseType(
+            userLimitDate.toDate() > new Date()
+              ? user.licenseType
+              : LICENSE_TYPES.FREE
+          );
+          setValidLicense(verificarLicencia(licenseType, userLimitDate));
         } else {
           navigate("/dashboard");
         }
@@ -169,69 +210,123 @@ const EditCard = () => {
   return (
     <div className="container" style={{ paddingTop: "90px" }}>
       <Header />
-      <BoldTitle textAlign="center">Editar Tarjeta</BoldTitle>
-      <div className="mt-3"></div>
-      <>
-        {loadingGetting ? (
-          <div className="full-container d-flex align-items-center justify-content-center w-100">
-            <span className="loader"></span>
-          </div>
-        ) : (
+      {validLicense ? (
+        <>
+          <BoldTitle textAlign="center">Editar Tarjeta</BoldTitle>
+          <div className="mt-3"></div>
           <>
-            {width > 986 ? (
-              <div className="d-flex">
-                <EditCardTabs
-                  elementsInfo={elementsInfo}
-                  setElementsInfo={setElementsInfo}
-                  cardId={idCard}
-                />
-                <PreviewCardTab handleSave={handleSave} loading={loading} />
+            {loadingGetting ? (
+              <div className="full-container d-flex align-items-center justify-content-center w-100">
+                <span className="loader"></span>
               </div>
             ) : (
               <>
-                <ToggleButtonGroup
-                  color="primary"
-                  value={nav}
-                  exclusive
-                  onChange={handleChange}
-                  fullWidth
-                >
-                  <ToggleButton value="edit">Edición</ToggleButton>
-                  <ToggleButton value="preview">Vista Previa</ToggleButton>
-                </ToggleButtonGroup>
-                {nav === "edit" ? (
-                  <EditCardTabs
-                    elementsInfo={elementsInfo}
-                    setElementsInfo={setElementsInfo}
-                    cardId={idCard}
-                  />
+                {width > 986 ? (
+                  <div className="d-flex">
+                    <EditCardTabs
+                      elementsInfo={elementsInfo}
+                      setElementsInfo={setElementsInfo}
+                      cardId={idCard}
+                      licenseType={licenseType}
+                      setOpenUpdate={setOpenUpdate}
+                    />
+                    <PreviewCardTab
+                      handleSave={handleSave}
+                      loading={loading}
+                      elementsInfo={elementsInfo}
+                      licenseType={licenseType}
+                    />
+                  </div>
                 ) : (
-                  <PreviewCardTab handleSave={handleSave} loading={loading} />
+                  <>
+                    <ToggleButtonGroup
+                      color="primary"
+                      value={nav}
+                      exclusive
+                      onChange={handleChange}
+                      fullWidth
+                    >
+                      <ToggleButton value="edit">Edición</ToggleButton>
+                      <ToggleButton value="preview">Vista Previa</ToggleButton>
+                    </ToggleButtonGroup>
+                    {nav === "edit" ? (
+                      <EditCardTabs
+                        elementsInfo={elementsInfo}
+                        setElementsInfo={setElementsInfo}
+                        cardId={idCard}
+                        licenseType={licenseType}
+                        setOpenUpdate={setOpenUpdate}
+                      />
+                    ) : (
+                      <PreviewCardTab
+                        handleSave={handleSave}
+                        loading={loading}
+                        elementsInfo={elementsInfo}
+                        licenseType={licenseType}
+                      />
+                    )}
+                    <div
+                      style={{
+                        position: "fixed",
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        padding: "10px",
+                        boxSizing: "border-box",
+                      }}
+                      className="container"
+                    >
+                      <MediumPrimaryButton
+                        loading={loading}
+                        onClick={handleSave}
+                        fullWidth
+                      >
+                        Publicar Cambios
+                      </MediumPrimaryButton>
+                    </div>
+                  </>
                 )}
-                <div
-                  style={{
-                    position: "fixed",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    padding: "10px",
-                    boxSizing: "border-box",
-                  }}
-                  className="container"
-                >
-                  <MediumPrimaryButton
-                    loading={loading}
-                    onClick={handleSave}
-                    fullWidth
-                  >
-                    Publicar Cambios
-                  </MediumPrimaryButton>
-                </div>
               </>
             )}
           </>
-        )}
-      </>
+        </>
+      ) : (
+        <Dialog
+          open={true}
+          onClose={() => {}}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            Licencia expirada
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              El límite de la Licencia Gratuita ha expirado. Adquiere una
+              licencia para editar y publicar su tarjeta.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                navigate("/plans");
+              }}
+              startIcon={<FaStar />}
+              variant="contained"
+              color="primary"
+            >
+              Adquirir Licencia
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
+
+      <UpdateLicenseModal
+        open={openUpdate !== ""}
+        setOpen={(bool) => setOpenUpdate(!bool ? "" : "admin")}
+        keyLic={openUpdate}
+        handleSave={simpleSave}
+      />
     </div>
   );
 };

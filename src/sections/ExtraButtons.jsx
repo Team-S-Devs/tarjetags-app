@@ -7,6 +7,7 @@ import { GoTrash } from "react-icons/go";
 import SmallPrimaryButton from "../components/buttons/SmallPrimaryButton";
 import { GREY_RECTANGLE } from "../utils/constants";
 import ExtraButtonModal from "../components/modals/ExtraButtonModal";
+import useWindowSize from "../hooks/useWindowsSize";
 
 const ExtraButtons = ({
   elementsInfo = {
@@ -28,7 +29,7 @@ const ExtraButtons = ({
       id: Date.now(),
       url: "",
       name: "",
-      imgUrl: ""
+      imgUrl: "",
     });
     setElementsInfo(elementsInfoCopy);
     setButtonIdx(elementsInfoCopy.extraButtons.length - 1);
@@ -40,6 +41,8 @@ const ExtraButtons = ({
     elementsInfoCopy.extraButtons.splice(index, 1);
     setElementsInfo(elementsInfoCopy);
   };
+
+  const { width } = useWindowSize();
 
   return (
     <StyledCard style={{ padding: 30 }}>
@@ -63,15 +66,13 @@ const ExtraButtons = ({
               key={button.id}
             >
               <img
-                src={
-                  button.imgUrl !== "" ? button.imgUrl : GREY_RECTANGLE
-                }
+                src={button.imgUrl !== "" ? button.imgUrl : GREY_RECTANGLE}
                 width={62}
                 height={62}
                 style={{
                   objectFit: "cover",
                   flex: 20,
-                  maxWidth: 62
+                  maxWidth: 62,
                 }}
               />
 
@@ -79,9 +80,9 @@ const ExtraButtons = ({
                 <Typography
                   style={{
                     wordWrap: "break-word",
-                    width: 120,
                     textAlign: "left",
                   }}
+                  maxWidth={width > 900 ? 400 : 120}
                   marginLeft={5}
                   marginRight={2}
                 >
@@ -90,9 +91,9 @@ const ExtraButtons = ({
                 <Typography
                   style={{
                     wordWrap: "break-word",
-                    width: 120,
                     textAlign: "left",
                   }}
+                  maxWidth={width > 900 ? 400 : 120}
                   marginLeft={5}
                   marginRight={2}
                   variant="caption"

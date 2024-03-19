@@ -8,6 +8,7 @@ import SmallPrimaryButton from "../buttons/SmallPrimaryButton";
 import { Timestamp, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../utils/firebase-config";
 import { useNavigate } from "react-router-dom";
+import { URL_NAME } from "../../utils/constants";
 
 const NewCardModal = ({ open, setOpen, userId }) => {
   const navigate = useNavigate();
@@ -41,7 +42,9 @@ const NewCardModal = ({ open, setOpen, userId }) => {
     "edit",
     "error",
     "details",
+    "plans",
     "admin",
+    "store"
   ];
 
   const saveNewCard = async () => {
@@ -104,8 +107,8 @@ const NewCardModal = ({ open, setOpen, userId }) => {
         <div className="mt-1"></div>
 
         <div className="d-flex align-items-center justify-content-center">
-          <ThinTitle variant="h6" color="primary">
-            tarjetags.com/
+          <ThinTitle variant={width > 768 ? "h6" : "body2"} color="primary">
+            {URL_NAME}
           </ThinTitle>
           <div style={{ width: width > 768 ? 30 : 15 }}></div>
           <FieldText

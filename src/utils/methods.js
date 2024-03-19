@@ -1,5 +1,7 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "./firebase-config";
+import { LICENSE_TYPES } from "./constants";
+import { Timestamp } from "firebase/firestore";
 
 /**
  * Truncates a string if its length is greater than 30 characters.
@@ -75,7 +77,13 @@ export const validateImage = (file) => {
   return true;
 };
 
-export const handleUploadImage = async (file, elementsInfo, cardId, index, folder) => {
+export const handleUploadImage = async (
+  file,
+  elementsInfo,
+  cardId,
+  index,
+  folder
+) => {
   try {
     const storageRef = ref(
       storage,
@@ -98,3 +106,89 @@ export const handleUploadImage = async (file, elementsInfo, cardId, index, folde
     };
   }
 };
+
+// Function to check if a date is less than 3 months in the future
+export function isLessThanThreeMonthsInFuture(date) {
+  // Get today's date
+  const today = new Date();
+
+  // Calculate the date 3 months from today
+  const threeMonthsFromNow = new Date(
+    today.getFullYear(),
+    today.getMonth() + 3,
+    today.getDate()
+  );
+
+  // Compare the given date with the date 3 months from now
+  return date < threeMonthsFromNow;
+}
+
+// Function to check if a date is less than 1 month in the future
+export function isLessThanOneMonthInFuture(date) {
+  // Get today's date
+  const today = new Date();
+
+  // Calculate the date 3 months from today
+  const threeMonthsFromNow = new Date(
+    today.getFullYear(),
+    today.getMonth() + 1,
+    today.getDate()
+  );
+
+  // Compare the given date with the date 3 months from now
+  return date < threeMonthsFromNow;
+}
+
+// Function to get the remaining time as a string
+export function getRemainingTimeAsString(date) {
+  // Get today's date
+  const today = new Date();
+
+  // Calculate the difference in milliseconds
+  const difference = date.getTime() - today.getTime();
+
+  // Calculate the difference in days and months
+  const daysDifference = Math.ceil(difference / (1000 * 3600 * 24));
+  const monthsDifference = Math.ceil(daysDifference / 30);
+
+  // If less than a month, return the difference in days
+  if (monthsDifference < 1) {
+    return `Quedan ${daysDifference} día${
+      daysDifference !== 1 ? "s" : ""
+    } restantes de validez de su licencia`;
+  }
+
+  // Otherwise, return the difference in months
+  return `Quedan ${monthsDifference} mes${
+    monthsDifference !== 1 ? "es" : ""
+  } restantes de validez de su licencia`;
+}
+
+export const verificarLicencia = (licenseType, limitDate) => {
+  const fechaActual = new Date();
+  const timestampActual = Timestamp.fromDate(fechaActual);
+
+  const fechaLimite = limitDate.toDate();
+
+  // Caso 1: Si el tipo de licencia es "Gratis" y la fecha límite es menor que la fecha actual
+  if (licenseType === LICENSE_TYPES.FREE && limitDate < timestampActual) {
+      return false;
+  }
+  
+  // Caso 2: Si el tipo de licencia no es "Gratis" y la fecha actual es menor que la fecha límite + 3 meses
+  if (licenseType !== LICENSE_TYPES.FREE) {
+      // Añadir 3 meses a la fecha límite
+      fechaLimite.setMonth(fechaLimite.getMonth() + 3);
+      const tresMesesDespues = Timestamp.fromDate(fechaLimite);
+      
+      // Comprobar si la fecha actual es menor que tresMesesDespues
+      if (timestampActual < tresMesesDespues) {
+          return true;
+      } else {
+          return false;
+      }
+  }
+
+  // Otros casos: Si no cumple ninguno de los criterios anteriores, devolver false
+  return false;
+}

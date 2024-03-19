@@ -3,17 +3,9 @@ import { Box, Modal, Typography } from "@mui/material";
 import DropdownField from "../form/fields/DropdownField";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import dayjs from "dayjs";
-import { Timestamp, collection, doc, updateDoc } from "firebase/firestore";
+import { Timestamp, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../utils/firebase-config";
-
-const LICENSE_TYPES = {
-  FREE: "Gratis",
-  STANDARD: "Estándar",
-  PROFESSIONAL: "Profesional",
-  GOLD: "Oro",
-  SILVER: "Plata",
-  BRONZE: "Bronce",
-};
+import { LICENSE_TYPES } from "../../utils/constants";
 
 const UserRow = ({
   userId = "",
@@ -34,7 +26,7 @@ const UserRow = ({
   const licenseOptions = [
     LICENSE_TYPES.FREE,
     LICENSE_TYPES.STANDARD,
-    LICENSE_TYPES.PROFESSIONAL,
+    LICENSE_TYPES.PREMIUM,
     LICENSE_TYPES.BRONZE,
     LICENSE_TYPES.SILVER,
     LICENSE_TYPES.GOLD,

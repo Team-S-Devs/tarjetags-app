@@ -5,18 +5,40 @@ import ThinTitle from "../components/texts/ThinTitle";
 import { LiaEditSolid } from "react-icons/lia";
 import { GoTrash } from "react-icons/go";
 import SmallPrimaryButton from "../components/buttons/SmallPrimaryButton";
-import { GREY_RECTANGLE } from "../utils/constants";
+import {
+  GREY_RECTANGLE,
+  LICENSE_TYPES,
+  licenseLimits,
+} from "../utils/constants";
 import ProductModal from "../components/modals/ProductModal";
+import { FaLock } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const ProductsServicesList = ({
   elementsInfo = { title: "", description: "", contactLinks: [], products: [] },
   setElementsInfo,
   cardId,
+  licenseType = "",
+  setOpenUpdate,
 }) => {
   const [productIdx, setProductIdx] = useState(0);
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleAddProduct = () => {
+    if (
+      licenseLimits[licenseType].maxProducts <= elementsInfo.products.length
+    ) {
+      setOpenUpdate(
+        licenseType === LICENSE_TYPES.PREMIUM ||
+          licenseType === LICENSE_TYPES.BRONZE ||
+          licenseType === LICENSE_TYPES.SILVER ||
+          licenseType === LICENSE_TYPES.GOLD
+          ? "products" + licenseType
+          : "products"
+      );
+      return;
+    }
     const elementsInfoCopy = { ...elementsInfo };
     elementsInfoCopy.products.push({
       name: "",
@@ -101,10 +123,7 @@ const ProductsServicesList = ({
               >
                 <LiaEditSolid size={30} color="#4C77EA" />
               </IconButton>
-              <IconButton
-                color="error"
-                onClick={() => deleteProduct(index)}
-              >
+              <IconButton color="error" onClick={() => deleteProduct(index)}>
                 <GoTrash />
               </IconButton>
             </div>
@@ -112,8 +131,31 @@ const ProductsServicesList = ({
         </>
       )}
       <div className="mt-4"></div>
-      <div className="d-flex align-items-center justify-content-center">
-        <SmallPrimaryButton onClick={handleAddProduct}>
+      <div
+        className="d-flex align-items-center justify-content-center"
+        onClick={() => {
+          if (
+            licenseLimits[licenseType].maxProducts <=
+            elementsInfo.products.length
+          )
+            handleAddProduct();
+        }}
+      >
+        <SmallPrimaryButton
+          onClick={handleAddProduct}
+          disabled={
+            licenseLimits[licenseType].maxProducts <=
+            elementsInfo.products.length
+          }
+          endIcon={
+            licenseLimits[licenseType].maxProducts <=
+            elementsInfo.products.length ? (
+              <FaLock />
+            ) : (
+              <></>
+            )
+          }
+        >
           Agregar
         </SmallPrimaryButton>
       </div>

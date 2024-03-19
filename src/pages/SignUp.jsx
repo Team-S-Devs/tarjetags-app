@@ -193,7 +193,6 @@ const SignUp = () => {
           : "",
         department: departmentValue,
         discountCode: discountCodeValue,
-        license: Timestamp.fromMillis(0),
         createdAt: Timestamp.now(),
         licenseType: LICENSE_TYPES.FREE,
         limitDate: Timestamp.fromDate(threeMonthsAhead)

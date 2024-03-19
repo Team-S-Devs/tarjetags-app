@@ -20,7 +20,7 @@ const ProductsServicesTab = ({
 }) => {
   const updatePress = () => {
     if (!licenseLimits[licenseType].productsDivision)
-      setOpenUpdate(LICENSE_TYPES.PROFESSIONAL);
+      setOpenUpdate(LICENSE_TYPES.PREMIUM);
   };
 
   return (

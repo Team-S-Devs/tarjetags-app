@@ -44,6 +44,7 @@ const NewCardModal = ({ open, setOpen, userId }) => {
     "details",
     "plans",
     "admin",
+    "store"
   ];
 
   const saveNewCard = async () => {

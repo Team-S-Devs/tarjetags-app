@@ -29,7 +29,6 @@ const ExtraButtonModal = ({
   const handleSaveProduct = async () => {
     let userInf = { ...userInfoCop };
     setLoading(true);
-    console.log(file);
     if (file) {
       try {
         let imageStatus = await handleUploadImage(

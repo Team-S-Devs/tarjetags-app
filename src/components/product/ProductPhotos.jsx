@@ -92,6 +92,7 @@ const ProductPhotos = ({
 
   const { width } = useWindowSize();
 
+  console.log(imageUrls)
   return (
     <div style={{ margin: 0, marginTop: 12, marginBottom: 24 }}>
       <Box

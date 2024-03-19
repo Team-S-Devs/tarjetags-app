@@ -8,11 +8,14 @@ import ThinTitle from "../texts/ThinTitle";
 import { useNavigate } from "react-router-dom";
 import {
   getDateFromTimestamp,
+  getRemainingTimeAsString,
   getStringDateFromTimestamp,
+  isLessThanThreeMonthsInFuture,
 } from "../../utils/methods";
 import MediumPrimaryButton from "../buttons/MediumPrimaryButton";
 import { FaStar } from "react-icons/fa";
 import useWindowSize from "../../hooks/useWindowsSize";
+import { LICENSE_TYPES } from "../../utils/constants";
 
 const InfoCard = ({ cardId, user }) => {
   const [loadingGetting, setLoadingGetting] = useState(true);
@@ -23,7 +26,10 @@ const InfoCard = ({ cardId, user }) => {
     coverPhoto: "",
   });
   const [license, setLicense] = useState("");
+  const [licenseType, setLicenseType] = useState("");
   const [isPro, setIsPro] = useState(true);
+  const [proxVenc, setProxVenc] = useState(false);
+  const [remainingLicense, setRemainingLicense] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,8 +67,19 @@ const InfoCard = ({ cardId, user }) => {
       doc(db, "users", user.uid),
       (snapshot) => {
         const userInfo = snapshot.data();
-        setIsPro(getDateFromTimestamp(userInfo.license) >= new Date());
-        setLicense(getStringDateFromTimestamp(userInfo.license));
+        setIsPro(getDateFromTimestamp(userInfo.limitDate) >= new Date());
+        setLicenseType(
+          userInfo.limitDate.toDate() > new Date()
+            ? userInfo.licenseType
+            : LICENSE_TYPES.FREE
+        );
+        setProxVenc(isLessThanThreeMonthsInFuture(userInfo.limitDate));
+        if (userInfo.limitDate.toDate() > new Date())
+          setLicense("Hasta " + getStringDateFromTimestamp(userInfo.limitDate));
+        else setLicense("Caducada");
+        setRemainingLicense(
+          getRemainingTimeAsString(userInfo.limitDate.toDate())
+        );
       },
       (error) => {
         navigate("/");
@@ -133,9 +150,7 @@ const InfoCard = ({ cardId, user }) => {
             <div className="d-flex">
               <ThinTitle color="primary" variant="h6" textAlign="left">
                 Fecha de creación:&nbsp;&nbsp;&nbsp;
-                <span style={{ color: "#000" }}>
-                    {elementsInfo.createdAt}
-                </span>
+                <span style={{ color: "#000" }}>{elementsInfo.createdAt}</span>
               </ThinTitle>
             </div>
             <div className="mt-1"></div>
@@ -144,16 +159,30 @@ const InfoCard = ({ cardId, user }) => {
                 Licencia:&nbsp;&nbsp;&nbsp;
               </ThinTitle>
               <ThinTitle color="black" variant="h6" textAlign="left">
-                {isPro ? `Hasta ${license}` : "Gratuita"}
+                {licenseType} {`${license}`}
               </ThinTitle>
             </div>
-            {!isPro && (
+            {(!isPro || licenseType === LICENSE_TYPES.FREE) && (
               <div className="mt-2">
                 <MediumPrimaryButton
                   startIcon={<FaStar size={14} />}
                   onClick={() => navigate("/plans")}
                 >
                   Adquirir licencia
+                </MediumPrimaryButton>
+              </div>
+            )}
+            {proxVenc && (
+              <div className="mt-3">
+                <ThinTitle color="#888" variant="h6" textAlign="left">
+                  {remainingLicense}
+                </ThinTitle>
+                <div className="mt-2"></div>
+                <MediumPrimaryButton
+                  startIcon={<FaStar size={14} />}
+                  onClick={() => navigate("/plans")}
+                >
+                  Renovar licencia
                 </MediumPrimaryButton>
               </div>
             )}

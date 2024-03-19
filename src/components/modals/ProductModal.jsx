@@ -3,7 +3,6 @@ import {
   CircularProgress,
   Dialog,
   FormControlLabel,
-  MenuItem,
   Switch,
   TextField,
   Typography,
@@ -39,7 +38,7 @@ const ProductModal = ({
     if (imgsArray) {
       for (let i = 0; i < imgsArray.length; i++) {
         imgsUrlsCop.push({
-          url: imgsArray[i],
+          url: imgsArray[i].url,
         });
       }
     }
@@ -184,14 +183,14 @@ const ProductModal = ({
               index={index}
             />
 
-            {/* <Button
+            <Button
               variant="contained"
               color="primary"
               style={{ fontSize: 15, marginTop: 32 }}
               onClick={handleSaveProduct}
             >
               Guardar
-            </Button> */}
+            </Button>
           </div>
         </Dialog>
       ) : (

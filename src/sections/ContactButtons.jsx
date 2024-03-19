@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import StyledCard from "../components/card/StyledCard";
 import ThinTitle from "../components/texts/ThinTitle";
 import { IconButton, Typography } from "@mui/material";
-import { FaPhone, } from "react-icons/fa";
+import { FaPhone } from "react-icons/fa";
 import { GoGlobe, GoTrash } from "react-icons/go";
 import { LiaEditSolid } from "react-icons/lia";
 import SmallPrimaryButton from "../components/buttons/SmallPrimaryButton";
@@ -51,6 +51,8 @@ export const contactButtonsOptions = [
 const ContactButtons = ({
   elementsInfo = { title: "", description: "", contactLinks: [] },
   setElementsInfo,
+  licenseType = "",
+  setOpenUpdate
 }) => {
   const [openContactModal, setOpenContactModal] = useState(false);
 
@@ -142,6 +144,8 @@ const ContactButtons = ({
         elementsInfo={elementsInfo}
         indexEditContactLink={indexEditContactLink}
         isEditing={indexEditContactLink !== -1}
+        licenseType={licenseType}
+        setOpenUpdate={setOpenUpdate}
       />
     </StyledCard>
   );

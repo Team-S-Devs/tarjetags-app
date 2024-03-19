@@ -30,6 +30,7 @@ import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase-config";
 import { Timestamp } from "firebase/firestore";
+import { LICENSE_TYPES } from "../utils/constants";
 
 /**
  * SignUp component provides a user registration form with optional company details.
@@ -170,6 +171,14 @@ const SignUp = () => {
     }
 
     try {
+      const today = new Date();
+      // Add 3 months to today's date
+      const threeMonthsAhead = new Date(
+        today.getFullYear(),
+        today.getMonth() + 3,
+        today.getDate()
+      );
+
       // Create user data in Firestore
       const userData = {
         fullname,
@@ -186,6 +195,8 @@ const SignUp = () => {
         discountCode: discountCodeValue,
         license: Timestamp.fromMillis(0),
         createdAt: Timestamp.now(),
+        licenseType: LICENSE_TYPES.FREE,
+        limitDate: Timestamp.fromDate(threeMonthsAhead)
       };
       setLoading(true);
 

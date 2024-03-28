@@ -26,7 +26,9 @@ const SearchBar = (
             <Paper
                 component="form"
                 sx={{ p: '2px 4px', display: 'flex', alignItems: 'center'}}
-                onSubmit={(e) => {e.preventDefault(); handleSearch}}
+                onSubmit={(e) => {
+                    e.preventDefault(); handleSearch()
+                }}
             >
                 <InputBase
                     sx={{

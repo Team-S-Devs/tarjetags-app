@@ -6,7 +6,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../utils/firebase-config";
 import { verificarLicencia } from "../utils/methods";
 import Preview from "../sections/Preview";
-import "../assets/styles/loader.css";
+import '../assets/styles/loader.css'
 
 const Card = () => {
   const { cardId } = useParams();
@@ -74,8 +74,7 @@ const Card = () => {
               ? user.licenseType
               : LICENSE_TYPES.FREE
           );
-          if (!verificarLicencia(licenseType, userLimitDate))
-            console.log("hola");
+          if (!verificarLicencia(user.licenseType, userLimitDate)) navigate("/error");
         } else {
           navigate("/error");
         }
@@ -94,12 +93,9 @@ const Card = () => {
         <title>{`${elementsInfo.title} - ${SITE_NAME}`}</title>
       </MetaTags>
       {loadingGetting ? (
-        <div
-          className="container d-flex align-items-center justify-content-center"
-          style={{ height: "100vh" }}
-        >
-          <span className="loader"></span>
-        </div>
+        <div className='container d-flex align-items-center justify-content-center' style={{ height: '100vh' }}>
+        <span className="loader"></span>
+      </div>
       ) : (
         <Preview elementsInfo={elementsInfo} licenseType={licenseType} />
       )}

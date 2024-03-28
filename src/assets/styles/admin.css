@@ -104,3 +104,37 @@
 .personal-info-style table tr td:nth-child(1) {
     font-weight: 600;
 }
+
+.search-style {
+    display: flex;
+    justify-content: right;
+}
+
+.not-found-style {
+    display:block;
+    text-align: center;
+    background-color:aliceblue;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+}
+
+.not-found-style h4 {
+    font-size: 1.4rem;
+    font-weight: 550;
+    padding: 0.2rem;
+    padding-inline: 0.4rem;
+    border-radius: 10px;
+}
+
+
+.search-container {
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 400px) {
+    .search-container {
+        font-size: 0.3rem;
+    }    
+}

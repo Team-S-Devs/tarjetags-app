@@ -38,6 +38,7 @@ const ProductModal = ({
     if (imgsArray) {
       for (let i = 0; i < imgsArray.length; i++) {
         imgsUrlsCop.push({
+          id: imgsArray[i].id,
           url: imgsArray[i].url,
         });
       }

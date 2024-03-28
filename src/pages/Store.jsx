@@ -88,15 +88,19 @@ const Store = () => {
               División de productos
             </ThinTitle>
             <br />
-            <StoreProductsList products={products} setProducts={setProducts} />
+            <StoreProductsCategories
+              categories={categories}
+              setCategories={setCategories}
+            />
             <br />
             <ThinTitle variant="h5" color="primary" textAlign="center">
               Productos
             </ThinTitle>
             <br />
-            <StoreProductsCategories
+            <StoreProductsList
+              products={products}
+              setProducts={setProducts}
               categories={categories}
-              setCategories={setCategories}
             />
           </>
         )}

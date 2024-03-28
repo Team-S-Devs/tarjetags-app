@@ -22,6 +22,7 @@ const StoreProductModal = ({
   products = [],
   setProducts,
   index,
+  categories = [],
 }) => {
   const [userInfoCop, setUserInfoCop] = useState({});
   const [imgUrls, setImgUrls] = useState([]);
@@ -33,6 +34,7 @@ const StoreProductModal = ({
     if (imgsArray) {
       for (let i = 0; i < imgsArray.length; i++) {
         imgsUrlsCop.push({
+          id: imgsArray[i].id,
           url: imgsArray[i].url,
         });
       }
@@ -148,7 +150,7 @@ const StoreProductModal = ({
             <StoreCategorySelector
               products={products}
               setProducts={setProducts}
-              categories={[]}
+              categories={categories}
               index={index}
             />
 

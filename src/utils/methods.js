@@ -167,17 +167,17 @@ export function isLessThanOneMonthInFuture(date) {
   return date < threeMonthsFromNow;
 }
 
-// Function to get the remaining time as a string
+// Function to get the remaining date as a string
 export function getRemainingTimeAsString(date) {
   // Get today's date
   const today = new Date();
 
   // Calculate the difference in milliseconds
-  const difference = date.getTime() - today.getTime();
+  const difference = date - today;
 
   // Calculate the difference in days and months
   const daysDifference = Math.ceil(difference / (1000 * 3600 * 24));
-  const monthsDifference = Math.ceil(daysDifference / 30);
+  const monthsDifference = Math.floor(daysDifference / 30);
 
   // If less than a month, return the difference in days
   if (monthsDifference < 1) {

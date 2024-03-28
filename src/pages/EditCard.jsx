@@ -196,7 +196,7 @@ const EditCard = () => {
               ? user.licenseType
               : LICENSE_TYPES.FREE
           );
-          setValidLicense(verificarLicencia(licenseType, userLimitDate));
+          setValidLicense(verificarLicencia(user.licenseType, userLimitDate));
         } else {
           navigate("/dashboard");
         }
@@ -297,7 +297,7 @@ const EditCard = () => {
         </>
       ) : (
         <Dialog
-          open={true}
+          open={!loadingGetting}
           onClose={() => {}}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"

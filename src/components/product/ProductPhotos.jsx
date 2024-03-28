@@ -32,7 +32,7 @@ const ProductPhotos = ({
       imgUrls.push({
         url: URL.createObjectURL(imageFiles[i]),
         file: imageFiles[i],
-        id: idMax + 1
+        id: idMax + i
       });
     }
     setImageUrls([...imageUrls, ...imgUrls]);
@@ -54,7 +54,7 @@ const ProductPhotos = ({
       imgUrls.push({
         url: URL.createObjectURL(imageFiles[i]),
         file: imageFiles[i],
-        id: idMax + 1
+        id: idMax + i
       });
     }
     setImageUrls([...imageUrls, ...imgUrls]);

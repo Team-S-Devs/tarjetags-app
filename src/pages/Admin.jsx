@@ -8,6 +8,7 @@ import {
   limit,
   orderBy,
   startAfter,
+  where,
 } from "firebase/firestore";
 import { db } from "../utils/firebase-config";
 import "../assets/styles/admin.css";
@@ -15,49 +16,67 @@ import UserRow from "../components/admin/UserRow";
 import useWindowSize from "../hooks/useWindowsSize";
 import { MetaTags } from "react-meta-tags";
 import { SITE_NAME } from "../utils/constants";
+import SearchBar from "../components/admin/SearchBar";
 
 const Admin = () => {
   const [usersArray, setUsersArray] = useState([]);
   const [pageNum, setPageNum] = useState(0);
-  const [firstDocRefArray, setDocRefArray] = useState([]);
+  const [lastEmailRef, setLastEmailRef] = useState([]);
+  const [searchReq, setSearchReq] = useState("")
   const [loading, setLoading] = useState(true);
+  const [notFoundView, setNotFoundView] = useState(false);
+  const { width, height } = useWindowSize();
 
-  const setNonRepeatedDocRef = (querySnapshot) => {
-    for (let i = 0; i < firstDocRefArray.length; i++) {
+  const setNonRepeatedEmailRef = (usersArray) => {
+    for (let i = 0; i < lastEmailRef.length; i++) {
       if (
-        firstDocRefArray[i] ==
-        querySnapshot.docs[querySnapshot.docs.length - 1].id
-      )
+        lastEmailRef[i] == usersArray[usersArray.length-1].email)
         return;
     }
-    if (querySnapshot.docs.length >= 10)
-      setDocRefArray([
-        ...firstDocRefArray,
-        querySnapshot.docs[querySnapshot.docs.length - 1].id,
+
+    if (usersArray.length >= 10)
+      setLastEmailRef([
+        ...lastEmailRef,
+        usersArray[usersArray.length - 1].email,
       ]);
-  };
+  }
 
-  const getUsersInRange = async (limitN) => {
+  const getUsersByPartialEmail = async (partialEmail, limitN) => {
     setLoading(true);
-    const q =
-      pageNum != 0
-        ? query(
-            collection(db, "users"),
-            orderBy("__name__"),
-            startAfter(firstDocRefArray[pageNum - 1]),
-            limit(limitN)
-          )
-        : query(collection(db, "users"), orderBy("__name__"), limit(limitN));
-
-    const querySnapshot = await getDocs(q);
-
-    setUsersArray(
-      querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }))
+  
+    const partialMatchQuery = (pageNum !== 0) 
+    ? query(
+      collection(db, "users"),
+      orderBy("email"),
+      where("email", ">=", partialEmail),
+      where("email", "<=", partialEmail + "\uf8ff"),
+      startAfter(lastEmailRef[pageNum - 1]),
+      limit(limitN))
+    : query(
+      collection(db, "users"),
+      orderBy("email"),
+      where("email", ">=", partialEmail),
+      where("email", "<=", partialEmail + "\uf8ff"),
+      limit(limitN)
     );
-    setNonRepeatedDocRef(querySnapshot);
+  
+    const [partialMatchSnapshot] = await Promise.all([
+      getDocs(partialMatchQuery)
+    ]);
+
+    const partialMatchUsers = partialMatchSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  
+    if (partialMatchUsers.length > 0) {
+      setNotFoundView(false);
+      setUsersArray(partialMatchUsers);
+      setNonRepeatedEmailRef(partialMatchUsers);
+    } else {
+      setNotFoundView(true);
+    }
+
     setLoading(false);
   };
 
@@ -90,11 +109,16 @@ const Admin = () => {
     </tbody>
   );
 
-  useEffect(() => {
-    getUsersInRange(10);
-  }, [pageNum]);
+  const cleanLastEmailRef = () => {
+    setLastEmailRef([]);
+  }
 
-  const { width, height } = useWindowSize();
+  useEffect(() => {
+    if (searchReq != "") {
+      cleanLastEmailRef();
+    }
+    getUsersByPartialEmail(searchReq,10);
+  }, [pageNum, searchReq]);
 
   return (
     <div className="profile-container">
@@ -111,10 +135,15 @@ const Admin = () => {
           ADMINISTRADOR
         </BoldTitle>
 
+        <div className="search-style">
+          <SearchBar setSearchVal={setSearchReq}/>    
+        </div>
+
         <div className="bg-white adminTable">
-          {loading ? (
+          {loading || notFoundView ? (
             <div className="d-flex mt-4 mb-2 align-items-center justify-content-center loader_style">
-              <span className="loader"></span>
+              {loading ? <span className="loader"></span> 
+              : <div className="not-found-style"><h4>No se encontró</h4><p>prueba otro email</p></div>}
             </div>
           ) : (
             <div className="table-responsive">

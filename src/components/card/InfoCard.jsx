@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import StyledCard from "./StyledCard";
 import { db } from "../../utils/firebase-config";
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, Timestamp } from "firebase/firestore";
 import lightPurpleSvg from "../../assets/images/light-purple.svg";
 import { Grid } from "@mui/material";
 import ThinTitle from "../texts/ThinTitle";
@@ -11,10 +11,10 @@ import {
   getRemainingTimeAsString,
   getStringDateFromTimestamp,
   isLessThanThreeMonthsInFuture,
+  verificarLicencia,
 } from "../../utils/methods";
 import MediumPrimaryButton from "../buttons/MediumPrimaryButton";
 import { FaStar } from "react-icons/fa";
-import useWindowSize from "../../hooks/useWindowsSize";
 import { LICENSE_TYPES } from "../../utils/constants";
 
 const InfoCard = ({ cardId, user }) => {
@@ -30,6 +30,7 @@ const InfoCard = ({ cardId, user }) => {
   const [isPro, setIsPro] = useState(true);
   const [proxVenc, setProxVenc] = useState(false);
   const [remainingLicense, setRemainingLicense] = useState("");
+  const [validLicense, setValidLicense] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -67,18 +68,44 @@ const InfoCard = ({ cardId, user }) => {
       doc(db, "users", user.uid),
       (snapshot) => {
         const userInfo = snapshot.data();
-        setIsPro(getDateFromTimestamp(userInfo.limitDate) >= new Date());
-        setLicenseType(
-          userInfo.limitDate.toDate() > new Date()
+        const userLimitDate = userInfo.limitDate;
+
+        setIsPro(getDateFromTimestamp(userLimitDate) >= new Date());
+        const licenseTypeCopy =
+          userLimitDate.toDate() > new Date()
             ? userInfo.licenseType
-            : LICENSE_TYPES.FREE
+            : LICENSE_TYPES.FREE;
+        setLicenseType(licenseTypeCopy);
+        const isValidLicense = verificarLicencia(
+          userInfo.licenseType,
+          userLimitDate
         );
+        setValidLicense(isValidLicense);
         setProxVenc(isLessThanThreeMonthsInFuture(userInfo.limitDate));
-        if (userInfo.limitDate.toDate() > new Date())
-          setLicense("Hasta " + getStringDateFromTimestamp(userInfo.limitDate));
+
+        const limitDateUser = userInfo.limitDate.toDate();
+        const threeMonthsFromNow = new Date(
+          limitDateUser.getFullYear(),
+          limitDateUser.getMonth() + 3,
+          limitDateUser.getDate()
+        );
+
+        const realTimestampDate =
+          limitDateUser < new Date()
+            ? Timestamp.fromDate(threeMonthsFromNow)
+            : userInfo.limitDate;
+
+        const realDate = realTimestampDate.toDate()
+
+        if (isValidLicense)
+          setLicense("Hasta " + getStringDateFromTimestamp(realTimestampDate));
         else setLicense("Caducada");
+
+        const bool =
+          userInfo.license !== LICENSE_TYPES.FREE &&
+          userInfo.limitDate.toDate() < new Date();
         setRemainingLicense(
-          getRemainingTimeAsString(userInfo.limitDate.toDate())
+          getRemainingTimeAsString(realDate)
         );
       },
       (error) => {
@@ -88,8 +115,6 @@ const InfoCard = ({ cardId, user }) => {
 
     return () => unsubscribe();
   }, [user]);
-
-  const { width } = useWindowSize();
 
   return (
     <StyledCard>
@@ -162,7 +187,7 @@ const InfoCard = ({ cardId, user }) => {
                 {licenseType} {`${license}`}
               </ThinTitle>
             </div>
-            {(!isPro || licenseType === LICENSE_TYPES.FREE) && (
+            {(!isPro || licenseType === LICENSE_TYPES.FREE) && !validLicense && (
               <div className="mt-2">
                 <MediumPrimaryButton
                   startIcon={<FaStar size={14} />}
@@ -172,7 +197,7 @@ const InfoCard = ({ cardId, user }) => {
                 </MediumPrimaryButton>
               </div>
             )}
-            {proxVenc && (
+            {proxVenc && validLicense && (
               <div className="mt-3">
                 <ThinTitle color="#888" variant="h6" textAlign="left">
                   {remainingLicense}

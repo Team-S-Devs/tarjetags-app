@@ -9,7 +9,7 @@ import { GREY_RECTANGLE, SITE_NAME } from "../utils/constants";
 import '../assets/styles/loader.css'
 import StoreProductModal from "../components/modals/StoreProductModal";
 
-const StoreProductsList = ({ products = [], setProducts }) => {
+const StoreProductsList = ({ products = [], setProducts, categories = [] }) => {
   const [productIdx, setProductIdx] = useState(0);
   const [open, setOpen] = useState(false);
 
@@ -120,6 +120,7 @@ const StoreProductsList = ({ products = [], setProducts }) => {
         index={productIdx}
         products={products}
         setProducts={setProducts}
+        categories={categories}
       />
     </StyledCard>
   );

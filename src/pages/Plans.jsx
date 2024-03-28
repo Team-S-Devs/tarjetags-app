@@ -9,6 +9,8 @@ import { FaRegClock } from "react-icons/fa";
 import { GoCheckCircleFill, GoXCircle } from "react-icons/go";
 import SmallPrimaryButton from "../components/buttons/SmallPrimaryButton";
 import { Link } from "react-router-dom";
+import { MetaTags } from "react-meta-tags";
+import { SITE_NAME } from "../utils/constants";
 
 const plansItems = [
   {
@@ -85,6 +87,9 @@ const Plans = ({ user }) => {
 
   return (
     <div className="container">
+      <MetaTags>
+        <title>{`Planes - ${SITE_NAME}`}</title>
+      </MetaTags>
       <Header />
       <div
         style={{ flex: 100, marginTop: 100, width: "100%" }}

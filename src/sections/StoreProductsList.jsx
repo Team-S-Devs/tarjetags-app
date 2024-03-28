@@ -5,41 +5,17 @@ import ThinTitle from "../components/texts/ThinTitle";
 import { LiaEditSolid } from "react-icons/lia";
 import { GoTrash } from "react-icons/go";
 import SmallPrimaryButton from "../components/buttons/SmallPrimaryButton";
-import {
-  GREY_RECTANGLE,
-  LICENSE_TYPES,
-  licenseLimits,
-  SITE_NAME,
-} from "../utils/constants";
-import ProductModal from "../components/modals/ProductModal";
-import { FaLock } from "react-icons/fa";
+import { GREY_RECTANGLE, SITE_NAME } from "../utils/constants";
+import '../assets/styles/loader.css'
+import StoreProductModal from "../components/modals/StoreProductModal";
 
-const ProductsServicesList = ({
-  elementsInfo = { title: "", description: "", contactLinks: [], products: [] },
-  setElementsInfo,
-  cardId,
-  licenseType = "",
-  setOpenUpdate,
-}) => {
+const StoreProductsList = ({ products = [], setProducts, categories = [] }) => {
   const [productIdx, setProductIdx] = useState(0);
   const [open, setOpen] = useState(false);
 
   const handleAddProduct = () => {
-    if (
-      licenseLimits[licenseType].maxProducts <= elementsInfo.products.length
-    ) {
-      setOpenUpdate(
-        licenseType === LICENSE_TYPES.PREMIUM ||
-          licenseType === LICENSE_TYPES.BRONZE ||
-          licenseType === LICENSE_TYPES.SILVER ||
-          licenseType === LICENSE_TYPES.GOLD
-          ? "products" + licenseType
-          : "products"
-      );
-      return;
-    }
-    const elementsInfoCopy = { ...elementsInfo };
-    elementsInfoCopy.products.push({
+    const productsCopy = [ ...products ];
+    productsCopy.push({
       name: "",
       show: true,
       id: Date.now(),
@@ -64,24 +40,23 @@ const ProductsServicesList = ({
       },
       imgs: [],
     });
-    setElementsInfo(elementsInfoCopy);
-    setProductIdx(elementsInfoCopy.products.length - 1);
+    setProducts(productsCopy);
+    setProductIdx(productsCopy.length - 1);
     setOpen(true);
   };
 
   const deleteProduct = (index) => {
-    const elementsInfoCopy = { ...elementsInfo };
-    elementsInfoCopy.products.splice(index, 1);
-    setElementsInfo(elementsInfoCopy);
+    const productsCopy = [ ...products ];
+    productsCopy.splice(index, 1);
+    setProducts(productsCopy);
   };
 
   return (
-    <StyledCard style={{ padding: 30 }}>
-      {elementsInfo.products.length === 0 ? (
+    <StyledCard style={{ padding: 30, paddingTop: 50 }}>
+      {products.length === 0 ? (
         <>
           <ThinTitle variant="subtitle1" color="secondary" textAlign="center">
-            Gestiona tus productos y servicios! Aquí puedes agregar, editar y
-            gestionar tus productos o servicios para su venta.
+            Gestiona tus productos.
           </ThinTitle>
           <div className="mt-4"></div>
           <ThinTitle variant="subtitle1" color="gray" textAlign="center">
@@ -90,7 +65,7 @@ const ProductsServicesList = ({
         </>
       ) : (
         <>
-          {elementsInfo.products.map((product, index) => (
+          {products.map((product, index) => (
             <div
               className="d-flex align-items-center mt-2 mb-3"
               key={product.id}
@@ -132,43 +107,23 @@ const ProductsServicesList = ({
       <div className="mt-4"></div>
       <div
         className="d-flex align-items-center justify-content-center"
-        onClick={() => {
-          if (
-            licenseLimits[licenseType].maxProducts <=
-            elementsInfo.products.length
-          )
-            handleAddProduct();
-        }}
+        onClick={handleAddProduct}
       >
-        <SmallPrimaryButton
-          onClick={handleAddProduct}
-          disabled={
-            licenseLimits[licenseType].maxProducts <=
-            elementsInfo.products.length
-          }
-          endIcon={
-            licenseLimits[licenseType].maxProducts <=
-            elementsInfo.products.length ? (
-              <FaLock />
-            ) : (
-              <></>
-            )
-          }
-        >
+        <SmallPrimaryButton onClick={handleAddProduct}>
           Agregar
         </SmallPrimaryButton>
       </div>
 
-      <ProductModal
+      <StoreProductModal
         open={open}
         setOpen={setOpen}
-        elementsInfo={elementsInfo}
-        setElementsInfo={setElementsInfo}
         index={productIdx}
-        cardId={cardId}
+        products={products}
+        setProducts={setProducts}
+        categories={categories}
       />
     </StyledCard>
   );
 };
 
-export default ProductsServicesList;
+export default StoreProductsList;

@@ -107,6 +107,34 @@ export const handleUploadImage = async (
   }
 };
 
+export const handleUploadStoreImage = async (
+  file,
+  index,
+  folder
+) => {
+  try {
+    const storageRef = ref(
+      storage,
+      `admins/${folder}/${index}`
+    );
+    // Upload the file to Firebase Cloud Storage
+    await uploadBytes(storageRef, file);
+
+    // Get the URL of the uploaded image
+    const url = await getDownloadURL(storageRef);
+
+    return {
+      success: true,
+      url,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      url: "",
+    };
+  }
+};
+
 // Function to check if a date is less than 3 months in the future
 export function isLessThanThreeMonthsInFuture(date) {
   // Get today's date
@@ -139,17 +167,17 @@ export function isLessThanOneMonthInFuture(date) {
   return date < threeMonthsFromNow;
 }
 
-// Function to get the remaining time as a string
+// Function to get the remaining date as a string
 export function getRemainingTimeAsString(date) {
   // Get today's date
   const today = new Date();
 
   // Calculate the difference in milliseconds
-  const difference = date.getTime() - today.getTime();
+  const difference = date - today;
 
   // Calculate the difference in days and months
   const daysDifference = Math.ceil(difference / (1000 * 3600 * 24));
-  const monthsDifference = Math.ceil(daysDifference / 30);
+  const monthsDifference = Math.floor(daysDifference / 30);
 
   // If less than a month, return the difference in days
   if (monthsDifference < 1) {

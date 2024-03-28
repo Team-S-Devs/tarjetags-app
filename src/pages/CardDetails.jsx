@@ -7,11 +7,13 @@ import ShareCard from "../components/card/ShareCard";
 import InfoCard from "../components/card/InfoCard";
 import { Button } from "@mui/material";
 import { FaChevronLeft } from "react-icons/fa";
+import { SITE_NAME } from "../utils/constants";
+import { MetaTags } from "react-meta-tags";
 
 const CardDetails = ({ user }) => {
   const { cardId } = useParams();
   const [urlWithId, setUrlWithId] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const currentUrl = window.location.origin;
@@ -24,6 +26,9 @@ const CardDetails = ({ user }) => {
       className="container d-flex flex-column align-items-end"
       style={{ height: "100vh", paddingBottom: "60px" }}
     >
+      <MetaTags>
+        <title>{`Detalles ${cardId} - ${SITE_NAME}`}</title>
+      </MetaTags>
       <Header />
       <div
         style={{ flex: 100, marginTop: 100, width: "100%" }}
@@ -31,13 +36,16 @@ const CardDetails = ({ user }) => {
       >
         <div className="d-flex flex-column align-items-start">
           <Button
-            startIcon={<FaChevronLeft/>}
+            startIcon={<FaChevronLeft />}
             style={{ fontSize: 18, padding: 0 }}
             onClick={() => navigate("/dashboard")}
           >
             Volver
           </Button>
-          <BoldTitle style={{ marginTop: 10, width: '100%' }} textAlign="center">
+          <BoldTitle
+            style={{ marginTop: 10, width: "100%" }}
+            textAlign="center"
+          >
             Mi Tarjeta Digital
           </BoldTitle>
         </div>
@@ -53,7 +61,9 @@ const CardDetails = ({ user }) => {
         </ThinTitle>
         <div className="mt-3"></div>
         <InfoCard cardId={cardId} user={user} />
-        <br /><br /><br />
+        <br />
+        <br />
+        <br />
       </div>
     </div>
   );

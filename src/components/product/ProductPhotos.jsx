@@ -32,7 +32,7 @@ const ProductPhotos = ({
       imgUrls.push({
         url: URL.createObjectURL(imageFiles[i]),
         file: imageFiles[i],
-        id: idMax + 1
+        id: idMax + i
       });
     }
     setImageUrls([...imageUrls, ...imgUrls]);
@@ -54,7 +54,7 @@ const ProductPhotos = ({
       imgUrls.push({
         url: URL.createObjectURL(imageFiles[i]),
         file: imageFiles[i],
-        id: idMax + 1
+        id: idMax + i
       });
     }
     setImageUrls([...imageUrls, ...imgUrls]);
@@ -92,7 +92,6 @@ const ProductPhotos = ({
 
   const { width } = useWindowSize();
 
-  console.log(imageUrls)
   return (
     <div style={{ margin: 0, marginTop: 12, marginBottom: 24 }}>
       <Box

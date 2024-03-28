@@ -19,12 +19,10 @@ import useWindowSize from "../hooks/useWindowsSize";
 import NewCardModal from "../components/modals/NewCardModal";
 import UserCardDisplay from "../components/card/UserCardsDisplay";
 import { onAuthStateChanged } from "firebase/auth";
-import { LICENSE_TYPES } from "../utils/constants";
+import { LICENSE_TYPES, SITE_NAME } from "../utils/constants";
 import NearUpgrade from "../components/modals/NearUpgrade";
-import {
-  isLessThanOneMonthInFuture,
-  isLessThanThreeMonthsInFuture,
-} from "../utils/methods";
+import { isLessThanOneMonthInFuture } from "../utils/methods";
+import { MetaTags } from "react-meta-tags";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -99,6 +97,9 @@ const Dashboard = () => {
       className="container d-flex flex-column align-items-end"
       style={{ height: "100vh", paddingBottom: "60px" }}
     >
+      <MetaTags>
+        <title>{`Dashboard - ${SITE_NAME}`}</title>
+      </MetaTags>
       <NearUpgrade
         open={openNear}
         setOpen={setOpenNear}

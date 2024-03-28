@@ -10,30 +10,26 @@ import {
 import React, { useEffect, useState } from "react";
 import useWindowSize from "../../hooks/useWindowsSize";
 import ProductPhotos from "../product/ProductPhotos";
-import CategorySelector from "../product/CategorySelector";
-import { handleUploadImage } from "../../utils/methods";
-import ProductPrice from "../product/ProductPrice";
-import ButtonAction from "../product/ButtonAction";
+import { handleUploadStoreImage } from "../../utils/methods";
 import HorizontalLine from "../lines/HorizontalLine";
+import StoreProductPrice from "../store/StoreProductPrice";
+import StoreButtonAction from "../store/StoreButtonAction";
+import StoreCategorySelector from "../store/StoreCategorySelector";
 
-const ProductModal = ({
+const StoreProductModal = ({
   open,
   setOpen,
-  elementsInfo,
-  setElementsInfo,
+  products = [],
+  setProducts,
   index,
-  cardId
+  categories = [],
 }) => {
   const [userInfoCop, setUserInfoCop] = useState({});
   const [imgUrls, setImgUrls] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setUserInfoCop(elementsInfo);
-  }, [elementsInfo]);
-
-  useEffect(() => {
-    const imgsArray = elementsInfo.products[index]?.imgs;
+    const imgsArray = products[index]?.imgs;
     let imgsUrlsCop = [];
     if (imgsArray) {
       for (let i = 0; i < imgsArray.length; i++) {
@@ -47,9 +43,9 @@ const ProductModal = ({
   }, [index]);
 
   const handleEditProduct = (val, key) => {
-    const userInfoCopy = { ...userInfoCop };
-    userInfoCopy.products[index][key] = val;
-    setUserInfoCop(userInfoCopy);
+    const productsCopy = [...products];
+    productsCopy[index][key] = val;
+    setProducts(productsCopy);
   };
 
   const handleSaveProduct = async () => {
@@ -58,7 +54,11 @@ const ProductModal = ({
     try {
       for (let i = 0; i < imgUrls.length; i++) {
         if (imgUrls[i].file) {
-          let imageStatus = await handleUploadImage(imgUrls[i].file, elementsInfo, cardId, imgUrls[i].id, "products");
+          let imageStatus = await handleUploadStoreImage(
+            imgUrls[i].file,
+            imgUrls[i].id,
+            "products"
+          );
           if (!imageStatus.success) {
             alert("No se pudo subir una imagen, intenta de nuevo.");
           } else {
@@ -78,17 +78,17 @@ const ProductModal = ({
       setLoading(false);
     }
     setLoading(false);
-    let userInf = { ...userInfoCop };
-    userInf.products[index].imgs = imgUrlsCopy
+    let productsCop = [...products];
+    productsCop[index].imgs = imgUrlsCopy;
     setOpen(false);
-    setElementsInfo(userInf);
+    setProducts(products);
   };
 
   const { width } = useWindowSize();
 
   return (
     <>
-      {open && elementsInfo.products.length > 0 && elementsInfo.products[index] ? (
+      {open && products.length > 0 && products[index] ? (
         <Dialog open={open} onClose={handleSaveProduct} style={{ margin: 0 }}>
           <Dialog open={loading}>
             <div style={{ padding: 30, textAlign: "center" }}>
@@ -103,12 +103,9 @@ const ProductModal = ({
             <FormControlLabel
               control={
                 <Switch
-                  checked={!elementsInfo.products[index].show}
+                  checked={!products[index].show}
                   onChange={() => {
-                    handleEditProduct(
-                      !elementsInfo.products[index].show,
-                      "show"
-                    );
+                    handleEditProduct(!products[index].show, "show");
                   }}
                 />
               }
@@ -119,7 +116,7 @@ const ProductModal = ({
             <TextField
               label="Nombre del producto o servicio:"
               placeholder=""
-              value={userInfoCop.products[index]?.name}
+              value={products[index]?.name}
               onChange={(e) => handleEditProduct(e.target.value, "name")}
               fullWidth
               required
@@ -134,7 +131,7 @@ const ProductModal = ({
             <TextField
               label="Descripción del producto o servicio:"
               placeholder=""
-              value={userInfoCop.products[index]?.description}
+              value={products[index]?.description}
               onChange={(e) => handleEditProduct(e.target.value, "description")}
               fullWidth
               required
@@ -150,25 +147,26 @@ const ProductModal = ({
             <ProductPhotos imageUrls={imgUrls} setImageUrls={setImgUrls} />
 
             <div style={{ marginTop: 18 }}></div>
-            <CategorySelector
-              userInfo={userInfoCop}
-              setUserInfo={setUserInfoCop}
+            <StoreCategorySelector
+              products={products}
+              setProducts={setProducts}
+              categories={categories}
               index={index}
             />
 
             <div style={{ marginTop: 18 }}></div>
 
             <HorizontalLine />
-            <ProductPrice
-              elementsInfo={elementsInfo}
-              setElementsInfo={setElementsInfo}
+            <StoreProductPrice
+              products={products}
+              setProducts={setProducts}
               index={index}
               keyProduct="price"
             />
 
-            <ProductPrice
-              elementsInfo={elementsInfo}
-              setElementsInfo={setElementsInfo}
+            <StoreProductPrice
+              products={products}
+              setProducts={setProducts}
               index={index}
               keyProduct="offerPrice"
               label="Precio de oferta:"
@@ -178,9 +176,9 @@ const ProductModal = ({
 
             <HorizontalLine />
 
-            <ButtonAction
-              elementsInfo={elementsInfo}
-              setElementsInfo={setElementsInfo}
+            <StoreButtonAction
+              products={products}
+              setProducts={setProducts}
               index={index}
             />
 
@@ -201,4 +199,4 @@ const ProductModal = ({
   );
 };
 
-export default ProductModal;
+export default StoreProductModal;

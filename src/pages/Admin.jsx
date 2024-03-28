@@ -13,6 +13,8 @@ import { db } from "../utils/firebase-config";
 import "../assets/styles/admin.css";
 import UserRow from "../components/admin/UserRow";
 import useWindowSize from "../hooks/useWindowsSize";
+import { MetaTags } from "react-meta-tags";
+import { SITE_NAME } from "../utils/constants";
 
 const Admin = () => {
   const [usersArray, setUsersArray] = useState([]);
@@ -67,8 +69,6 @@ const Admin = () => {
     setPageNum(pageNum - 1);
   };
 
-  
-                    
   const mountUsersTable = () => (
     <tbody>
       {usersArray.map((userData, index) => (
@@ -96,13 +96,20 @@ const Admin = () => {
 
   const { width, height } = useWindowSize();
 
-
   return (
-      <div className='profile-container'>
-           <Header/>
-          
-          <div className="my-5 my-md-0 d-flex flex-column justify-content-center container cont-profile1" style={{ minHeight: "100vh"}}>
-              <BoldTitle variant={ width > 500 ? 'h3' : 'h5'} textAlign='center'>ADMINISTRADOR</BoldTitle>
+    <div className="profile-container">
+      <MetaTags>
+        <title>{`Admin Panel- ${SITE_NAME}`}</title>
+      </MetaTags>
+      <Header />
+
+      <div
+        className="my-5 my-md-0 d-flex flex-column justify-content-center container cont-profile1"
+        style={{ minHeight: "100vh" }}
+      >
+        <BoldTitle variant={width > 500 ? "h3" : "h5"} textAlign="center">
+          ADMINISTRADOR
+        </BoldTitle>
 
         <div className="bg-white adminTable">
           {loading ? (
@@ -111,9 +118,9 @@ const Admin = () => {
             </div>
           ) : (
             <div className="table-responsive">
-                <table className="table table-hover">
+              <table className="table table-hover">
                 <thead>
-                    <tr>
+                  <tr>
                     <th scope="col">Nombre</th>
                     <th>Email</th>
                     <th>Fecha de Registro</th>
@@ -121,10 +128,10 @@ const Admin = () => {
                     <th>Tipo de Licencia</th>
                     <th>Codigo de descuento</th>
                     <th>Opciones</th>
-                    </tr>
+                  </tr>
                 </thead>
                 {mountUsersTable()}
-                </table>
+              </table>
             </div>
           )}
         </div>

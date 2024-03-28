@@ -1,7 +1,6 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Splash from "./pages/Splash";
 import "bootstrap/dist/css/bootstrap.min.css";
-import TestComponents from "./pages/TestComponents";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
 import LogIn from "./pages/LogIn";
@@ -137,20 +136,20 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  onAuthStateChanged(auth, (fireBaseUser) => {
-    if (fireBaseUser) {
-      setUser(fireBaseUser);
-
-      onSnapshot(doc(db, "users", fireBaseUser.uid), (snapshot) => {
-        const userInfo = snapshot.data();
-        setIsAdmin(userInfo.admin);
-      });
-    } else {
-      setUser(null);
-    }
-  });
-
   useEffect(() => {
+    onAuthStateChanged(auth, (fireBaseUser) => {
+      if (fireBaseUser) {
+        setUser(fireBaseUser);
+  
+        onSnapshot(doc(db, "users", fireBaseUser.uid), (snapshot) => {
+          const userInfo = snapshot.data();
+          setIsAdmin(userInfo.admin);
+        });
+      } else {
+        setUser(null);
+      }
+    });
+    
     const unsubscribe = onAuthStateChanged(auth, (fireBaseUser) => {
       if (fireBaseUser) {
         setUser(fireBaseUser);
@@ -170,7 +169,6 @@ const App = () => {
             <Route path="/" Component={Splash} />
             <Route path="/:cardId" Component={Card} />
             <Route path="/dashboard" Component={user ? Dashboard : Splash} />
-            <Route path="/test-components" Component={TestComponents} />
             <Route path="/sign-up" Component={SignUp} />
             <Route path="/login" Component={LogIn} />
             <Route path="/error" Component={Error} />

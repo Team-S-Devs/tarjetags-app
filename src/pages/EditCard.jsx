@@ -20,16 +20,18 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db, storage } from "../utils/firebase-config";
 import "../assets/styles/loader.css";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { LICENSE_TYPES } from "../utils/constants";
+import { LICENSE_TYPES, SITE_NAME } from "../utils/constants";
 import { verificarLicencia } from "../utils/methods";
 import UpdateLicenseModal from "../components/modals/UpdateLicenseModal";
 import { FaStar } from "react-icons/fa";
+import { MetaTags } from "react-meta-tags";
 
 const EditCard = () => {
+  const navigate = useNavigate();
   const { cardId } = useParams();
   const { width } = useWindowSize();
+
   const [nav, setNav] = useState("edit");
-  const navigate = useNavigate();
   const [idCard, setIdCard] = useState("");
   const [licenseType, setLicenseType] = useState("");
   const [validLicense, setValidLicense] = useState(true);
@@ -209,6 +211,9 @@ const EditCard = () => {
 
   return (
     <div className="container" style={{ paddingTop: "90px" }}>
+      <MetaTags>
+        <title>{`Editar tarjeta ${elementsInfo.title} - ${SITE_NAME}`}</title>
+      </MetaTags>
       <Header />
       {validLicense ? (
         <>

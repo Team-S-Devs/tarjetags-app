@@ -107,6 +107,34 @@ export const handleUploadImage = async (
   }
 };
 
+export const handleUploadStoreImage = async (
+  file,
+  index,
+  folder
+) => {
+  try {
+    const storageRef = ref(
+      storage,
+      `admins/${folder}/${index}`
+    );
+    // Upload the file to Firebase Cloud Storage
+    await uploadBytes(storageRef, file);
+
+    // Get the URL of the uploaded image
+    const url = await getDownloadURL(storageRef);
+
+    return {
+      success: true,
+      url,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      url: "",
+    };
+  }
+};
+
 // Function to check if a date is less than 3 months in the future
 export function isLessThanThreeMonthsInFuture(date) {
   // Get today's date

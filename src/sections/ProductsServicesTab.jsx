@@ -53,7 +53,7 @@ const ProductsServicesTab = ({
       <br />
       <div className="mt-4" style={{ marginTop: 400 }}>
         <ThinTitle variant="h5" color="primary" textAlign="center">
-          Añade tus servicios y/o productos
+          Productos y/o servicios
         </ThinTitle>
       </div>
       <div className="mt-3">

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Box, Modal, Typography } from "@mui/material";
+import { Box, Button, Modal, Typography } from "@mui/material";
 import DropdownField from "../form/fields/DropdownField";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import dayjs from "dayjs";
 import { Timestamp, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../utils/firebase-config";
 import { LICENSE_TYPES } from "../../utils/constants";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserRow = ({
   userId = "",
@@ -35,6 +36,8 @@ const UserRow = ({
   const [editUser, setEditUser] = useState(false);
   const [selectedDate, setSelectedDate] = useState(dayjs("2022-04-17"));
   const [saveLoader, setSaveLoader] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleDateChange = (newDate) => {
     setSelectedDate(newDate);
@@ -88,10 +91,8 @@ const UserRow = ({
 
   const saveChangesToFirestore = () => {
     setSaveLoader(true);
-    // Assuming you have a 'users' collection in Firestore and each user has a document with an 'id'
     const userRef = doc(db, "users", userId);
 
-    // Convert the date to a Firestore Timestamp
     const timestamp = selectedDate.toDate(); // Convert from dayjs to JavaScript Date
     const timestampObject = Timestamp.fromDate(timestamp);
 
@@ -100,7 +101,6 @@ const UserRow = ({
       licenseType: licenseValue,
     };
 
-    // Use updateDoc to update the document with the new data
     updateDoc(userRef, newData)
       .then(() => {
         setSaveLoader(false);
@@ -110,6 +110,10 @@ const UserRow = ({
         alert("Error guardando los nuevos datos. Inténtalo de nuevo");
       });
   };
+
+  const goHistoryPage = () => {
+    setHistoryPayPage(true);
+  }
 
   return (
     <>
@@ -202,6 +206,14 @@ const UserRow = ({
                             <tr>
                                 <td>Compañia:</td>
                                 <td>{company}</td>
+                            </tr>
+                            <tr>
+                                <td>Payments:</td>
+                                <td>
+                                  <button className="history-pay-button" onClick={() => navigate(`/payments/${userId}`)}>
+                                    ver pagos  
+                                  </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

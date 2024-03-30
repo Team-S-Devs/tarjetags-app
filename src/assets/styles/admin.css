@@ -128,9 +128,28 @@
     border-radius: 10px;
 }
 
+.container-not-found {
+    padding: 1.5rem;
+    padding-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .search-container {
     margin-top: 0.5rem;
+}
+
+.history-pay-button {
+    border-radius: 10px;
+    color: #561AD9;
+    font-weight: 500;
+    border: 1px solid #561AD9;
+
+}
+
+.history-pay-button:hover {
+    border: 1px solid #571ad99b;
 }
 
 @media (max-width: 400px) {

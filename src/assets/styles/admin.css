@@ -152,8 +152,16 @@
     border: 1px solid #571ad99b;
 }
 
+.info-container{
+    background: red;
+}
+
 @media (max-width: 400px) {
     .search-container {
         font-size: 0.3rem;
     }    
+
+    .personal-info-style {
+        font-size: 0.87rem;
+    }
 }

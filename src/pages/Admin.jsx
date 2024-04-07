@@ -59,7 +59,7 @@ const Admin = () => {
       where("email", "<=", partialEmail + "\uf8ff"),
       limit(limitN)
     );
-  
+
     const [partialMatchSnapshot] = await Promise.all([
       getDocs(partialMatchQuery)
     ]);
@@ -98,7 +98,7 @@ const Admin = () => {
           email={userData.email}
           phone={userData.phone}
           registerDate={userData.createdAt}
-          limitDate={userData.license}
+          limitDate={userData.limitDate}
           licenseType={userData.licenseType}
           discountCode={userData.discountCode}
           city={userData.department}

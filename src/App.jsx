@@ -11,6 +11,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import Error from "./pages/Error";
 import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
+import Payments from "./pages/Payments";
 import EditCard from "./pages/EditCard";
 import RestorePassword from "./pages/RestorePassword";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
@@ -173,6 +174,7 @@ const App = () => {
             <Route path="/login" Component={LogIn} />
             <Route path="/error" Component={Error} />
             <Route path="/store" Component={isAdmin ? Store : Error} />
+            <Route path="/payments/:userId" Component={isAdmin ? Payments : Error} />
             <Route path="/admin" Component={isAdmin ? Admin : Error} />
             <Route path="/edit/:cardId" Component={EditCard} />
             <Route path="/restorePassword" Component={RestorePassword} />

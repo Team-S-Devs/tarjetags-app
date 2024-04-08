@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Box, Modal, Typography } from "@mui/material";
+import { Box, Button, Modal, Typography } from "@mui/material";
 import DropdownField from "../form/fields/DropdownField";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import dayjs from "dayjs";
 import { Timestamp, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../utils/firebase-config";
-import { LICENSE_TYPES } from "../../utils/constants";
+import { LICENSE_TYPES, licenseLimits } from "../../utils/constants";
+import { useNavigate } from "react-router-dom";
+
 
 const UserRow = ({
   userId = "",
@@ -19,10 +21,14 @@ const UserRow = ({
   city = "",
   company = "",
   companySector = "",
+
 }) => {
+
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [licenseValue, setLicenseType] = useState(licenseType);
+  const [editUser, setEditUser] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(dayjs("31/04/2024"));
+  const [saveLoader, setSaveLoader] = useState(false);
   const licenseOptions = [
     LICENSE_TYPES.FREE,
     LICENSE_TYPES.STANDARD,
@@ -31,10 +37,11 @@ const UserRow = ({
     LICENSE_TYPES.SILVER,
     LICENSE_TYPES.GOLD,
   ];
-  const [licenseValue, setLicenseType] = useState(licenseType);
-  const [editUser, setEditUser] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(dayjs("2022-04-17"));
-  const [saveLoader, setSaveLoader] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
+
 
   const handleDateChange = (newDate) => {
     setSelectedDate(newDate);
@@ -45,7 +52,7 @@ const UserRow = ({
       const fireBaseTime = new Date(
         date.seconds * 1000 + date.nanoseconds / 1000000
       );
-      const formattedDate = dayjs(fireBaseTime).format("YYYY-MM-DD");
+      const formattedDate = dayjs(fireBaseTime).format("DD-MM-YYYY");
       return formattedDate;
     }
     return "";
@@ -86,13 +93,23 @@ const UserRow = ({
     getGeneralDateFromat(limitDate);
   }, []);
 
+
+  const updateLimitDate = (licenseValue, monthsToAdd) => {
+    if (licenseValue !== licenseType) {
+      const currentDate = dayjs();
+      const newDate = currentDate.add(monthsToAdd, 'month');
+      setSelectedDate(newDate);
+    }
+  };
+  
+
+
   const saveChangesToFirestore = () => {
     setSaveLoader(true);
-    // Assuming you have a 'users' collection in Firestore and each user has a document with an 'id'
     const userRef = doc(db, "users", userId);
 
-    // Convert the date to a Firestore Timestamp
-    const timestamp = selectedDate.toDate(); // Convert from dayjs to JavaScript Date
+    updateLimitDate(licenseValue, licenseLimits[licenseValue].limitValue);
+    const timestamp = selectedDate.toDate();
     const timestampObject = Timestamp.fromDate(timestamp);
 
     const newData = {
@@ -100,7 +117,6 @@ const UserRow = ({
       licenseType: licenseValue,
     };
 
-    // Use updateDoc to update the document with the new data
     updateDoc(userRef, newData)
       .then(() => {
         setSaveLoader(false);
@@ -120,13 +136,15 @@ const UserRow = ({
         <td onClick={handleOpen}>{email}</td>
         <td onClick={handleOpen}>{getModifiedDate(registerDate)}</td>
         <td>
-          {editUser ? (
-            <MobileDatePicker
-              value={selectedDate}
-              onChange={handleDateChange}
-            />
+        {editUser ? (
+              <MobileDatePicker
+                inputFormat={{ day: 'DD', month: 'MM', year: 'YYYY' }}
+                value={selectedDate}
+                onChange={handleDateChange}
+                mask={'__/__/____'}
+              />
           ) : (
-            selectedDate.format("YYYY-MM-DD")
+            selectedDate.format("DD/MM/YYYY")
           )}
         </td>
         <td>
@@ -148,7 +166,7 @@ const UserRow = ({
               {editUser ? "Guardar" : "Editar"}
               {saveLoader && (
                 <span
-                  class="spinner-border spinner-border-sm"
+                  className="spinner-border spinner-border-sm"
                   role="status"
                   aria-hidden="true"
                 ></span>
@@ -202,6 +220,14 @@ const UserRow = ({
                             <tr>
                                 <td>Compañia:</td>
                                 <td>{company}</td>
+                            </tr>
+                            <tr>
+                                <td>Pagos:</td>
+                                <td>
+                                  <button className="history-pay-button" onClick={() => navigate(`/payments/${userId}`)}>
+                                    ver pagos  
+                                  </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

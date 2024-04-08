@@ -114,11 +114,15 @@ const Admin = () => {
   }
 
   useEffect(() => {
-    if (searchReq != "") {
-      cleanLastEmailRef();
-    }
     getUsersByPartialEmail(searchReq,10);
-  }, [pageNum, searchReq]);
+  }, [pageNum]);
+
+
+  useEffect(() => {
+    setPageNum(0);
+    cleanLastEmailRef();
+    getUsersByPartialEmail(searchReq,10);
+  }, [searchReq]);
 
   return (
     <div className="profile-container">

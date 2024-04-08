@@ -12,7 +12,7 @@ const PaymentRow = ({
           const fireBaseTime = new Date(
             date.seconds * 1000 + date.nanoseconds / 1000000
           );
-          const formattedDate = dayjs(fireBaseTime).format("YYYY-MM-DD");
+          const formattedDate = dayjs(fireBaseTime).format("DD/MM/YYYY");
           return formattedDate;
         }
         return "";

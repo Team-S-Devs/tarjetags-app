@@ -27,7 +27,7 @@ const UserRow = ({
   const [open, setOpen] = useState(false);
   const [licenseValue, setLicenseType] = useState(licenseType);
   const [editUser, setEditUser] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(dayjs("31-04-2024"));
+  const [selectedDate, setSelectedDate] = useState(dayjs("31/04/2024"));
   const [saveLoader, setSaveLoader] = useState(false);
   const licenseOptions = [
     LICENSE_TYPES.FREE,
@@ -144,7 +144,7 @@ const UserRow = ({
                 mask={'__/__/____'}
               />
           ) : (
-            selectedDate.format("DD-MM-YYYY")
+            selectedDate.format("DD/MM/YYYY")
           )}
         </td>
         <td>
@@ -222,7 +222,7 @@ const UserRow = ({
                                 <td>{company}</td>
                             </tr>
                             <tr>
-                                <td>Payments:</td>
+                                <td>Pagos:</td>
                                 <td>
                                   <button className="history-pay-button" onClick={() => navigate(`/payments/${userId}`)}>
                                     ver pagos  

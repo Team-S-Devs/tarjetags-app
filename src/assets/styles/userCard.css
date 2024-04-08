@@ -13,7 +13,6 @@
     object-fit: cover;
     border: 4px solid white;
     margin-top: -90px;
-    z-index: 1;
 }
 
 @media (max-width: 768px) {

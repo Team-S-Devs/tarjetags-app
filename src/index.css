@@ -223,3 +223,19 @@ h1 {
 .card-content-container > * {
   flex-grow: 1;
 }
+
+::-webkit-scrollbar {
+  width: 12px; /* Ancho del scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color de fondo del track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--prim-purple); /* Color del thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sec-purple-light); /* Color del thumb al pasar el mouse */
+}

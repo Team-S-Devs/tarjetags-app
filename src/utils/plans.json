@@ -1,0 +1,130 @@
+[
+    {
+        "idPlan": 1,
+        "namePlan":"Gratis",
+        "pricePlan": 0,
+        "currency": "Bs",
+        "renovacion": "Solo 3 meses",
+        "libreDePublicidad": false,
+        "nombreDominio": false,
+        "servicioTiendaMax":3,
+        "botonesAdicionales": ["Ninguno"],
+        "clasificacionDeProductos":  false,
+        "comisionDeVenta": 0,
+        "descuentoPases": 0,
+        "descripcion": [
+            "Caducidad en 3 meses",
+            "Con anuncios",
+            "Tienda de 3 productos",
+            "Dominio aleatorio"
+        ]
+    },
+    {
+        "idPlan": 2,
+        "namePlan":"Basico",
+        "pricePlan": 100,
+        "currency": "Bs",
+        "renovacion": "Trimestral",
+        "libreDePublicidad": true,
+        "nombreDominio": true,
+        "servicioTiendaMax":5,
+        "botonesAdicionales": ["Whatsapp","TikTok"],
+        "clasificacionDeProductos":  false,
+        "comisionDeVenta": 0,
+        "descuentoPases": 0,
+        "descripcion": [
+            "Renovación trimestral",
+            "Sin anuncios",
+            "Tienda de 5 productos",
+            "Dominio personalizado"
+         ]
+    },
+    {
+        "idPlan": 3,
+        "namePlan":"Standard",
+        "pricePlan": 300,
+        "currency": "Bs",
+        "renovacion": "Semestral",
+        "libreDePublicidad": true,
+        "nombreDominio": true,
+        "servicioTiendaMax":10,
+        "botonesAdicionales": ["Whatsapp","TikTok","Linkedin","Maps"],
+        "clasificacionDeProductos":  false,
+        "comisionDeVenta": 0,
+        "descuentoPases": 0,
+        "descripcion": [
+            "Renovación semestral",
+            "Sin anuncios",
+            "Tienda de 10 productos",
+            "Dominio personalizado"
+         ]
+    },
+    {
+        "idPlan": 4,
+        "namePlan":"Premium",
+        "pricePlan": 500,
+        "currency": "Bs",
+        "renovacion": "Anual",
+        "libreDePublicidad": true,
+        "nombreDominio": true,
+        "servicioTiendaMax":20,
+        "botonesAdicionales": ["Ilimitado"],
+        "clasificacionDeProductos":  true,
+        "comisionDeVenta": 0,
+        "descuentoPases": 0,
+        "descripcion": [
+            "Renovación anual",
+            "Sin anuncios",
+            "Tienda de 20 productos",
+            "Dominio personalizado",
+            "Clasificación de productos"
+         ]
+    },
+
+    {
+        "idPlan": 5,
+        "namePlan":"Partner",
+        "pricePlan": 1500,
+        "currency": "Bs",
+        "renovacion": "Semestral",
+        "libreDePublicidad": true,
+        "nombreDominio": true,
+        "servicioTiendaMax":20,
+        "botonesAdicionales": ["Ilimitado"],
+        "clasificacionDeProductos":  true,
+        "comisionDeVenta": 20,
+        "descuentoPases": 10,
+        "descripcion": [
+            "Renovación semestral",
+            "Sin publicidad",
+            "Tienda con 20 productos",
+            "Dominio perzonalizado",
+            "Comisión (20%)",
+            " Descuento (10%)"
+         ]
+    },
+
+    {
+        "idPlan": 6,
+        "namePlan":"Master",
+        "pricePlan": 3500,
+        "currency": "Bs",
+        "renovacion": "Anual",
+        "libreDePublicidad": true,
+        "nombreDominio": true,
+        "servicioTiendaMax":20,
+        "botonesAdicionales": ["Ilimitado"],
+        "clasificacionDeProductos":  true,
+        "comisionDeVenta": 30,
+        "descuentoPases": 20,
+        "descripcion": [
+            "Renovación anual",
+            "Sin anuncios",
+            "Tienda de 20 productos",
+            "Dominio personalizado",
+            "Clasificación de productos",
+            "Comisión (30%)",
+            " Descuento (20%)"
+         ]
+    }
+]

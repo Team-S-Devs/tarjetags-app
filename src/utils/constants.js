@@ -3,7 +3,7 @@ export const GREY_RECTANGLE =
 export const MAIN_COLOR = "#561AD9";
 
 export const URL_NAME = "tarjetag.com/"
-export const SITE_NAME = "tarjetag"
+export const SITE_NAME = "Tarjetag"
 
 export const LICENSE_TYPES = {
   FREE: "Gratis",

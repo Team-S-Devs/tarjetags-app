@@ -6,7 +6,12 @@ import Preview from "./Preview";
 const PreviewCardTab = ({ handleSave, loading, elementsInfo, licenseType }) => {
   const { width } = useWindowSize();
   return (
-    <div style={{ flex: 2 }}>
+    <div
+      style={{
+        flex: 2,
+  
+      }}
+    >
       {width > 986 && (
         <div className="d-flex" style={{ position: "fixed", marginLeft: 120 }}>
           <div style={{ flex: 10 }}></div>
@@ -27,18 +32,19 @@ const PreviewCardTab = ({ handleSave, loading, elementsInfo, licenseType }) => {
           marginTop: width > 986 ? 50 : 32,
           width: width > 986 ? 360 : 300,
           height: 680,
-          marginLeft: width > 986 ? 85 : 20,
+          marginLeft: width > 986 ? 85 : "10%",
           padding: 6,
           position: width > 986 ? "fixed" : "relative",
           overflow: "hidden",
           borderRadius: 32,
-          background: "#CCC",
+          backgroundColor: "#CCC",
         }}
       >
         <Preview
           elementsInfo={elementsInfo}
           borderRadius={12}
           licenseType={licenseType}
+          editPreview
         />
       </div>
       <br />

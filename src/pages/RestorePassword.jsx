@@ -7,7 +7,7 @@ import { sendPasswordResetEmail } from 'firebase/auth'
 import { auth } from '../utils/firebase-config'
 import useWindowSize from '../hooks/useWindowsSize'
 import Header from '../sections/Header'
-import { MetaTags } from 'react-meta-tags'
+import {Helmet} from "react-helmet";
 import { SITE_NAME } from '../utils/constants'
 
 const RestorePassword = () => {
@@ -47,9 +47,9 @@ const RestorePassword = () => {
 
   return (
     <div className='profile-background container'>
-      <MetaTags>
+      <Helmet>
         <title>{`Recuperar contraseña - ${SITE_NAME}`}</title>
-      </MetaTags>
+      </Helmet>
       <Header/>
       <div className='prof-2-cont'>
       <BoldTitleWithBackButton centered variant={ width < 400 ? 'h4':'h3'}>Restablecer contraseña</BoldTitleWithBackButton>

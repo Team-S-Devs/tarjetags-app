@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { MetaTags } from "react-meta-tags";
 import { LICENSE_TYPES, MAIN_COLOR, SITE_NAME } from "../utils/constants";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../utils/firebase-config";
 import { verificarLicencia } from "../utils/methods";
 import Preview from "../sections/Preview";
+import {Helmet} from "react-helmet";
 import "../assets/styles/loader.css";
 
 const Card = () => {
@@ -90,9 +90,9 @@ const Card = () => {
 
   return (
     <div>
-      <MetaTags>
+      <Helmet>
         <title>{`${elementsInfo.title} - ${SITE_NAME}`}</title>
-      </MetaTags>
+      </Helmet>
       {loadingGetting ? (
         <div
           className="d-flex align-items-center justify-content-center"

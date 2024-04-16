@@ -3,7 +3,7 @@ import BigPrimaryButton from "../components/buttons/BigPrimaryButton";
 import { useNavigate } from "react-router-dom";
 import "../assets/styles/404style.css";
 import Header from "../sections/Header";
-import { MetaTags } from "react-meta-tags";
+import {Helmet} from "react-helmet";
 import { SITE_NAME } from "../utils/constants";
 
 const Error = () => {
@@ -14,9 +14,9 @@ const Error = () => {
   };
   return (
     <div className="container">
-      <MetaTags>
+      <Helmet>
         <title>{`Página no encontrada - ${SITE_NAME}`}</title>
-      </MetaTags>
+      </Helmet>
       <Header />
       <div className="general-background">
         <div className="container container-error-page">

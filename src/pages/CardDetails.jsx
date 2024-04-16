@@ -8,7 +8,7 @@ import InfoCard from "../components/card/InfoCard";
 import { Button } from "@mui/material";
 import { FaChevronLeft } from "react-icons/fa";
 import { SITE_NAME } from "../utils/constants";
-import { MetaTags } from "react-meta-tags";
+import {Helmet} from "react-helmet";
 
 const CardDetails = ({ user }) => {
   const { cardId } = useParams();
@@ -26,9 +26,9 @@ const CardDetails = ({ user }) => {
       className="container d-flex flex-column align-items-end"
       style={{ height: "100vh", paddingBottom: "60px" }}
     >
-      <MetaTags>
+      <Helmet>
         <title>{`Detalles ${cardId} - ${SITE_NAME}`}</title>
-      </MetaTags>
+      </Helmet>
       <Header />
       <div
         style={{ flex: 100, marginTop: 100, width: "100%" }}

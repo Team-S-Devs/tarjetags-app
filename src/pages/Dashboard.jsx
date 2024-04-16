@@ -22,7 +22,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { LICENSE_TYPES, SITE_NAME } from "../utils/constants";
 import NearUpgrade from "../components/modals/NearUpgrade";
 import { isLessThanOneMonthInFuture } from "../utils/methods";
-import { MetaTags } from "react-meta-tags";
+import {Helmet} from "react-helmet";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -97,9 +97,9 @@ const Dashboard = () => {
       className="container d-flex flex-column align-items-end"
       style={{ height: "100vh", paddingBottom: "60px" }}
     >
-      <MetaTags>
+      <Helmet>
         <title>{`Dashboard - ${SITE_NAME}`}</title>
-      </MetaTags>
+      </Helmet>
       <NearUpgrade
         open={openNear}
         setOpen={setOpenNear}

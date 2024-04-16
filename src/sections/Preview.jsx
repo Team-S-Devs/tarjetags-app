@@ -76,7 +76,8 @@ const Preview = ({
       />
       <SocialLinks elementsInfo={elementsInfo} smallPreview={smallPreview} />
 
-      {/* START PRODUCTOS O SERVICIOS */}
+      {/* START PRODUCTOS O SERVICIOS, PON PADDING DE 28PX horizontal xd */}
+      <p>AQUI VAN PRODUCTOS</p>
 
       {licenseLimits[licenseType].productsDivision &&
         elementsInfo.productCategories.map((cat) => (

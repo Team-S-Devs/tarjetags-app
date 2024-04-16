@@ -137,7 +137,7 @@ const AdminPreviewItem = ({ currCard, bgColor = "#fff", dark, mainColor = MAIN_C
                     component="p"
                     variant="body1"
                     style={{
-                      wordBreak: "break-all",
+                      wordBreak: "break-word",
                       textAlign: "left",
                       color: dark ? "#fff" : "#000",
                     }}
@@ -149,7 +149,7 @@ const AdminPreviewItem = ({ currCard, bgColor = "#fff", dark, mainColor = MAIN_C
                     color="text.secondary"
                     component="p"
                     style={{
-                      wordBreak: "break-all",
+                      wordBreak: "break-word",
                       textAlign: "left",
                       color: dark ? "#bbb" : "#555",
                     }}

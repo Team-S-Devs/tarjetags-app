@@ -14,7 +14,7 @@ const TitleDescription = ({ elementsInfo = {}, smallPreview = false, textColor =
           lineHeight: smallPreview ? "36px" : "64px",
           fontSize: smallPreview ? "2em" : "3em",
           padding: "0 28px",
-          wordBreak: "break-all",
+          wordBreak: "break-word",
         }}
       >
         {elementsInfo.title}
@@ -27,7 +27,7 @@ const TitleDescription = ({ elementsInfo = {}, smallPreview = false, textColor =
         marginBottom={smallPreview ? 4 : 5}
         style={{
           padding: "0 28px",
-          wordBreak: "break-all",
+          wordBreak: "break-word",
         }}
       >
         {elementsInfo.description}
@@ -45,7 +45,7 @@ const TitleDescription = ({ elementsInfo = {}, smallPreview = false, textColor =
             marginRight: smallPreview ? 22 : 28,
             padding: "20px 28px",
             borderRadius: "12px",
-            wordBreak: "break-all",
+            wordBreak: "break-word",
           }}
         >
           {elementsInfo.companyDescription}

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { MetaTags } from "react-meta-tags";
-import { LICENSE_TYPES, SITE_NAME } from "../utils/constants";
+import { LICENSE_TYPES, MAIN_COLOR, SITE_NAME } from "../utils/constants";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../utils/firebase-config";
 import { verificarLicencia } from "../utils/methods";
 import Preview from "../sections/Preview";
-import '../assets/styles/loader.css'
+import "../assets/styles/loader.css";
 
 const Card = () => {
   const { cardId } = useParams();
@@ -74,7 +74,8 @@ const Card = () => {
               ? user.licenseType
               : LICENSE_TYPES.FREE
           );
-          if (!verificarLicencia(user.licenseType, userLimitDate)) navigate("/error");
+          if (!verificarLicencia(user.licenseType, userLimitDate))
+            navigate("/error");
         } else {
           navigate("/error");
         }
@@ -88,16 +89,33 @@ const Card = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div>
       <MetaTags>
         <title>{`${elementsInfo.title} - ${SITE_NAME}`}</title>
       </MetaTags>
       {loadingGetting ? (
-        <div className='container d-flex align-items-center justify-content-center' style={{ height: '100vh' }}>
-        <span className="loader"></span>
-      </div>
+        <div
+          className="d-flex align-items-center justify-content-center"
+          style={{ height: "100vh", background: MAIN_COLOR, width: "100vw" }}
+        >
+          <span className="loader-white"></span>
+        </div>
       ) : (
-        <Preview elementsInfo={elementsInfo} licenseType={licenseType} />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              height: "100vh",
+            }}
+          >
+            <Preview elementsInfo={elementsInfo} licenseType={licenseType} />
+          </div>
+        </div>
       )}
     </div>
   );

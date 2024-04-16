@@ -34,7 +34,7 @@ const ProductsServicesTab = ({
             }
             textAlign="center"
           >
-            División de productos
+            División de productos y/o servicios
             {!licenseLimits[licenseType].productsDivision && (
               <FaLock style={{ marginLeft: 20, cursor: "pointer" }} />
             )}

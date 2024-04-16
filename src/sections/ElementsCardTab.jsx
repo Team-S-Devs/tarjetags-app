@@ -60,14 +60,14 @@ const ElementsCardTab = ({
           </div>
           <div className="mt-3"></div>
           <FieldText
-            maxLength={80}
+            maxLength={60}
             label="Título"
             value={elementsInfo.title}
             setValue={(newVal) => handleChange(newVal, "title")}
           />
           <FieldText
             multiline
-            maxLength={220}
+            maxLength={300}
             value={elementsInfo.description}
             label="Sobre el usuario:"
             marginTop={2}
@@ -77,7 +77,7 @@ const ElementsCardTab = ({
           />
           <FieldText
             multiline
-            maxLength={220}
+            maxLength={300}
             value={elementsInfo.companyDescription}
             label="Sobre su empresa:"
             marginTop={2}

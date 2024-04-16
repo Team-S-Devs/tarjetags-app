@@ -1,10 +1,42 @@
 import React from "react";
-import { GREY_RECTANGLE, licenseLimits } from "../utils/constants";
+import { licenseLimits } from "../utils/constants";
 import { Typography } from "@mui/material";
+import PhotosHeader from "../components/preview/PhotosHeader";
+import useWindowSize from "../hooks/useWindowsSize";
+import TitleDescription from "../components/preview/TitleDescription";
+import SocialLinks from "../components/preview/SocialLinks";
+import ContactLinks from "../components/preview/ContactLinks";
+import ExtraButtons from "../components/preview/ExtraButtons";
+import { contrast } from "chroma-js";
+import AdminPreview from "../components/preview/AdminPreview";
 
-const Preview = ({ elementsInfo = {}, borderRadius = 0, licenseType }) => {
+const Preview = ({
+  elementsInfo = {},
+  borderRadius = 0,
+  licenseType,
+  editPreview = false,
+}) => {
   const color = elementsInfo.theme === "dark" ? "#FFF" : "#000";
   const backgroundColor = elementsInfo.theme === "dark" ? "#25242B" : "#FFF";
+  const { width } = useWindowSize();
+
+  const smallPreview = width < 986 || editPreview;
+
+  // COLOR DE FONDO ESCOGIDO POR EL USUARIO
+  const bgColor = elementsInfo.color;
+
+  const contrastWithWhite = contrast(bgColor, "white");
+  const contrastWithBlack = contrast(bgColor, "black");
+
+  const customContrastThreshold = 3;
+
+  // COLOR DEL TEXTO USANDO EL FONDO ESCOGIDO POR EL USUARIO
+  const textColor =
+    contrastWithWhite > customContrastThreshold
+      ? "#fff"
+      : contrastWithBlack > customContrastThreshold
+      ? "#000"
+      : "#fff";
 
   return (
     <div
@@ -13,26 +45,46 @@ const Preview = ({ elementsInfo = {}, borderRadius = 0, licenseType }) => {
         height: "100%",
         backgroundColor,
         borderWidth: 2,
-        borderColor: "red",
         borderRadius,
-        overflow: "hidden",
+        overflow: "scroll",
+        overflowX: "hidden",
+        position: "relative",
+        paddingLeft: smallPreview ? 0 : "28%",
+        paddingRight: smallPreview ? 0 : "28%",
       }}
+      className="preview-container"
     >
-      <img
-        src={
-          elementsInfo.coverPhoto && elementsInfo.coverPhoto.url !== ""
-            ? elementsInfo.coverPhoto.url
-            : GREY_RECTANGLE
-        }
-        style={{
-          width: "100%",
-          height: "auto",
-          maxHeight: "100px",
-          objectFit: "cover",
-        }}
-        alt="Foto de portada"
+      <style>
+        {`
+          .preview-container::-webkit-scrollbar {
+            width: ${smallPreview ? "5px" : "10px"};
+            display: ${smallPreview && "none"}
+          }
+          .preview-container::-webkit-scrollbar-thumb {
+            background: ${elementsInfo.color}
+          }
+          .preview-container::-webkit-scrollbar-track{
+            background: ${backgroundColor}
+          }
+        `}
+      </style>
+      <PhotosHeader elementsInfo={elementsInfo} smallPreview={smallPreview} />
+      <TitleDescription
+        elementsInfo={elementsInfo}
+        smallPreview={smallPreview}
+        textColor={textColor}
       />
-      Preview
+      <SocialLinks elementsInfo={elementsInfo} smallPreview={smallPreview} />
+
+      {/* START PRODUCTOS O SERVICIOS, PON PADDING DE 28PX horizontal xd */}
+      <p>AQUI VAN PRODUCTOS</p>
+
+      {licenseLimits[licenseType].productsDivision &&
+        elementsInfo.productCategories.map((cat) => (
+          <Typography color={color} key={"cat-view" + cat.id}>
+            {cat.title}
+          </Typography>
+        ))}
       {elementsInfo.products
         .slice(0, licenseLimits[licenseType].maxProducts)
         .map((prod) => (
@@ -40,28 +92,27 @@ const Preview = ({ elementsInfo = {}, borderRadius = 0, licenseType }) => {
             {prod.name}
           </Typography>
         ))}
-      {licenseLimits[licenseType].admin &&
-        elementsInfo.adminCards.map((card, index) => (
-          <Typography color={color} key={"admin-card-view" + index}>
-            {card}
-          </Typography>
-        ))}
-      {elementsInfo.contactLinks
-        .filter(
-          (button) =>
-            !licenseLimits[licenseType].excludedButtons.includes(button.name)
-        )
-        .map((button) => (
-          <Typography color={color} key={"contact-view" + button}>
-            {button.name}
-          </Typography>
-        ))}
-      {licenseLimits[licenseType].productsDivision &&
-        elementsInfo.productCategories.map((cat) => (
-          <Typography color={color} key={"cat-view" + cat.id}>
-            {cat.title}
-          </Typography>
-        ))}
+
+      {/* END PRODUCTOS O SERVICIOS */}
+
+      <ExtraButtons
+        elementsInfo={elementsInfo}
+        smallPreview={smallPreview}
+        textColor={textColor}
+      />
+
+      <AdminPreview
+        elementsInfo={elementsInfo}
+        smallPreview={smallPreview}
+        licenseType={licenseType}
+      />
+
+      <ContactLinks
+        elementsInfo={elementsInfo}
+        smallPreview={smallPreview}
+        licenseType={licenseType}
+        backgroundColor={backgroundColor}
+      />
     </div>
   );
 };

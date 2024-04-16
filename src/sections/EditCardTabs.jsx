@@ -52,7 +52,7 @@ const EditCardTabs = ({
         >
           <Tab label="Elementos" {...a11yProps(0)} />
           <Tab label="Botones" {...a11yProps(1)} />
-          <Tab label="Servicios" {...a11yProps(2)} />
+          <Tab label="Tienda" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>

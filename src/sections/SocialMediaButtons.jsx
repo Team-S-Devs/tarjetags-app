@@ -20,11 +20,28 @@ import {
   FaVimeo,
   FaTelegram,
 } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaThreads, FaXTwitter } from "react-icons/fa6";
 import { GoTrash } from "react-icons/go";
 import { LiaEditSolid } from "react-icons/lia";
 import SmallPrimaryButton from "../components/buttons/SmallPrimaryButton";
 import SocialMediaDialog from "../components/modals/SocialMediaDialog";
+import facebook from "../assets/images/social/facebook.png";
+import instagram from "../assets/images/social/instagram.png";
+import x from "../assets/images/social/x.png";
+import twitch from "../assets/images/social/twitch.png";
+import threads from "../assets/images/social/threads.png";
+import youtube from "../assets/images/social/youtube.png";
+import discord from "../assets/images/social/discord.png";
+import vimeo from "../assets/images/social/vimeo.png";
+import linkedin from "../assets/images/social/linkedin.png";
+import telegram from "../assets/images/social/telegram.png";
+import spotify from "../assets/images/social/spotify.png";
+import tiktok from "../assets/images/social/tiktok.png";
+import behance from "../assets/images/social/behance.png";
+import pinterest from "../assets/images/social/pinterest.png";
+import reddit from "../assets/images/social/reddit.png";
+import snapchat from "../assets/images/social/snapchat.png";
+
 
 export const socialMediaOptions = [
   {
@@ -32,96 +49,112 @@ export const socialMediaOptions = [
     icon: <FaFacebook size={40} />,
     color: "#1877f2",
     placeholder: "https://www.facebook.com/tuperfil",
+    img: facebook
   },
   {
     name: "Instagram",
     icon: <FaInstagram size={40} />,
     color: "#e4405f",
     placeholder: "https://www.instagram.com/tuperfil",
+    img: instagram
   },
   {
     name: "Twitter",
     icon: <FaXTwitter size={40} />,
     color: "#000",
     placeholder: "https://twitter.com/tuperfil",
+    img: x
   },
   {
     name: "LinkedIn",
     icon: <FaLinkedin size={40} />,
     color: "#0077b5",
     placeholder: "https://www.linkedin.com/in/tuperfil",
+    img: linkedin
   },
   {
     name: "YouTube",
     icon: <FaYoutube size={40} />,
     color: "#ff0000",
     placeholder: "https://www.youtube.com/c/tucanal",
+    img: youtube
   },
   {
     name: "TikTok",
     icon: <FaTiktok size={40} />,
     color: "#000000",
     placeholder: "https://www.tiktok.com/@tunombredeusuario",
+    img: tiktok
   },
   {
     name: "Behance",
     icon: <FaBehance size={40} />,
     color: "#1769ff",
     placeholder: "https://www.behance.net/tuperfil",
+    img: behance
   },
   {
     name: "Pinterest",
     icon: <FaPinterest size={40} />,
     color: "#bd081c",
     placeholder: "https://www.pinterest.com/tuperfil",
+    img: pinterest
   },
   {
     name: "Reddit",
     icon: <FaReddit size={40} />,
     color: "#ff4500",
     placeholder: "https://www.reddit.com/user/tunombredeusuario",
+    img: reddit
   },
   {
     name: "Snapchat",
     icon: <FaSnapchat size={40} />,
     color: "#fffc00",
     placeholder: "https://www.snapchat.com/add/tunombredeusuario",
+    img: snapchat
   },
   {
     name: "Telegram",
     icon: <FaTelegram size={40} />,
     color: "#0088cc",
     placeholder: "https://t.me/tunombredeusuario",
+    img: telegram
   },
   {
     name: "Twitch",
     icon: <FaTwitch size={40} />,
     color: "#6441a5",
     placeholder: "https://www.twitch.tv/tucanal",
+    img: twitch
   },
   {
     name: "Discord",
     icon: <FaDiscord size={40} />,
     color: "#5865f2",
     placeholder: "https://discord.gg/yourserver",
+    img: discord
   },
   {
     name: "Spotify",
     icon: <FaSpotify size={40} />,
     color: "#1db954",
     placeholder: "https://open.spotify.com/user/tunombredeusuario",
+    img: spotify
   },
   {
-    name: "Flickr",
-    icon: <FaFlickr size={40} />,
-    color: "#ff0084",
-    placeholder: "https://www.flickr.com/photos/tunombredeusuario",
+    name: "Threads",
+    icon: <FaThreads size={40} />,
+    color: "#000",
+    placeholder: "https://threads.net/@tunombredeusuario",
+    img: threads
   },
   {
     name: "Vimeo",
     icon: <FaVimeo size={40} />,
     color: "#1ab7ea",
     placeholder: "https://vimeo.com/tunombredeusuario",
+    img: vimeo
   },
 ];
 

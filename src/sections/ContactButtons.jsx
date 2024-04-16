@@ -9,6 +9,11 @@ import SmallPrimaryButton from "../components/buttons/SmallPrimaryButton";
 import ContactMethodsDialog from "../components/modals/ContactMethodsDialog";
 import { IoLogoWhatsapp, IoMail } from "react-icons/io5";
 import { SiGooglemaps } from "react-icons/si";
+import email from "../assets/images/social/email.png";
+import whatsapp from "../assets/images/social/whatsapp.png";
+import web from "../assets/images/social/web.png";
+import maps from "../assets/images/social/maps.png";
+import phone from "../assets/images/social/phone.png";
 
 export const contactButtonsOptions = [
   {
@@ -17,6 +22,7 @@ export const contactButtonsOptions = [
     color: "#2E60E7",
     placeholder: "76543218",
     type: "tel",
+    img: phone
   },
   {
     name: "E-mail",
@@ -24,6 +30,7 @@ export const contactButtonsOptions = [
     color: "#E42300",
     placeholder: "usuario@ejemplo.com",
     type: "mail",
+    img: email
   },
   {
     name: "WhatsApp",
@@ -31,6 +38,7 @@ export const contactButtonsOptions = [
     color: "#25D366",
     placeholder: "76543218",
     type: "tel",
+    img: whatsapp
   },
   {
     name: "Sitio Web",
@@ -38,6 +46,7 @@ export const contactButtonsOptions = [
     color: "#4BC6F0",
     placeholder: "https://tupagina.com",
     type: "text",
+    img: web
   },
   {
     name: "Google Maps",
@@ -45,6 +54,7 @@ export const contactButtonsOptions = [
     color: "#119047",
     placeholder: "https://maps.app.goo.gl/tudireccion",
     type: "text",
+    img: maps
   },
 ];
 

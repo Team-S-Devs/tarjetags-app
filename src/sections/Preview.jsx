@@ -9,6 +9,9 @@ import ContactLinks from "../components/preview/ContactLinks";
 import ExtraButtons from "../components/preview/ExtraButtons";
 import { contrast } from "chroma-js";
 import AdminPreview from "../components/preview/AdminPreview";
+import '../assets/styles/dashboard.css'
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 const Preview = ({
   elementsInfo = {},
@@ -77,7 +80,15 @@ const Preview = ({
       <SocialLinks elementsInfo={elementsInfo} smallPreview={smallPreview} />
 
       {/* START PRODUCTOS O SERVICIOS, PON PADDING DE 28PX horizontal xd */}
-      <p>AQUI VAN PRODUCTOS</p>
+
+      <div className="products-preview-container">
+          <Typography style={{fontWeight: 'bolder'}} color={color} variant="h6" key={"product-view"}>
+            Productos o Servicios
+          </Typography>
+
+          <div className="carrousel-products">w</div>
+
+      </div>
 
       {licenseLimits[licenseType].productsDivision &&
         elementsInfo.productCategories.map((cat) => (

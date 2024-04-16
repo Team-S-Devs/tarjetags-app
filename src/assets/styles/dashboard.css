@@ -1,0 +1,6 @@
+.products-preview-container {
+    display:flex;
+    flex-direction: column;
+    background-color: rgb(125, 113, 113);
+    align-items: center;
+}

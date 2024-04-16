@@ -10,8 +10,6 @@ import ExtraButtons from "../components/preview/ExtraButtons";
 import { contrast } from "chroma-js";
 import AdminPreview from "../components/preview/AdminPreview";
 import '../assets/styles/dashboard.css'
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 
 const Preview = ({
   elementsInfo = {},

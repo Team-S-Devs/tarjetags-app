@@ -4,3 +4,12 @@
     background-color: rgb(125, 113, 113);
     align-items: center;
 }
+
+.carrousel-products{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem;
+    margin: 1rem;
+}

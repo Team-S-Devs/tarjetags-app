@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { auth } from '../utils/firebase-config';
 import { useNavigate } from 'react-router-dom';
 import '../assets/styles/loader.css'
-import { MetaTags } from 'react-meta-tags';
+import {Helmet} from "react-helmet";
 import { SITE_NAME } from '../utils/constants';
 
 const Splash = ({ navigateTo = "/login", loggedNavigateTo  = "/dashboard" }) => {
@@ -25,9 +25,9 @@ const Splash = ({ navigateTo = "/login", loggedNavigateTo  = "/dashboard" }) => 
     
   return (
     <div className='container d-flex align-items-center justify-content-center' style={{ height: '100vh' }}>
-      <MetaTags>
+      <Helmet>
         <title>{`${SITE_NAME}`}</title>
-      </MetaTags>
+      </Helmet>
       <span className="loader"></span>
     </div>
   )

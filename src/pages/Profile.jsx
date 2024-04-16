@@ -21,7 +21,7 @@ import SmallPrimaryButton from '../components/buttons/SmallPrimaryButton';
 import Header from '../sections/Header';
 import '../assets/styles/login.css';
 import LogModal from '../components/profile/LogModal';
-import { MetaTags } from 'react-meta-tags';
+import {Helmet} from "react-helmet";
 import { SITE_NAME } from '../utils/constants';
 
 const Profile = ({ user }) => {
@@ -275,9 +275,9 @@ const [userData, setUserData ] = useState(null);
 
     return (
         <div className='profile-container'>
-            <MetaTags>
+            <Helmet>
                 <title>{`Perfil - ${SITE_NAME}`}</title>
-            </MetaTags>
+            </Helmet>
             <Header/>
             
             <div className="my-5 my-md-0 d-flex flex-column justify-content-center container cont-profile1" style={{ minHeight: "90vh"}}>

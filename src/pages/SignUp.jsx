@@ -31,7 +31,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase-config";
 import { Timestamp } from "firebase/firestore";
 import { LICENSE_TYPES, SITE_NAME } from "../utils/constants";
-import { MetaTags } from "react-meta-tags";
+import {Helmet} from "react-helmet";
 
 /**
  * SignUp component provides a user registration form with optional company details.
@@ -227,9 +227,9 @@ const SignUp = () => {
 
   return (
     <Container>
-      <MetaTags>
+      <Helmet>
         <title>{`Regístrate - ${SITE_NAME}`}</title>
-      </MetaTags>
+      </Helmet>
       <div
         className="my-5 my-md-0 d-flex flex-column justify-content-center"
         style={{ minHeight: "100vh" }}

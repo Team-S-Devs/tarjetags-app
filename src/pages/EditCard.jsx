@@ -24,7 +24,7 @@ import { LICENSE_TYPES, SITE_NAME } from "../utils/constants";
 import { verificarLicencia } from "../utils/methods";
 import UpdateLicenseModal from "../components/modals/UpdateLicenseModal";
 import { FaStar } from "react-icons/fa";
-import { MetaTags } from "react-meta-tags";
+import {Helmet} from "react-helmet";
 
 const EditCard = () => {
   const navigate = useNavigate();
@@ -211,9 +211,9 @@ const EditCard = () => {
 
   return (
     <div className="container" style={{ paddingTop: "90px" }}>
-      <MetaTags>
+      <Helmet>
         <title>{`Editar tarjeta ${elementsInfo.title} - ${SITE_NAME}`}</title>
-      </MetaTags>
+      </Helmet>
       <Header />
       {validLicense ? (
         <>

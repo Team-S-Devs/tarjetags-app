@@ -49,8 +49,8 @@
 :root {
   line-height: 1.5;
   font-weight: 400;
-
-  --prim-purple: #561ad9;
+  --prim-purple: #662295;
+  /* --prim-purple: #561ad9; */
   --sec-purple-light: #733ee8;
   --third-white: #edf0f7;
   --third-green: #9dd91a;

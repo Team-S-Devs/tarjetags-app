@@ -1,26 +1,23 @@
-import React from 'react';
-import '../../assets/styles/Prices/CardPrice.css';
+import React from "react";
+import "../../assets/styles/Prices/CardPrice.css";
 import { Button, Typography } from "@mui/material";
-import { useState } from 'react';
-const ButtonCardPrice = (props) => {
+import { useState } from "react";
+const ButtonCardPrice = ({ width, height, href }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const message = "Adquirir";
 
-    const width = props.width;
-    const height = props.height;
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
 
-    const [isHovered, setIsHovered] = useState(false);
-    const message = "Adquirir"
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
 
-    const handleMouseEnter = () => {
-      setIsHovered(true);
-    };
-  
-    const handleMouseLeave = () => {
-      setIsHovered(false);
-    };
-  
-    return (  
-     <Button variant="outlined" 
-        sx={{
+  return (
+    <Button
+      variant="outlined"
+      sx={{
         width: width ? `${width}px` : "100%",
         height: height ? `${height}px` : "100%",
         borderRadius: "100px",
@@ -28,37 +25,40 @@ const ButtonCardPrice = (props) => {
         background: "rgba(255, 255, 255, 0.00)",
         transition: "opacity 2.5s",
 
-        ":hover":{
+        ":hover": {
           background: "linear-gradient(90deg, #733EE8 0%, #DB00FF 100%)",
         },
-        }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        
-        >
-
-        {isHovered?
-         (
-           <Typography variant="h5" className="text-button-price-card"
-           sx={{
+      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      href={href}
+      target="_blank"
+    >
+      {isHovered ? (
+        <Typography
+          variant="h5"
+          className="text-button-price-card"
+          sx={{
             color: "#FFF",
             textAlign: "center",
             fontFamily: "Poppins",
-            fontSize: "32px",
+            fontSize: "24px",
             fontStyle: "normal",
             fontWeight: 400,
             lineHeight: "normal",
             "text-transform": "capitalize",
-           }}>
-            {message}
-           </Typography> 
-         ) : 
-         ( 
-         <Typography variant="h5" className="text-button-price-card"
-            sx={{
+          }}
+        >
+          {message}
+        </Typography>
+      ) : (
+        <Typography
+          variant="h5"
+          className="text-button-price-card"
+          sx={{
             textAlign: "center",
             fontFamily: "Poppins",
-            fontSize: "32px",
+            fontSize: "24px",
             fontStyle: "normal",
             fontWeight: 400,
             lineHeight: "normal",
@@ -66,15 +66,14 @@ const ButtonCardPrice = (props) => {
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
-            textTransform: "capitalize"
-            }}> 
-            {message}
-        </Typography>)}
-
-
-      
-  </Button>);
-  
-}
+            textTransform: "capitalize",
+          }}
+        >
+          {message}
+        </Typography>
+      )}
+    </Button>
+  );
+};
 
 export default ButtonCardPrice;

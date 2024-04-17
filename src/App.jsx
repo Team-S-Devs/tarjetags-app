@@ -28,7 +28,8 @@ const theme = createTheme({
     MuiCssBaseline: {
       "@global": {
         "::selection": {
-          color: "#561AD9",
+          // color: "#561AD9",
+          color: "#662483",
           background: "#fff",
         },
       },
@@ -36,7 +37,8 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#561AD9",
+      // main: "#561AD9",
+      main: "#662483",
     },
     secondary: {
       main: "#604F83",

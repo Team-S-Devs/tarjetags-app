@@ -10,7 +10,7 @@ import DropdownIconField from '../components/form/fields/DropdownIconField';
 import DropdownField from '../components/form/fields/DropdownField';
 import useWindowSize from '../hooks/useWindowsSize';
 import '../assets/styles/sign-up.css';
-import { Box, Modal, Typography } from '@mui/material';
+import { Box, Button, Modal, Typography } from '@mui/material';
 import Form from '../components/form/Form';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../utils/firebase-config';
@@ -22,7 +22,8 @@ import Header from '../sections/Header';
 import '../assets/styles/login.css';
 import LogModal from '../components/profile/LogModal';
 import { MetaTags } from 'react-meta-tags';
-import { SITE_NAME } from '../utils/constants';
+import { PHONE_NUMBER, SITE_NAME } from '../utils/constants';
+import { FiTool } from "react-icons/fi";
 
 const Profile = ({ user }) => {
 
@@ -461,8 +462,22 @@ const [userData, setUserData ] = useState(null);
                                 Cerrar Sesión
                             </SmallPrimaryButton>
                         </div>
+
                     </div>
                 </div>
+            
+            <br /><br /><br />
+            <div style={{ paddingLeft: 20 }}>
+                <Button 
+                    href={`https://wa.me/591${PHONE_NUMBER}`} 
+                    variant='outlined' 
+                    startIcon={<FiTool/>}
+                    target='_blank'
+                >
+                    Soporte de usuario
+                </Button>
+            </div>
+
             </div>
 
         </div>

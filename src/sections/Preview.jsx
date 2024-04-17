@@ -10,13 +10,17 @@ import ExtraButtons from "../components/preview/ExtraButtons";
 import { contrast } from "chroma-js";
 import AdminPreview from "../components/preview/AdminPreview";
 import '../assets/styles/dashboard.css'
+import Carousel from "../components/preview/Carousel";
+
 
 const Preview = ({
   elementsInfo = {},
   borderRadius = 0,
   licenseType,
   editPreview = false,
+  
 }) => {
+
   const color = elementsInfo.theme === "dark" ? "#FFF" : "#000";
   const backgroundColor = elementsInfo.theme === "dark" ? "#25242B" : "#FFF";
   const { width } = useWindowSize();
@@ -38,6 +42,12 @@ const Preview = ({
       : contrastWithBlack > customContrastThreshold
       ? "#000"
       : "#fff";
+
+  const images = [
+        'https://via.placeholder.com/800x400/ff5733/fff',
+        'https://via.placeholder.com/800x400/33ff57/fff',
+        'https://via.placeholder.com/800x400/5733ff/fff',
+      ];
 
   return (
     <div
@@ -84,11 +94,23 @@ const Preview = ({
             Productos o Servicios
           </Typography>
 
-          <div className="carrousel-products">w</div>
+      <div className="categories-options">
+        {licenseLimits[licenseType].productsDivision &&
+          elementsInfo.productCategories.map((cat) => (
+            <Typography color={color} key={"cat-view" + cat.id}>
+              {cat.title}
+            </Typography>
+                    ))}
+      </div>
+          
+
+          <div className="carrousel-products">
+            <Carousel licType={licenseType} elemInfo={elementsInfo} color={color} images={images}></Carousel>
+          </div>
 
       </div>
 
-      {licenseLimits[licenseType].productsDivision &&
+      {/* {licenseLimits[licenseType].productsDivision &&
         elementsInfo.productCategories.map((cat) => (
           <Typography color={color} key={"cat-view" + cat.id}>
             {cat.title}
@@ -100,7 +122,7 @@ const Preview = ({
           <Typography color={color} key={prod.id + "product-view"}>
             {prod.name}
           </Typography>
-        ))}
+        ))} */}
 
       {/* END PRODUCTOS O SERVICIOS */}
 

@@ -3,8 +3,9 @@ import BigPrimaryButton from "../components/buttons/BigPrimaryButton";
 import { useNavigate } from "react-router-dom";
 import "../assets/styles/404style.css";
 import Header from "../sections/Header";
-import { MetaTags } from "react-meta-tags";
+import {Helmet} from "react-helmet";
 import { SITE_NAME } from "../utils/constants";
+import marca from "../assets/images/auth/Marca.svg"
 
 const Error = () => {
   const navigation = useNavigate();
@@ -14,9 +15,14 @@ const Error = () => {
   };
   return (
     <div className="container">
-      <MetaTags>
+      <Helmet>
         <title>{`Página no encontrada - ${SITE_NAME}`}</title>
-      </MetaTags>
+        <meta
+          name="description"
+          content="Crea tarjetas de presentación irresistibles que te abran puertas y
+            te conecten con oportunidades ilimitadas."
+        />
+      </Helmet>
       <Header />
       <div className="general-background">
         <div className="container container-error-page">

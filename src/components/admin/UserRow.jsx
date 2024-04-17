@@ -26,6 +26,7 @@ const UserRow = ({
 
   const [open, setOpen] = useState(false);
   const [licenseValue, setLicenseType] = useState(licenseType);
+  const [isLicenseChange, setLicenceChange] = useState(false);
   const [editUser, setEditUser] = useState(false);
   const [selectedDate, setSelectedDate] = useState(dayjs("31/04/2024"));
   const [saveLoader, setSaveLoader] = useState(false);
@@ -42,6 +43,10 @@ const UserRow = ({
   const handleClose = () => setOpen(false);
   const navigate = useNavigate();
 
+  const setLicenseTypeBool = (data) => {
+    setLicenseType(data);
+    setLicenceChange(true);
+  }
 
   const handleDateChange = (newDate) => {
     setSelectedDate(newDate);
@@ -69,6 +74,8 @@ const UserRow = ({
 
   const handleEditOption = () => {
     setEditUser(!editUser);
+    setLicenceChange(false);
+    setLicenseType(licenseType);
   };
 
   const styleModal = {
@@ -94,12 +101,14 @@ const UserRow = ({
   }, []);
 
 
-  const updateLimitDate = (licenseValue, monthsToAdd) => {
-    if (licenseValue !== licenseType) {
+  const updateLimitDate = (monthsToAdd) => {
+    if (isLicenseChange) {
       const currentDate = dayjs();
       const newDate = currentDate.add(monthsToAdd, 'month');
       setSelectedDate(newDate);
+      return newDate;
     }
+    else {return selectedDate;}
   };
   
 
@@ -108,8 +117,9 @@ const UserRow = ({
     setSaveLoader(true);
     const userRef = doc(db, "users", userId);
 
-    updateLimitDate(licenseValue, licenseLimits[licenseValue].limitValue);
-    const timestamp = selectedDate.toDate();
+    const finalDate = updateLimitDate(licenseLimits[licenseValue].limitValue);
+
+    const timestamp = finalDate.toDate();
     const timestampObject = Timestamp.fromDate(timestamp);
 
     const newData = {
@@ -121,6 +131,7 @@ const UserRow = ({
       .then(() => {
         setSaveLoader(false);
         setEditUser(false);
+        setLicenceChange(false);
       })
       .catch((error) => {
         alert("Error guardando los nuevos datos. Inténtalo de nuevo");
@@ -153,7 +164,7 @@ const UserRow = ({
               options={licenseOptions}
               value={licenseValue}
               focused={false}
-              setValue={setLicenseType}
+              setValue={setLicenseTypeBool}
             />
           ) : (
             licenseValue

@@ -14,7 +14,7 @@ import { Typography } from "@mui/material";
 import PasswordField from "../components/form/fields/PasswordField";
 import "../assets/styles/login.css";
 import { SITE_NAME } from "../utils/constants";
-import { MetaTags } from "react-meta-tags";
+import {Helmet} from "react-helmet";
 
 const LogIn = () => {
   const navigate = useNavigate();
@@ -115,9 +115,14 @@ const LogIn = () => {
 
   return (
     <div className="general-background">
-      <MetaTags>
+      <Helmet>
         <title>{`Inicia sesión - ${SITE_NAME}`}</title>
-      </MetaTags>
+        <meta
+          name="description"
+          content="Crea tarjetas de presentación irresistibles que te abran puertas y
+            te conecten con oportunidades ilimitadas."
+        />
+      </Helmet>
       <div className="d-flex justify-content-center flex-column login-container ">
         <BoldTitleWithBackButton children="Inicio de Sesión" />
         <GreySubtitleWithLink

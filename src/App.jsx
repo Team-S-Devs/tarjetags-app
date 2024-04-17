@@ -14,7 +14,7 @@ import Profile from "./pages/Profile";
 import Payments from "./pages/Payments";
 import EditCard from "./pages/EditCard";
 import RestorePassword from "./pages/RestorePassword";
-import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import CardDetails from "./pages/CardDetails";
 import Plans from "./pages/Plans";
 import Card from "./pages/Card";

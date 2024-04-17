@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../sections/Header";
 import BoldTitle from "../components/texts/BoldTitle";
+import {Helmet} from "react-helmet";
 import {
   collection,
   query,
@@ -14,7 +15,6 @@ import { db } from "../utils/firebase-config";
 import "../assets/styles/admin.css";
 import UserRow from "../components/admin/UserRow";
 import useWindowSize from "../hooks/useWindowsSize";
-import { MetaTags } from "react-meta-tags";
 import { SITE_NAME } from "../utils/constants";
 import SearchBar from "../components/admin/SearchBar";
 
@@ -126,9 +126,14 @@ const Admin = () => {
 
   return (
     <div className="profile-container">
-      <MetaTags>
+      <Helmet>
         <title>{`Admin Panel- ${SITE_NAME}`}</title>
-      </MetaTags>
+        <meta
+          name="description"
+          content="Crea tarjetas de presentación irresistibles que te abran puertas y
+            te conecten con oportunidades ilimitadas."
+        />
+      </Helmet>
       <Header />
 
       <div

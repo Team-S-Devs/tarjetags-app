@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../sections/Header";
 import BoldTitle from "../components/texts/BoldTitle";
-import { MetaTags } from "react-meta-tags";
+import {Helmet} from "react-helmet";
 import { SITE_NAME } from "../utils/constants";
 import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import StoreProductsList from "../sections/StoreProductsList";
@@ -66,9 +66,14 @@ const Store = () => {
 
   return (
     <div className="container">
-      <MetaTags>
+      <Helmet>
         <title>{`Tienda- ${SITE_NAME}`}</title>
-      </MetaTags>
+        <meta
+          name="description"
+          content="Crea tarjetas de presentación irresistibles que te abran puertas y
+            te conecten con oportunidades ilimitadas."
+        />
+      </Helmet>
       <Header />
       <div
         style={{ flex: 100, marginTop: 100, width: "100%" }}

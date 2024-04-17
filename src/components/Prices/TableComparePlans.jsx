@@ -9,7 +9,7 @@ import ButtonTableComparison from "./ButtonTableComparison";
 import "../../assets/styles/Prices/CarouselButtons.css";
 import plans from "../../utils/plans.json";
 
-function TableComparePlans() {
+function TableComparePlans({ user = { email: "" } }) {
   const carouselRef = useRef(null);
   const flickityInstance = useRef(null);
   const [displayCells, setDisplayCells] = useState([false, true, false]);
@@ -88,6 +88,7 @@ function TableComparePlans() {
             title={getTitlePlanById(1)}
             currency="Bs"
             amount={getAmountById(1)}
+            user={user}
           />
         </div>
         <div className="carousel-cell" onClick={() => handleCellClick(1)}>
@@ -95,6 +96,7 @@ function TableComparePlans() {
             title={getTitlePlanById(2)}
             currency="Bs"
             amount={getAmountById(2)}
+            user={user}
           />
         </div>
         <div className="carousel-cell" onClick={() => handleCellClick(2)}>
@@ -102,6 +104,7 @@ function TableComparePlans() {
             title={getTitlePlanById(3)}
             currency="Bs"
             amount={getAmountById(3)}
+            user={user}
           />
         </div>
       </div>

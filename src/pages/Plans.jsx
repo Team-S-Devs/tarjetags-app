@@ -28,7 +28,7 @@ const Plans = ({ user }) => {
   };
 
   return (
-    <div className="container">
+    <div >
       <Helmet>
         <title>{`Planes - ${SITE_NAME}`}</title>
         <meta
@@ -96,7 +96,7 @@ const Plans = ({ user }) => {
                 </Container>
                 <br />
                 <br />
-                <TableComparePlans />
+                <TableComparePlans  user={user}/>
               </TabPanel>
               <TabPanel value="plansPartner" className="tabPanel-Style">
                 <br />

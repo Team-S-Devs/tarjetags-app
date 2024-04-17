@@ -3,7 +3,7 @@ import "../../assets/styles/Prices/CardPrice.css";
 import { BsCheckCircleFill } from "react-icons/bs";
 import ButtonCardPrice from "./ButtonCardPrice";
 import plans from "../../utils/plans.json";
-import { PHONE_NUMBER } from "../../utils/constants";
+import { PHONE_NUMBER, SITE_NAME } from "../../utils/constants";
 
 const CardPrice = ({ idPlan, user }) => {
   const currentPlan = plans.find((plan) => plan.idPlan === idPlan);
@@ -40,7 +40,7 @@ const CardPrice = ({ idPlan, user }) => {
   const getWppLink = () => {
     return `https://wa.me/591${PHONE_NUMBER}?text=${obtenerSaludo()}.%20Deseo adquirir la Licencia ${
       currentPlan.namePlan
-    } para mi cuenta cuyo correo es: ${user.email}`;
+    } de ${SITE_NAME}, para mi cuenta cuyo correo es: ${user.email}`;
   };
 
   return (

@@ -2,7 +2,7 @@ import React from "react";
 import "../../assets/styles/Prices/ButtonTableCompare.css";
 import "../../assets/styles/Prices/CarouselButtons.css";
 import ButtonCardPrice from "./ButtonCardPrice";
-import { PHONE_NUMBER } from "../../utils/constants";
+import { PHONE_NUMBER, SITE_NAME } from "../../utils/constants";
 
 const ButtonTableComparison = (props) => {
   const obtenerSaludo = () => {
@@ -20,7 +20,7 @@ const ButtonTableComparison = (props) => {
   const getWppLink = () => {
     return `https://wa.me/591${PHONE_NUMBER}?text=${obtenerSaludo()}.%20Deseo adquirir la Licencia ${
       props.title
-    } para mi cuenta cuyo correo es: ${props.user.email}`;
+    } de ${SITE_NAME} para mi cuenta cuyo correo es: ${props.user.email}`;
   };
 
   return (

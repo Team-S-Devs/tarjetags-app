@@ -5,8 +5,9 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../utils/firebase-config";
 import { verificarLicencia } from "../utils/methods";
 import Preview from "../sections/Preview";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import "../assets/styles/loader.css";
+import marca from "../assets/images/auth/Marca.svg";
 
 const Card = () => {
   const { cardId } = useParams();
@@ -92,6 +93,15 @@ const Card = () => {
     <div>
       <Helmet>
         <title>{`${elementsInfo.title} - ${SITE_NAME}`}</title>
+        <meta name="description" content={elementsInfo.description} />
+        <meta
+          property="og:image"
+          content={
+            elementsInfo.coverPhoto && elementsInfo.coverPhoto.url !== ""
+              ? elementsInfo.coverPhoto.url
+              : marca
+          }
+        />
       </Helmet>
       {loadingGetting ? (
         <div

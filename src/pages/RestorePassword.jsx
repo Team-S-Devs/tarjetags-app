@@ -49,6 +49,11 @@ const RestorePassword = () => {
     <div className='profile-background container'>
       <Helmet>
         <title>{`Recuperar contraseña - ${SITE_NAME}`}</title>
+        <meta
+          name="description"
+          content="Crea tarjetas de presentación irresistibles que te abran puertas y
+            te conecten con oportunidades ilimitadas."
+        />
       </Helmet>
       <Header/>
       <div className='prof-2-cont'>

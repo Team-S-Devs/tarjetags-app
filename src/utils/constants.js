@@ -1,9 +1,11 @@
 export const GREY_RECTANGLE =
   "https://i.ibb.co/Np6gfbd/light-grey-background-institute-of-innovation-technology-and-light-grey-background-png-4095-1982.png";
-export const MAIN_COLOR = "#561AD9";
+// export const MAIN_COLOR = "#561AD9";
+export const MAIN_COLOR = "#662483";
 
 export const URL_NAME = "tarjetag.com/"
 export const SITE_NAME = "Tarjetag"
+export const PHONE_NUMBER = "63073135"
 
 export const LICENSE_TYPES = {
   FREE: "Gratis",

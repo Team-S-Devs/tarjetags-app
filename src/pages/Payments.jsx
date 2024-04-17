@@ -8,6 +8,7 @@ import GreySubtitle from '../components/texts/GreySubtitle';
 import { db } from '../utils/firebase-config';
 import { doc, getDoc } from 'firebase/firestore';
 import PaymentRow from '../components/admin/PaymentRow';
+import { Helmet } from 'react-helmet';
 
 const Payments = () => {
   const { userId } = useParams();
@@ -33,7 +34,7 @@ const Payments = () => {
 
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching payment history:', error);
+        alert("No se pudo obtener el historial de pagos")
         setLoading(false);
       }
     };
@@ -49,6 +50,15 @@ const Payments = () => {
 
   return (
     <div className="profile-container">
+      <Helmet>
+        <title>{`Historial de Pagos - ${SITE_NAME}`}</title>
+        <meta
+          name="description"
+          content="Crea tarjetas de presentación irresistibles que te abran puertas y
+            te conecten con oportunidades ilimitadas."
+        />
+      </Helmet>
+      <Header />
       <Header />
 
       <div className="my-5 my-md-0 d-flex flex-column justify-content-center container cont-profile1" style={{ minHeight: "100vh" }}>

@@ -128,6 +128,11 @@ const Admin = () => {
     <div className="profile-container">
       <Helmet>
         <title>{`Admin Panel- ${SITE_NAME}`}</title>
+        <meta
+          name="description"
+          content="Crea tarjetas de presentación irresistibles que te abran puertas y
+            te conecten con oportunidades ilimitadas."
+        />
       </Helmet>
       <Header />
 

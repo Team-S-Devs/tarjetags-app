@@ -5,126 +5,90 @@
         "pricePlan": 0,
         "currency": "Bs",
         "renovacion": "Solo 3 meses",
-        "libreDePublicidad": false,
-        "nombreDominio": false,
-        "servicioTiendaMax":3,
-        "botonesAdicionales": ["Ninguno"],
+        "servicioTiendaMax":10,
+        "botonesAdicionales": ["Ilimitado sin Whatsapp y Maps"],
         "clasificacionDeProductos":  false,
-        "comisionDeVenta": 0,
-        "descuentoPases": 0,
         "descripcion": [
             "Caducidad en 3 meses",
-            "Con anuncios",
-            "Tienda de 3 productos",
-            "Dominio aleatorio"
+            "Tienda de hasta 10 productos",
+            "Todos los botones menos WhatsApp y Maps"
         ]
     },
     {
         "idPlan": 2,
-        "namePlan":"Basico",
-        "pricePlan": 100,
+        "namePlan":"Estándar",
+        "pricePlan": 150,
         "currency": "Bs",
-        "renovacion": "Trimestral",
-        "libreDePublicidad": true,
-        "nombreDominio": true,
-        "servicioTiendaMax":5,
-        "botonesAdicionales": ["Whatsapp","TikTok"],
+        "renovacion": "Anual",
+        "servicioTiendaMax":100,
+        "botonesAdicionales": ["Ilimitado"],
         "clasificacionDeProductos":  false,
-        "comisionDeVenta": 0,
-        "descuentoPases": 0,
         "descripcion": [
-            "Renovación trimestral",
-            "Sin anuncios",
-            "Tienda de 5 productos",
-            "Dominio personalizado"
+            "Renovación Anual",
+            "Tienda de hasta 100 productos",
+            "Todos los botones"
          ]
     },
     {
         "idPlan": 3,
-        "namePlan":"Standard",
-        "pricePlan": 300,
+        "namePlan":"Premium",
+        "pricePlan": 250,
         "currency": "Bs",
-        "renovacion": "Semestral",
-        "libreDePublicidad": true,
-        "nombreDominio": true,
-        "servicioTiendaMax":10,
-        "botonesAdicionales": ["Whatsapp","TikTok","Linkedin","Maps"],
-        "clasificacionDeProductos":  false,
-        "comisionDeVenta": 0,
-        "descuentoPases": 0,
+        "renovacion": "Anual",
+        "servicioTiendaMax":250,
+        "botonesAdicionales": ["Ilimitado"],
+        "clasificacionDeProductos":  true,
         "descripcion": [
-            "Renovación semestral",
-            "Sin anuncios",
-            "Tienda de 10 productos",
-            "Dominio personalizado"
+            "Renovación anual",
+            "Tienda de hasta 250 productos",
+            "Todos los botones",
+            "Clasificación de productos",
+            "Administrador: Vincular otras cuentas"
          ]
     },
     {
         "idPlan": 4,
-        "namePlan":"Premium",
+        "namePlan":"Bronce",
         "pricePlan": 500,
         "currency": "Bs",
         "renovacion": "Anual",
-        "libreDePublicidad": true,
-        "nombreDominio": true,
-        "servicioTiendaMax":20,
-        "botonesAdicionales": ["Ilimitado"],
-        "clasificacionDeProductos":  true,
-        "comisionDeVenta": 0,
-        "descuentoPases": 0,
+        "servicioTiendaMax": 0,
+        "botonesAdicionales": ["Ilimitado"],                
         "descripcion": [
-            "Renovación anual",
-            "Sin anuncios",
-            "Tienda de 20 productos",
-            "Dominio personalizado",
-            "Clasificación de productos"
+            "Comision de venta 10%",
+            "Suscriptores descuentos 0%",
+            "Costo de pase 5.00 Bs",
+            "Minimo pases 100"
          ]
     },
-
     {
         "idPlan": 5,
-        "namePlan":"Partner",
-        "pricePlan": 1500,
-        "currency": "Bs",
-        "renovacion": "Semestral",
-        "libreDePublicidad": true,
-        "nombreDominio": true,
-        "servicioTiendaMax":20,
-        "botonesAdicionales": ["Ilimitado"],
-        "clasificacionDeProductos":  true,
-        "comisionDeVenta": 20,
-        "descuentoPases": 10,
-        "descripcion": [
-            "Renovación semestral",
-            "Sin publicidad",
-            "Tienda con 20 productos",
-            "Dominio perzonalizado",
-            "Comisión (20%)",
-            " Descuento (10%)"
-         ]
-    },
-
-    {
-        "idPlan": 6,
-        "namePlan":"Master",
-        "pricePlan": 3500,
+        "namePlan":"Plata",
+        "pricePlan": 2250,
         "currency": "Bs",
         "renovacion": "Anual",
-        "libreDePublicidad": true,
-        "nombreDominio": true,
-        "servicioTiendaMax":20,
+        "servicioTiendaMax":250,
         "botonesAdicionales": ["Ilimitado"],
-        "clasificacionDeProductos":  true,
-        "comisionDeVenta": 30,
-        "descuentoPases": 20,
         "descripcion": [
-            "Renovación anual",
-            "Sin anuncios",
-            "Tienda de 20 productos",
-            "Dominio personalizado",
-            "Clasificación de productos",
-            "Comisión (30%)",
-            " Descuento (20%)"
+            "Comision de venta 20%",
+            "Suscriptores descuentos 10%",
+            "Costo de pase 15.00 Bs",
+            "Minimo pases 150"
+         ]
+    },
+    {
+        "idPlan": 6,
+        "namePlan":"Oro",
+        "pricePlan": 7500,
+        "currency": "Bs",
+        "renovacion": "Anual",
+        "servicioTiendaMax":250,
+        "botonesAdicionales": ["Ilimitado"],
+        "descripcion": [
+            "Comision de venta 35%",
+            "Suscriptores descuentos 15%",
+            "Costo de pase 30.00 Bs",
+            "Minimo pases 250"
          ]
     }
 ]

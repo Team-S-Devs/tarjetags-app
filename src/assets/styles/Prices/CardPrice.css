@@ -17,7 +17,7 @@
     padding-top: 19px;
     color: black;
     font-style: normal;
-    font-weight: 900;
+    font-weight: 500;
     line-height: normal; 
 }
 
@@ -36,7 +36,7 @@
     position: absolute;
     top: 0px;
     padding-inline: 10px;
-    background: linear-gradient(to bottom right, #F2A5FF, #561AD9);
+    background: linear-gradient(to bottom right, #F2A5FF, #662483);
     border-bottom: var(--f) solid #0005;
     color: #fff;
     line-height: 1.3em;
@@ -105,7 +105,7 @@
     font-family: var(--font-family-general);
     color: #1B0844;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 500;
     line-height: normal; 
     font-size: 20px;
     width: 100%;
@@ -163,7 +163,7 @@
     color: white;
 }
 
-@media screen and (max-width: 1599px) {
+/* @media screen and (max-width: 1599px) {
     .cards-container{
         gap: 70px;
     }
@@ -290,4 +290,4 @@
     .price-content-text{
         width: 100%;
     }
-}
+} */

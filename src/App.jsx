@@ -14,7 +14,7 @@ import Profile from "./pages/Profile";
 import Payments from "./pages/Payments";
 import EditCard from "./pages/EditCard";
 import RestorePassword from "./pages/RestorePassword";
-import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import CardDetails from "./pages/CardDetails";
 import Plans from "./pages/Plans";
 import Card from "./pages/Card";
@@ -28,7 +28,8 @@ const theme = createTheme({
     MuiCssBaseline: {
       "@global": {
         "::selection": {
-          color: "#561AD9",
+          // color: "#561AD9",
+          color: "#662483",
           background: "#fff",
         },
       },
@@ -36,7 +37,8 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#561AD9",
+      // main: "#561AD9",
+      main: "#662483",
     },
     secondary: {
       main: "#604F83",

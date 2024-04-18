@@ -31,7 +31,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase-config";
 import { Timestamp } from "firebase/firestore";
 import { LICENSE_TYPES, SITE_NAME } from "../utils/constants";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 
 /**
  * SignUp component provides a user registration form with optional company details.
@@ -196,7 +196,7 @@ const SignUp = () => {
         discountCode: discountCodeValue,
         createdAt: Timestamp.now(),
         licenseType: LICENSE_TYPES.FREE,
-        limitDate: Timestamp.fromDate(threeMonthsAhead)
+        limitDate: Timestamp.fromDate(threeMonthsAhead),
       };
       setLoading(true);
 
@@ -229,6 +229,11 @@ const SignUp = () => {
     <Container>
       <Helmet>
         <title>{`Regístrate - ${SITE_NAME}`}</title>
+        <meta
+          name="description"
+          content="Crea tarjetas de presentación irresistibles que te abran puertas y
+            te conecten con oportunidades ilimitadas."
+        />
       </Helmet>
       <div
         className="my-5 my-md-0 d-flex flex-column justify-content-center"

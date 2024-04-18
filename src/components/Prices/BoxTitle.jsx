@@ -3,10 +3,10 @@ import React from "react";
 const BoxTitle = (props) => {
     return (
         <div className='box-content-top'>
-            <h3>{props.title}</h3>
-            <div className='text-container-price'>
-                <h2 className='text-price-table'
-                ><span className="currency-text">{props.currency}</span> {props.amount}</h2>
+            <h5>{props.title}</h5>
+            <div className='text-container-price' style={{ marginTop: -6 }}>
+                <h4 className='text-price-table'
+                ><span className="currency-text">{props.currency}</span> {props.amount}</h4>
             </div>
          </div>
     );

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import image from "../assets/images/auth/logo.png";
+import image from "../assets/images/auth/logo.svg";
+import imageFull from "../assets/images/auth/logoTarjetags.svg";
 import { Link, useLocation } from "react-router-dom";
 import { BiSolidUser } from "react-icons/bi";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../utils/firebase-config";
 import { GoFileDirectoryFill } from "react-icons/go";
 import { FaStore, FaUsersCog } from "react-icons/fa";
-
 import useWindowSize from "../hooks/useWindowsSize";
 import "../assets/styles/header.css";
 import { doc, onSnapshot } from "firebase/firestore";
@@ -59,7 +59,7 @@ const Header = () => {
         <div className="logo_img">
           <Link to="/">
             <div className="logoHeader">
-              <img src={image} alt="vetsoft logo" />
+              <img src={isResponsive ? image : imageFull} alt="tarjetag logo" />
             </div>
           </Link>
         </div>

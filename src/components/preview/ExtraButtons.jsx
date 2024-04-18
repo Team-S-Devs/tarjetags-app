@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import React from "react";
 import { GREY_RECTANGLE } from "../../utils/constants";
 
-const ExtraButtons = ({ elementsInfo = {}, textColor, smallPreview }) => {
+const ExtraButtons = ({ elementsInfo = {}, smallPreview }) => {
   return (
     <div
       style={{
@@ -20,7 +20,7 @@ const ExtraButtons = ({ elementsInfo = {}, textColor, smallPreview }) => {
           variant="contained"
           fullWidth
           style={{
-            background: elementsInfo.theme === "dark" ? "#000" : "#fefefe",
+            background: elementsInfo.theme === "dark" ? "#111" : "#FFF",
             color: elementsInfo.theme === "dark" ? "#fefefe" : "#000",
             display: "flex",
             justifyContent: "flex-start",

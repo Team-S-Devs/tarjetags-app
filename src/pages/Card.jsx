@@ -105,19 +105,12 @@ const Card = () => {
       </Helmet>
       {loadingGetting ? (
         <div
-          className="d-flex align-items-center justify-content-center"
           style={{ height: "100vh", background: MAIN_COLOR, width: "100vw" }}
         >
           <span className="loader-white"></span>
         </div>
       ) : (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+        <div>
           <div
             style={{
               height: "100vh",

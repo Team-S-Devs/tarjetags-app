@@ -1,13 +1,12 @@
-// src/Carousel.js
 import React, { useState, useRef } from 'react';
-import { licenseLimits } from '../../utils/constants';
+import { TRANSPARENT_SQUARE, licenseLimits } from '../../utils/constants';
 import { Typography } from '@mui/material';
 
 const Carousel = ({
     elemInfo = {},
-    licType,
     editPreview = false,
-    images,
+    licType,
+    textColor = "#fff",
     color
     
   }) => {
@@ -49,6 +48,11 @@ const Carousel = ({
     );
   };
 
+  const getImageFromProduct = () => {
+    if (productsAct[activeIndex].imgs.length > 0) return productsAct[activeIndex].imgs[0].url
+    else return TRANSPARENT_SQUARE;
+  }
+
   return (
     <div
       ref={carouselRef}
@@ -79,21 +83,28 @@ const Carousel = ({
 
       <div className='card-container'>
         <img
-            src={productsAct[activeIndex].imgs[0].url}
+            src={getImageFromProduct()}
             alt={`Slide ${activeIndex}`}
             className="carouselA__img"
+            style={
+              {maxWidth: editPreview ? '200px' : 'inherital',
+               maxHeight: editPreview ? '200px' : 'inherital'}}
         />
             <Typography color={color} style={{fontWeight:'bolder'}}>
                 {productsAct[activeIndex].name}
             </Typography>
-            {/* <Typography color={color}>
-                {productsAct[activeIndex].description}
-            </Typography> */}
             <Typography color={color}>
-                {productsAct[activeIndex].price.number+productsAct[activeIndex].price.currency}
+                {productsAct[activeIndex].description}
             </Typography>
-            <div className='obtain-preview-button'>
-              Obtener
+            <Typography color={color} style={productsAct[activeIndex].description ? {paddingTop: '1rem'}: {}} className='price-carousel'>
+                {productsAct[activeIndex].price.number+" "+productsAct[activeIndex].price.currency}
+            </Typography>
+            <div className='obtain-preview-button' style={{
+                backgroundColor: elemInfo.color,
+                color: textColor
+              }}
+            >
+              {productsAct[activeIndex].buttonAction.buttonText}
             </div>
       </div>
       <button

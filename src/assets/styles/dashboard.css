@@ -36,18 +36,20 @@
     background-color: rgba(0, 0, 0, 0.8);
   }
   .carouselA__btn--prev {
-    left: 2px;
+    left: 5px;
   }
   .carouselA__btn--next {
-    right: 2px;
+    right: 5px;
   }
   .carouselA__img {
+    border-radius: 15px;
     width: 100%;
-    max-width: 260px;
-    max-height: 200px;
-    min-height: 100px;
-    height: auto;
+    max-width: 500px;
+    height: 500px;
+    width: 500px;
+    object-fit: contain;
     margin-inline: .4rem;
+    margin: .8rem;
     display: block;
     transition: transform 0.3s ease-in-out;
   }
@@ -60,16 +62,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgb(76, 73, 73);
+  border: 1px solid black;
   border-radius: 15px;
   padding: 1rem;
 }
 
 .obtain-preview-button{
-  background-color: white;
   padding: .25rem;
   margin-top: 4%;
-  border: 1px solid black;
   padding-inline: 1rem;
   border-radius: 15px;
   font-weight: 600;
@@ -82,10 +82,90 @@
   padding-inline: 1.1rem;
 }
 
-.categories-options{
-  display: flex;
+
+.category_option {
+  border-radius: 15px;
+  border: 1px solid;
+  padding: .2rem;
+  padding-inline: 1rem;
+  cursor: pointer;
 }
 
-.categories-options div {
-  margin-right: 1rem;
+/* Table 2 scrollbar */
+
+.table-wrapper {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  width: 95%;
+}
+
+.table-wrapper table {
+  margin-bottom: .1rem; /*dar margin al scroll*/
+  border-collapse: collapse;
+  margin: auto;
+  width: auto; 
+  text-align: center;
+}
+
+.table-wrapper td {
+  padding: 7px;
+  white-space: nowrap;
+}
+
+.table-wrapper td {
+  padding: 7px;
+}
+
+
+.table-wrapper::-webkit-scrollbar {
+  height: 3px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  border-radius: 0;
+  background: transparent;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 5px;
+  }
+
+
+@media (max-width: 550px) {
+  .carouselA__img {
+    width: 400px;
+    height: 400px;
+  }
+}
+
+
+@media (max-width: 500px) {
+  .carouselA__img {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 350px) {
+  .carouselA__img {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+
+@media (max-width: 300px) {
+  .carouselA__img {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 260px) {
+  .carouselA__img {
+    width: 160px;
+    height: 160px;
+  }
 }

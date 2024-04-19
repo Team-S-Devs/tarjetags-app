@@ -43,12 +43,9 @@ const Preview = ({
       ? "#000"
       : "#fff";
 
-  const images = [
-        'https://via.placeholder.com/800x400/ff5733/fff',
-        'https://via.placeholder.com/800x400/33ff57/fff',
-        'https://via.placeholder.com/800x400/5733ff/fff',
-      ];
 
+
+  
   return (
     <div
       style={{
@@ -94,18 +91,40 @@ const Preview = ({
             Productos o Servicios
           </Typography>
 
-      <div className="categories-options">
-        {licenseLimits[licenseType].productsDivision &&
-          elementsInfo.productCategories.map((cat) => (
-            <Typography color={color} key={"cat-view" + cat.id}>
-              {cat.title}
-            </Typography>
+      {/* <div className="categories-options">
+          {licenseLimits[licenseType].productsDivision &&
+            elementsInfo.productCategories.map((cat) => (
+              <Typography color={color} key={"cat-view" + cat.id}>
+                {cat.title}
+              </Typography>
+          ))}
+      </div> */}
+      {(elementsInfo.productCategories) &&
+          <div className="table-wrapper">
+              <style>{`
+              .table-wrapper::-webkit-scrollbar-thumb {
+                background-color: ${color};
+                border-radius: 5px;
+                }
+        `     }</style>
+              <table className="scrollable-table">
+                <thead></thead>
+                <tbody>
+                  <tr>
+                    {elementsInfo.productCategories.map((cat) => (
+                      <td key={"categ-" + cat.id}>
+                        <div className="category_option" style={{color: color}}>{cat.title}</div>
+                      </td>
                     ))}
-      </div>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+      }
           
 
           <div className="carrousel-products">
-            <Carousel licType={licenseType} elemInfo={elementsInfo} color={color} images={images}></Carousel>
+            <Carousel licType={licenseType} editPreview={editPreview} elemInfo={elementsInfo} color={color} textColor={textColor}></Carousel>
           </div>
 
       </div>

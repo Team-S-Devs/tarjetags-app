@@ -10,6 +10,7 @@ import {
   LICENSE_TYPES,
   licenseLimits,
   SITE_NAME,
+  TRANSPARENT_SQUARE,
 } from "../utils/constants";
 import ProductModal from "../components/modals/ProductModal";
 import { FaLock } from "react-icons/fa";
@@ -97,7 +98,7 @@ const ProductsServicesList = ({
             >
               <img
                 src={
-                  product.imgs.length > 0 ? product.imgs[0].url : GREY_RECTANGLE
+                  product.imgs.length > 0 ? product.imgs[0].url : TRANSPARENT_SQUARE
                 }
                 style={{ maxWidth: 100, flex: 20 }}
               />

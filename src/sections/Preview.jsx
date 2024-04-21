@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { licenseLimits } from "../utils/constants";
 import { Typography } from "@mui/material";
 import PhotosHeader from "../components/preview/PhotosHeader";
@@ -27,6 +27,10 @@ const Preview = ({
 
   const smallPreview = width < 986 || editPreview;
 
+  const [products, setProducts] = useState(elementsInfo.products);
+  const [actualCategory, setActualCategory] = useState("0");
+  const [indexCarousel, setIndexCarousel] = useState(0);
+
   // COLOR DE FONDO ESCOGIDO POR EL USUARIO
   const bgColor = elementsInfo.color;
 
@@ -43,9 +47,23 @@ const Preview = ({
       ? "#000"
       : "#fff";
 
+  useEffect(() => {
+    if (actualCategory == "0") {
+      setIndexCarousel(0);
+      setProducts(elementsInfo.products.slice(0, licenseLimits[licenseType].maxProducts));
+    }
+    else {
+      const categoryProducts = elementsInfo.products.filter(prod => prod.category == actualCategory);
+      setIndexCarousel(0);
+      setProducts(categoryProducts.slice(0, licenseLimits[licenseType].maxProducts));
+    }
+  }, [actualCategory]);
+      
 
+  const changeCategory = (id) => {
+    setActualCategory(id)
+  }
 
-  
   return (
     <div
       style={{
@@ -84,21 +102,11 @@ const Preview = ({
       />
       <SocialLinks elementsInfo={elementsInfo} smallPreview={smallPreview} />
 
-      {/* START PRODUCTOS O SERVICIOS, PON PADDING DE 28PX horizontal xd */}
-
       <div className="products-preview-container">
           <Typography style={{fontWeight: 'bolder'}} color={color} variant="h6" key={"product-view"}>
             Productos o Servicios
           </Typography>
 
-      {/* <div className="categories-options">
-          {licenseLimits[licenseType].productsDivision &&
-            elementsInfo.productCategories.map((cat) => (
-              <Typography color={color} key={"cat-view" + cat.id}>
-                {cat.title}
-              </Typography>
-          ))}
-      </div> */}
       {(elementsInfo.productCategories) &&
           <div className="table-wrapper">
               <style>{`
@@ -111,11 +119,14 @@ const Preview = ({
                 <thead></thead>
                 <tbody>
                   <tr>
-                    {elementsInfo.productCategories.map((cat) => (
-                      <td key={"categ-" + cat.id}>
-                        <div className="category_option" style={{color: color}}>{cat.title}</div>
+                    <td key={"categ-" + 0}>
+                        <div className="category_option" onClick={() => changeCategory("0")} style={{color: color}}>All</div>
                       </td>
-                    ))}
+                      {licenseLimits[licenseType].productsDivision && elementsInfo.productCategories.map((cat) => (
+                        <td key={"categ-" + cat.id}>
+                          <div className="category_option" onClick={() => changeCategory(cat.id)} style={{color: color}}>{cat.title}</div>
+                        </td>
+                      ))}
                   </tr>
                 </tbody>
               </table>
@@ -124,26 +135,10 @@ const Preview = ({
           
 
           <div className="carrousel-products">
-            <Carousel licType={licenseType} editPreview={editPreview} elemInfo={elementsInfo} color={color} textColor={textColor}></Carousel>
+            <Carousel licType={licenseType} editPreview={editPreview} index={indexCarousel} products={products} elemInfo={elementsInfo} color={color} textColor={textColor}></Carousel>
           </div>
 
       </div>
-
-      {/* {licenseLimits[licenseType].productsDivision &&
-        elementsInfo.productCategories.map((cat) => (
-          <Typography color={color} key={"cat-view" + cat.id}>
-            {cat.title}
-          </Typography>
-        ))}
-      {elementsInfo.products
-        .slice(0, licenseLimits[licenseType].maxProducts)
-        .map((prod) => (
-          <Typography color={color} key={prod.id + "product-view"}>
-            {prod.name}
-          </Typography>
-        ))} */}
-
-      {/* END PRODUCTOS O SERVICIOS */}
 
       <ExtraButtons
         elementsInfo={elementsInfo}

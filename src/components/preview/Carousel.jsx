@@ -3,6 +3,8 @@ import { TRANSPARENT_SQUARE } from '../../utils/constants';
 import { Typography } from '@mui/material';
 import ImagesSlider from './ImagesSlider';
 import PriceOffer from './PriceOffer';
+import { Link } from 'react-router-dom';
+import ProductButton from './ProductButton';
 
 
 const Carousel = ({
@@ -70,23 +72,20 @@ const Carousel = ({
            &lt;
          </button>
    
-         <div className='card-container'>
+         <div className={'card-container'+((elemInfo.theme == 'dark') ? ' dark-prod-theme' : ' white-prod-theme')}>
          <ImagesSlider editPreview={editPreview} images={products[activeIndex].imgs}></ImagesSlider>
 
-               <Typography color={color} style={{fontWeight:'bolder'}}>
-                   {products[activeIndex].name}
+              <div className='text-preview-product' style={{maxWidth: editPreview ? '300px' : '500px'}}> 
+              <Typography color={color} style={{fontWeight:'bolder', wordBreak:'break-word'}}>
+                  {products[activeIndex].name}
                </Typography>
-               <Typography color={color}>
+               <Typography color={color} style={{wordBreak:'break-word', textAlign:'left', marginTop:'.1rem'}} >
                    {products[activeIndex].description}
                </Typography>
-               <PriceOffer color={color} products={products} activeIndex={activeIndex}/> 
-               <div className='obtain-preview-button' style={{
-                   backgroundColor: elemInfo.color,
-                   color: textColor
-                 }}
-               >
-                 {products[activeIndex].buttonAction.buttonText}
-               </div>
+               <PriceOffer color={color} products={products} activeIndex={activeIndex}/>
+              </div> 
+               <ProductButton  elemInfo={elemInfo} textColor={textColor} 
+               products={products} activeIndex={activeIndex}/>
          </div>
          <button
            onClick={nextSlide}

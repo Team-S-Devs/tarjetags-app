@@ -11,6 +11,7 @@ import { contrast } from "chroma-js";
 import AdminPreview from "../components/preview/AdminPreview";
 import '../assets/styles/dashboard.css'
 import Carousel from "../components/preview/Carousel";
+import ThinTitle from "../components/texts/ThinTitle";
 
 
 const Preview = ({
@@ -103,9 +104,21 @@ const Preview = ({
       <SocialLinks elementsInfo={elementsInfo} smallPreview={smallPreview} />
 
       <div className="products-preview-container">
-          <Typography style={{fontWeight: 'bolder'}} color={color} variant="h6" key={"product-view"}>
+          <ThinTitle
+            style={{
+              textOverflow: "ellipsis",
+              lineHeight: smallPreview ? "36px" : "64px",
+              fontSize: smallPreview ? "1.3em" : "1.8em",
+              padding: "0 28px",
+              wordBreak: "break-all",
+              textAlign: "center",
+              marginTop: 24,
+              marginBottom: 16,
+              color: elementsInfo.theme === "dark" ? "#eee" : "#111",
+            }}
+          >
             Productos o Servicios
-          </Typography>
+          </ThinTitle>
 
       {(elementsInfo.productCategories) &&
           <div className="table-wrapper">
@@ -120,7 +133,7 @@ const Preview = ({
                 <tbody>
                   <tr>
                     <td key={"categ-" + 0}>
-                        <div className={"category_option"+(actualCategory == "0" ? " selected-cat" : "")} onClick={() => changeCategory("0")} style={{color: color}}>All</div>
+                        <div className={"category_option"+(actualCategory == "0" ? " selected-cat" : "")} onClick={() => changeCategory("0")} style={{color: color}}>Todo</div>
                       </td>
                       {licenseLimits[licenseType].productsDivision && elementsInfo.productCategories.map((cat) => (
                         <td key={"categ-" + cat.id}>

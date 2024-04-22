@@ -49,49 +49,10 @@ const Carousel = ({
       prevIndex === 0 ? products.length - 1 : prevIndex - 1
     );
   };
-
-  const getImageFromProduct = () => {
-    if (products[activeIndex].imgs.length > 0) return products[activeIndex].imgs[0].url
-    else return TRANSPARENT_SQUARE;
-  }
   
   useEffect(() => {
       setActiveIndex(0);
   }, [products]);
-
-
-  const [autoplay, setAutoplay] = useState(true); // Estado para controlar la reproducción automática
-  const slideInterval = 5000; // Intervalo de tiempo entre cada cambio de slide (en milisegundos)
-
-  // useEffect(() => {
-  //   // Función para avanzar al siguiente slide
-  //   const nextSlide = () => {
-  //     setActiveIndex((prevIndex) => (prevIndex + 1) % products.length);
-  //   };
-
-  //   // Función para detener la reproducción automática
-  //   const stopAutoplay = () => {
-  //     setAutoplay(false);
-  //   };
-
-  //   // Función para iniciar la reproducción automática
-  //   const startAutoplay = () => {
-  //     setAutoplay(true);
-  //   };
-
-  //   // Si autoplay está activado, iniciar el intervalo para cambiar de slide automáticamente
-  //   let slideTimer;
-  //   if (autoplay) {
-  //     slideTimer = setInterval(() => {
-  //       nextSlide();
-  //     }, slideInterval);
-  //   }
-
-  //   // Limpiar el intervalo cuando el componente se desmonta o cuando se desactiva el autoplay
-  //   return () => {
-  //     clearInterval(slideTimer);
-  //   };
-  // }, [activeIndex, autoplay, products.length]);
 
   return (
     <>
@@ -108,19 +69,6 @@ const Carousel = ({
          >
            &lt;
          </button>
-         {/* {licenseLimits[licType].productsDivision &&
-           elemInfo.productCategories.map((cat) => (
-             <Typography color={color} key={"cat-view" + cat.id}>
-               {cat.title}
-             </Typography>
-           ))}
-         {elemInfo.products
-           .slice(0, licenseLimits[licType].maxProducts)
-           .map((prod) => (
-             <Typography color={color} key={prod.id + "product-view"}>
-               {prod.name}
-             </Typography>
-           ))} */}
    
          <div className='card-container'>
          <ImagesSlider editPreview={editPreview} images={products[activeIndex].imgs}></ImagesSlider>

@@ -11,7 +11,6 @@ import { contrast } from "chroma-js";
 import AdminPreview from "../components/preview/AdminPreview";
 import '../assets/styles/dashboard.css'
 import Carousel from "../components/preview/Carousel";
-import ImagesSlider from "../components/preview/ImagesSlider";
 
 
 const Preview = ({

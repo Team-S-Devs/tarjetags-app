@@ -72,7 +72,7 @@ const Carousel = ({
            &lt;
          </button>
    
-         <div className={'card-container'+((elemInfo.theme == 'dark') ? ' dark-prod-theme' : ' white-prod-theme')}>
+         <div className={'card-container'+((elemInfo.theme == 'dark') ? ' dark-prod-theme white-prod-theme' : ' white-prod-theme')}>
          <ImagesSlider editPreview={editPreview} images={products[activeIndex].imgs}></ImagesSlider>
 
               <div className='text-preview-product' style={{maxWidth: editPreview ? '300px' : '500px'}}> 

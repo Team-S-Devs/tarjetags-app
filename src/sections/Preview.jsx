@@ -11,6 +11,7 @@ import { contrast } from "chroma-js";
 import AdminPreview from "../components/preview/AdminPreview";
 import '../assets/styles/dashboard.css'
 import Carousel from "../components/preview/Carousel";
+import ImagesSlider from "../components/preview/ImagesSlider";
 
 
 const Preview = ({
@@ -120,11 +121,11 @@ const Preview = ({
                 <tbody>
                   <tr>
                     <td key={"categ-" + 0}>
-                        <div className="category_option" onClick={() => changeCategory("0")} style={{color: color}}>All</div>
+                        <div className={"category_option"+(actualCategory == "0" ? " selected-cat" : "")} onClick={() => changeCategory("0")} style={{color: color}}>All</div>
                       </td>
                       {licenseLimits[licenseType].productsDivision && elementsInfo.productCategories.map((cat) => (
                         <td key={"categ-" + cat.id}>
-                          <div className="category_option" onClick={() => changeCategory(cat.id)} style={{color: color}}>{cat.title}</div>
+                          <div className={"category_option"+(actualCategory == cat.id ? " selected-cat" : "")} onClick={() => changeCategory(cat.id)} style={{color: color}}>{cat.title}</div>
                         </td>
                       ))}
                   </tr>
@@ -137,6 +138,7 @@ const Preview = ({
           <div className="carrousel-products">
             <Carousel licType={licenseType} editPreview={editPreview} index={indexCarousel} products={products} elemInfo={elementsInfo} color={color} textColor={textColor}></Carousel>
           </div>
+
 
       </div>
 

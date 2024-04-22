@@ -28,7 +28,7 @@ const AdminPreview = ({ elementsInfo = {}, licenseType, smallPreview }) => {
       {licenseLimits[licenseType].admin &&
         elementsInfo.adminCards.map((card, index) => (
           <AdminPreviewItem
-            key={card + "index"}
+            key={card + index}
             currCard={card}
             bgColor={elementsInfo.theme === "dark" ? "#111" : "#FFF"}
             dark={elementsInfo.theme === "dark"}

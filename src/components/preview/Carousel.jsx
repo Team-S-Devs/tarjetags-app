@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { TRANSPARENT_SQUARE } from '../../utils/constants';
 import { Typography } from '@mui/material';
+import ImagesSlider from './ImagesSlider';
+import PriceOffer from './PriceOffer';
 
 
 const Carousel = ({
@@ -58,6 +60,39 @@ const Carousel = ({
   }, [products]);
 
 
+  const [autoplay, setAutoplay] = useState(true); // Estado para controlar la reproducción automática
+  const slideInterval = 5000; // Intervalo de tiempo entre cada cambio de slide (en milisegundos)
+
+  // useEffect(() => {
+  //   // Función para avanzar al siguiente slide
+  //   const nextSlide = () => {
+  //     setActiveIndex((prevIndex) => (prevIndex + 1) % products.length);
+  //   };
+
+  //   // Función para detener la reproducción automática
+  //   const stopAutoplay = () => {
+  //     setAutoplay(false);
+  //   };
+
+  //   // Función para iniciar la reproducción automática
+  //   const startAutoplay = () => {
+  //     setAutoplay(true);
+  //   };
+
+  //   // Si autoplay está activado, iniciar el intervalo para cambiar de slide automáticamente
+  //   let slideTimer;
+  //   if (autoplay) {
+  //     slideTimer = setInterval(() => {
+  //       nextSlide();
+  //     }, slideInterval);
+  //   }
+
+  //   // Limpiar el intervalo cuando el componente se desmonta o cuando se desactiva el autoplay
+  //   return () => {
+  //     clearInterval(slideTimer);
+  //   };
+  // }, [activeIndex, autoplay, products.length]);
+
   return (
     <>
       {(products.length > 0 && products[activeIndex] != null ) &&
@@ -88,23 +123,15 @@ const Carousel = ({
            ))} */}
    
          <div className='card-container'>
-           <img
-               src={getImageFromProduct()}
-               alt={`Slide ${activeIndex}`}
-               className="carouselA__img"
-               style={
-                 {maxWidth: editPreview ? '200px' : 'inherital',
-                  maxHeight: editPreview ? '200px' : 'inherital'}}
-           />
+         <ImagesSlider editPreview={editPreview} images={products[activeIndex].imgs}></ImagesSlider>
+
                <Typography color={color} style={{fontWeight:'bolder'}}>
                    {products[activeIndex].name}
                </Typography>
                <Typography color={color}>
                    {products[activeIndex].description}
                </Typography>
-               <Typography color={color} style={products[activeIndex].description ? {paddingTop: '1rem'}: {}} className='price-carousel'>
-                   {products[activeIndex].price.number+" "+products[activeIndex].price.currency}
-               </Typography>
+               <PriceOffer color={color} products={products} activeIndex={activeIndex}/> 
                <div className='obtain-preview-button' style={{
                    backgroundColor: elemInfo.color,
                    color: textColor

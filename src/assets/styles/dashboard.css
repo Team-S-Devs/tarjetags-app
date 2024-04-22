@@ -89,6 +89,17 @@
   padding: .2rem;
   padding-inline: 1rem;
   cursor: pointer;
+  transition: all 200ms ease 100ms;
+}
+
+.category_option:hover {
+  padding-inline: 1.15rem;
+}
+
+.selected-cat {
+  box-shadow: 
+  1px 1px 1px,
+  1px 2px 2px; 
 }
 
 /* Table 2 scrollbar */
@@ -132,6 +143,19 @@
   border-radius: 5px;
   }
 
+ /* Prices Preview Product */ 
+
+ .price-product {
+  margin-top: -4px;
+  font-size: 1.05rem;
+  font-weight: 550;
+ }
+ 
+ .price-alone {
+  font-size: 1.05rem;
+  font-weight: 550;
+  padding-top: 1rem;
+ }
 
 @media (max-width: 550px) {
   .carouselA__img {

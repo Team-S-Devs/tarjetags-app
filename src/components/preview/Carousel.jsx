@@ -64,7 +64,7 @@ const Carousel = ({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-      > {(products.length > 1) && 
+      > {(products.filter(prod => prod.show).length > 1) && 
          <button
            onClick={prevSlide}
            className="carouselA__btn carouselA__btn--prev"
@@ -87,7 +87,7 @@ const Carousel = ({
                <ProductButton  elemInfo={elemInfo} textColor={textColor} 
                products={products} activeIndex={activeIndex}/>
          </div>
-         {(products.length > 1) &&
+         {(products.filter(prod => prod.show).length > 1) &&
               <button
               onClick={nextSlide}
               className="carouselA__btn carouselA__btn--next"

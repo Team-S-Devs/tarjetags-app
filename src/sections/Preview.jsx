@@ -71,7 +71,7 @@ const Preview = ({
   }
   
   const isNotCategoryEmpty = (cat) => {
-    return elementsInfo.products.some(prod => (prod.category == cat.id));
+    return elementsInfo.products.some(prod => (prod.category == cat.id && prod.show));
   }
 
   return (

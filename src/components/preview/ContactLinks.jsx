@@ -59,6 +59,7 @@ const ContactLinks = ({
         )
         .map((icon, index) => (
           <IconButton
+          key={"iconButton-"+index}
             style={{
               background: "#fff",
               color: contactButtonsOptions.find(

@@ -54,7 +54,7 @@ const Header = () => {
   const conditional = isOpen && isResponsive ? "navigationResponsive" : "";
 
   return (
-    <header>
+    <header style={{ zIndex: 1000 }}>
       <div className="headerContainer container">
         <div className="logo_img">
           <Link to="/">

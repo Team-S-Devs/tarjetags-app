@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../sections/Header";
 import BoldTitle from "../components/texts/BoldTitle";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import { SITE_NAME } from "../utils/constants";
 import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import StoreProductsList from "../sections/StoreProductsList";
@@ -65,7 +65,7 @@ const Store = () => {
   const { height, width } = useWindowSize();
 
   return (
-    <div className="container">
+    <div className="container" style={{ paddingBottom: 164 }}>
       <Helmet>
         <title>{`Tienda- ${SITE_NAME}`}</title>
         <meta
@@ -110,18 +110,25 @@ const Store = () => {
           </>
         )}
 
-        <div
-          className="d-flex justify-content-center align-items-center"
-          style={{
-            marginTop: 24,
-            position: "fixed",
-            bottom: height > 980 ? 140 : 48,
-            left: width / 2 - 98,
-          }}
-        >
-          <BigPrimaryButton onClick={handleSave} loading={loadingSaving}>
-            Guardar
-          </BigPrimaryButton>
+        <div>
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{
+              marginTop: 24,
+              position: "fixed",
+              paddingTop: 24,
+              bottom: 0,
+              paddingBottom: height > 980 ? 120 : 24,
+              left: 0,
+              background: "#fff",
+              width: "100vw",
+              boxShadow: "0px -5px 10px rgba(0, 0, 0, 0.1)"
+            }}
+          >
+            <BigPrimaryButton onClick={handleSave} loading={loadingSaving}>
+              Guardar
+            </BigPrimaryButton>
+          </div>
         </div>
       </div>
     </div>

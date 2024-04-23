@@ -12,9 +12,6 @@ const UserCardDisplay = ({ userCards = [] }) => {
   const navigate = useNavigate();
   return (
     <div style={{ overflow: "hidden" }}>
-      <ThinTitle color="primary" variant="h6" textAlign="center">
-        Mi tarjeta
-      </ThinTitle>
       <div className="mt-3"></div>
       <Grid container spacing={3} justifyContent="center">
         {userCards.map((userCard, index) => (

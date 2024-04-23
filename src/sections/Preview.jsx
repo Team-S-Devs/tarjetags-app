@@ -65,6 +65,15 @@ const Preview = ({
     setActualCategory(id)
   }
 
+
+  const isAProductVisible = () => {
+    return elementsInfo.products.some(prod => prod.show);
+  }
+  
+  const isNotCategoryEmpty = (cat) => {
+    return elementsInfo.products.some(prod => (prod.category == cat.id));
+  }
+
   return (
     <div
       style={{
@@ -103,7 +112,8 @@ const Preview = ({
       />
       <SocialLinks elementsInfo={elementsInfo} smallPreview={smallPreview} />
 
-      <div className="products-preview-container">
+      {(elementsInfo.products.length > 0 && isAProductVisible()) &&
+          <div className="products-preview-container">
           <ThinTitle
             style={{
               textOverflow: "ellipsis",
@@ -120,14 +130,14 @@ const Preview = ({
             Productos o Servicios
           </ThinTitle>
 
-      {(elementsInfo.productCategories) &&
+          {(elementsInfo.productCategories) && 
           <div className="table-wrapper">
               <style>{`
               .table-wrapper::-webkit-scrollbar-thumb {
                 background-color: ${color};
                 border-radius: 5px;
                 }
-        `     }</style>
+          `     }</style>
               <table className="scrollable-table">
                 <thead></thead>
                 <tbody>
@@ -136,6 +146,7 @@ const Preview = ({
                         <div className={"category_option"+(actualCategory == "0" ? " selected-cat" : "")} onClick={() => changeCategory("0")} style={{color: color}}>Todo</div>
                       </td>
                       {licenseLimits[licenseType].productsDivision && elementsInfo.productCategories.map((cat) => (
+                        isNotCategoryEmpty(cat) &&
                         <td key={"categ-" + cat.id}>
                           <div className={"category_option"+(actualCategory == cat.id ? " selected-cat" : "")} onClick={() => changeCategory(cat.id)} style={{color: color}}>{cat.title}</div>
                         </td>
@@ -144,15 +155,17 @@ const Preview = ({
                 </tbody>
               </table>
           </div>
-      }
-          
+          }
+
 
           <div className="carrousel-products">
             <Carousel licType={licenseType} editPreview={editPreview} index={indexCarousel} products={products} elemInfo={elementsInfo} color={color} textColor={textColor}></Carousel>
           </div>
 
 
-      </div>
+          </div>
+          }
+     
 
       <ExtraButtons
         elementsInfo={elementsInfo}

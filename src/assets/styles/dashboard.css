@@ -75,9 +75,9 @@
 }
 
 .white-prod-theme {
-  box-shadow: -1px 3px 18px  rgba(0, 0, 0, 0.521);
-  -webkit-box-shadow: -1px 3px 18px  rgba(0, 0, 0, 0.521);
-  -moz-box-shadow: -1px 3px 18px  rgba(0, 0, 0, 0.521);
+  box-shadow: 0px 3px 8px  rgba(0, 0, 0, 0.321);
+  -webkit-box-shadow: 0px 3px 8px  rgba(0, 0, 0, 0.321);
+  -moz-box-shadow: 0px 3px 8px  rgba(0, 0, 0, 0.321);
 }
 
 .text-preview-product {
@@ -103,10 +103,12 @@
 
 
 .category_option {
-  border-radius: 15px;
-  border: 1px solid;
+  border-radius: 10px;
   padding: .2rem;
   padding-inline: 1rem;
+  box-shadow: 
+  0px 3px 7px rgba(0, 0, 0, 0.39);
+  filter: opacity(0.7);
   cursor: pointer;
   transition: all 200ms ease 100ms;
 }
@@ -116,10 +118,10 @@
 }
 
 .selected-cat {
-  box-shadow: 
-  1px 1px 1px,
-  1px 2px 2px; 
+  filter: opacity(1);
+  padding-inline: 1.19rem;
 }
+
 
 /* Table 2 scrollbar */
 
@@ -149,7 +151,7 @@
 
 
 .table-wrapper::-webkit-scrollbar {
-  height: 3px;
+  height: 2px;
 }
 
 .table-wrapper::-webkit-scrollbar-track {
@@ -158,7 +160,7 @@
 }
 
 .table-wrapper::-webkit-scrollbar-thumb {
-  background-color: black;
+  background-color: rgb(0, 0, 0);
   border-radius: 5px;
   }
 

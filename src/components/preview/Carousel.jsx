@@ -51,7 +51,7 @@ const Carousel = ({
       prevIndex === 0 ? products.length - 1 : prevIndex - 1
     );
   };
-  
+
   useEffect(() => {
       setActiveIndex(0);
   }, [products]);
@@ -64,13 +64,13 @@ const Carousel = ({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-      >
+      > {(products.length > 1) && 
          <button
            onClick={prevSlide}
            className="carouselA__btn carouselA__btn--prev"
          >
            &lt;
-         </button>
+         </button> }
    
          <div className={'card-container'+((elemInfo.theme == 'dark') ? ' dark-prod-theme white-prod-theme' : ' white-prod-theme')}>
          <ImagesSlider editPreview={editPreview} images={products[activeIndex].imgs}></ImagesSlider>
@@ -87,12 +87,14 @@ const Carousel = ({
                <ProductButton  elemInfo={elemInfo} textColor={textColor} 
                products={products} activeIndex={activeIndex}/>
          </div>
-         <button
-           onClick={nextSlide}
-           className="carouselA__btn carouselA__btn--next"
-         >
-           &gt;
-         </button>
+         {(products.length > 1) &&
+              <button
+              onClick={nextSlide}
+              className="carouselA__btn carouselA__btn--next"
+            >
+              &gt;
+            </button>
+         }
          </div>
       }
     </>

@@ -116,7 +116,7 @@ const Dashboard = () => {
         style={{ flex: 100, marginTop: 100, width: "100%" }}
         className="d-flex flex-column"
       >
-        <BoldTitle textAlign="center">Tarjetas</BoldTitle>
+        <BoldTitle textAlign="center">Mi Tarjeta</BoldTitle>
         <HorizontalLine />
 
         {loading ? (

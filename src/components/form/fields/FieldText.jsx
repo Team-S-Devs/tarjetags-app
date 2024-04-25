@@ -52,7 +52,8 @@ const FieldText = ({
   color = "primary",
   maxLength = 50,
   marginTop = 12,
-  minRows = 1
+  minRows = 1,
+  styleField = {}
 }) => {
   /**
    * Sets the focus on the input field.
@@ -76,7 +77,7 @@ const FieldText = ({
 
   return (
     <TextField 
-      style={{ marginTop }}
+      style={{ marginTop, ...styleField }}
       id={name}
       variant={variant} 
       focused={focused}

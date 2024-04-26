@@ -179,7 +179,7 @@ const App = () => {
             <Route path="/payments/:userId" Component={isAdmin ? Payments : Error} />
             <Route path="/admin" Component={isAdmin ? Admin : Error} />
             <Route path="/edit/:cardId" Component={EditCard} />
-            <Route path="/restorePassword" Component={RestorePassword} />
+            <Route path="/restorePassword" Component={() => <RestorePassword user={user}/>} />
             <Route
               path="/profile"
               Component={() =>

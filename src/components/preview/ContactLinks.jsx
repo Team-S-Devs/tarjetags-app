@@ -42,7 +42,7 @@ const ContactLinks = ({
         bottom: 0,
         backgroundColor,
         width: "100%",
-        boxShadow: "0px -5px 5px -5px rgba(140,140,140,0.3)"
+        boxShadow: "0px -5px 5px -5px rgba(140,140,140,0.3)",
       }}
     >
       <style>
@@ -68,7 +68,16 @@ const ContactLinks = ({
               borderRadius: "50%",
               marginLeft: index !== 0 ? 16 : 0,
             }}
-            href={icon.url}
+            href={
+              icon.name === "WhatsApp"
+                ? `https://wa.me/591${icon.url}`
+                : icon.name === "E-mail"
+                ? `mailto:${icon.url}`
+                : icon.name === "Teléfono"
+                ? `tel:${icon.url}`
+                : icon.url
+            }
+            target="_blank"
           >
             <img
               width={smallPreview ? 40 : 60}

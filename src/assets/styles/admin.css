@@ -46,7 +46,7 @@
 }
 
 .optionsAdmin div:nth-child(1) {
-    background-color:#561AD9;
+    background-color:var(--prim-purple);
     display: flex;
     align-items: center;
 }
@@ -142,9 +142,9 @@
 
 .history-pay-button {
     border-radius: 10px;
-    color: #561AD9;
+    color: var(--prim-purple);
     font-weight: 500;
-    border: 1px solid #561AD9;
+    border: 1px solid var(--prim-purple);
 
 }
 

@@ -193,15 +193,16 @@ export function getRemainingTimeAsString(date) {
 }
 
 export const verificarLicencia = (licenseType, limitDate) => {
-  const fechaActual = new Date();
-  const timestampActual = Timestamp.fromDate(fechaActual);
+  const timestampActual = Timestamp.now();
 
   const fechaLimite = limitDate.toDate();
 
   // Caso 1: Si el tipo de licencia es "Gratis" y la fecha límite es menor que la fecha actual
   if (licenseType === LICENSE_TYPES.FREE && limitDate < timestampActual) {
       return false;
-  }
+  } else if (licenseType === LICENSE_TYPES.FREE && limitDate >= timestampActual) {
+    return true;
+}
   
   // Caso 2: Si el tipo de licencia no es "Gratis" y la fecha actual es menor que la fecha límite + 3 meses
   if (licenseType !== LICENSE_TYPES.FREE) {

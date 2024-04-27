@@ -20,7 +20,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db, storage } from "../utils/firebase-config";
 import "../assets/styles/loader.css";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { LICENSE_TYPES, SITE_NAME } from "../utils/constants";
+import { LICENSE_TYPES, MAIN_COLOR, SITE_NAME } from "../utils/constants";
 import { verificarLicencia } from "../utils/methods";
 import UpdateLicenseModal from "../components/modals/UpdateLicenseModal";
 import { FaStar } from "react-icons/fa";
@@ -184,7 +184,7 @@ const EditCard = () => {
           if (!cardFields.extraButtons) cardFields["extraButtons"] = [];
           if (!cardFields.adminCards) cardFields["adminCards"] = [];
           if (!cardFields.theme) cardFields["theme"] = "light";
-          if (!cardFields.color) cardFields["color"] = "#561AD9";
+          if (!cardFields.color) cardFields["color"] = MAIN_COLOR;
           setElementsInfo(cardFields);
 
           const docSnap = await getDoc(doc(db, "users", cardFields.userId));

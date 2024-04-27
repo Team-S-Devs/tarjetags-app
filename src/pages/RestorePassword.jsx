@@ -10,10 +10,11 @@ import Header from '../sections/Header'
 import {Helmet} from "react-helmet";
 import { SITE_NAME } from '../utils/constants'
 
-const RestorePassword = () => {
+const RestorePassword = ({user}) => {
 
   const [emailValue, setEmailValue] = useState('');
   const [emailError, setEmailError] = useState(false);
+  const [isEmailSent, setEmailSent] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState('Introduce un correo electrónico válido');
  
   const validateEmail = () => {
@@ -37,10 +38,13 @@ const RestorePassword = () => {
   
     try {
       await sendPasswordResetEmail(auth,emailValue);
-      setRestoreLoader(false);
+      setEmailSent(true);
+      console.log("vamosss")
     } catch (error) {
-      setRestoreLoader(false);
-    }
+      console.log("errorsaso")
+    } 
+    
+    setRestoreLoader(false);
   };
   
   const {width} = useWindowSize();
@@ -55,12 +59,12 @@ const RestorePassword = () => {
             te conecten con oportunidades ilimitadas."
         />
       </Helmet>
-      <Header/>
+      {user && <Header/>}
       <div className='prof-2-cont'>
-      <BoldTitleWithBackButton centered variant={ width < 400 ? 'h4':'h3'}>Restablecer contraseña</BoldTitleWithBackButton>
+      <BoldTitleWithBackButton  variant={ width < 400 ? 'h6':'h3'} style={{marginTop:'1rem'}}>Restablecer contraseña</BoldTitleWithBackButton>
             <br/>
             <div className='container'>
-            <GreySubtitle variant='h6' textAlign={"center"} paddingHorizontal={40}>Introduce el email con el que te registraste y se te enviará un enlace a tu correo electrónico para  cambiar tu contraseña, entra al link para restablecer la contraseña y vuelve a iniciar sesión</GreySubtitle>
+            <GreySubtitle variant={width < 400  ? 'h7' : 'h6'} textAlign={"center"} paddingHorizontal={width < 400 ? 0 : 40}>Introduce el email con el que te registraste y se te enviará un enlace a tu correo electrónico para  cambiar tu contraseña, entra al link para restablecer la contraseña y vuelve a iniciar sesión</GreySubtitle>
             </div>
 
                 <div className='mt-4 mb-3'>
@@ -76,11 +80,15 @@ const RestorePassword = () => {
                     setError={setEmailError}
                     errorMessage={emailErrorMessage}
                     validateMethod={validateEmail}
+                    
+                    styleField={{maxWidth:'100vw'}}
                 />
           </div>
-
+          {isEmailSent &&
+            <div style={{fontWeight: '550'}}>Verifique su Correo electrónico</div>
+          }
           <div className='mt-4'>
-            <BigPrimaryButton type='button' onClick={sendEmailRequest} loading={restoreLoader} children={"Mandar Correo"} />
+            <BigPrimaryButton type='button' onClick={sendEmailRequest} loading={restoreLoader} children={"Mandar Correo"} style={{maxWidth:'100vw'}} />
           </div>
         </div>
       </div>

@@ -166,6 +166,7 @@ const SignUp = () => {
       !validatePhone() ||
       !validatePassword() ||
       !validateConfirmPassword() ||
+      (discountCodeValue == "") ||
       fullname.trim().length < 4
     ) {
       return;
@@ -219,9 +220,23 @@ const SignUp = () => {
     }
   };
 
+
+  const generateDiscountCode = (num) => {
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    let result = "";
+    while (result.length < num){
+        let ch = characters.charAt(Math.floor(Math.random() * charactersLength));
+            result += ch;
+    }
+    setDiscountCodeValue(result)
+  }
+
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) navigate("/dashboard");
+      generateDiscountCode(10);
     });
   }, []);
 

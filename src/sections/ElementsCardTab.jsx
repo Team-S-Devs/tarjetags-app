@@ -8,6 +8,7 @@ import ImageUploader from "../components/form/fields/ImageUploader";
 import { BsStars } from "react-icons/bs";
 import ThemeSelector from "../components/form/ThemeSelector";
 import { TextField } from "@mui/material";
+import { MAIN_COLOR } from "../utils/constants";
 
 const ElementsCardTab = ({
   elementsInfo = {
@@ -53,7 +54,7 @@ const ElementsCardTab = ({
           }}
         >
           <div className="d-flex align-items-center">
-            <FaUser color="#561AD9" size={20} style={{ marginRight: 8 }} />
+            <FaUser color={MAIN_COLOR} size={20} style={{ marginRight: 8 }} />
             <ThinTitle color="primary" variant="h6">
               Información de usuario
             </ThinTitle>
@@ -112,7 +113,7 @@ const ElementsCardTab = ({
           />
           <br />
           <div className="d-flex align-items-center">
-            <BsStars color="#561AD9" size={24} />
+            <BsStars color={MAIN_COLOR} size={24} />
             <div className="ml-2"></div>
             <ThinTitle variant="h6" color="primary" textAlign="center">
               Diseño

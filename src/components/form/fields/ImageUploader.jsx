@@ -8,6 +8,7 @@ import {
 import { truncateString } from "../../../utils/methods";
 import useWindowSize from "../../../hooks/useWindowsSize";
 import { PiImageThin } from "react-icons/pi";
+import { MAIN_COLOR } from "../../../utils/constants";
 
 const allowedFormats = [
   "image/bmp",
@@ -103,7 +104,7 @@ const ImageUploader = ({
   const handleOnDragOver = (e) => {
     e.preventDefault();
     if (file !== "") return;
-    setBorderColor("#561AD9");
+    setBorderColor(MAIN_COLOR);
   };
 
   /**
@@ -177,7 +178,7 @@ const ImageUploader = ({
         ) : (
           <>
             <Box mb={2} mt={2}>
-              <PiImageThin size={64} color={"#561AD9"} />
+              <PiImageThin size={64} color={MAIN_COLOR} />
               {width > 1200 && (
                 <>
                   <Typography color={"#333"}>

@@ -27,18 +27,19 @@ const Admin = () => {
   const [notFoundView, setNotFoundView] = useState(false);
   const { width, height } = useWindowSize();
 
-  const setNonRepeatedEmailRef = (usersArray) => {
+  const setNonRepeatedEmailRef = (usersArrayA) => {
     for (let i = 0; i < lastEmailRef.length; i++) {
       if (
-        lastEmailRef[i] == usersArray[usersArray.length-1].email)
+        lastEmailRef[i] == usersArrayA[usersArrayA.length-1].email)
         return;
     }
 
-    if (usersArray.length >= 10)
-      setLastEmailRef([
-        ...lastEmailRef,
-        usersArray[usersArray.length - 1].email,
-      ]);
+    if (usersArrayA.length >= 10){
+        setLastEmailRef([
+          ...lastEmailRef,
+          usersArrayA[usersArrayA.length - 1].email,
+        ]);
+    }
   }
 
   const getUsersByPartialEmail = async (partialEmail, limitN) => {
@@ -74,6 +75,7 @@ const Admin = () => {
       setUsersArray(partialMatchUsers);
       setNonRepeatedEmailRef(partialMatchUsers);
     } else {
+      setUsersArray([])
       setNotFoundView(true);
     }
 

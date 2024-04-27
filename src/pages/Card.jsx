@@ -63,7 +63,7 @@ const Card = () => {
           if (!cardFields.extraButtons) cardFields["extraButtons"] = [];
           if (!cardFields.adminCards) cardFields["adminCards"] = [];
           if (!cardFields.theme) cardFields["theme"] = "light";
-          if (!cardFields.color) cardFields["color"] = "#561AD9";
+          if (!cardFields.color) cardFields["color"] = MAIN_COLOR;
           setElementsInfo(cardFields);
 
           const docSnap = await getDoc(doc(db, "users", cardFields.userId));

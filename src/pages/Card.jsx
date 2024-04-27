@@ -105,7 +105,14 @@ const Card = () => {
       </Helmet>
       {loadingGetting ? (
         <div
-          style={{ height: "100vh", background: MAIN_COLOR, width: "100vw" }}
+          style={{
+            height: "100vh",
+            background: MAIN_COLOR,
+            width: "100vw",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
           <span className="loader-white"></span>
         </div>

@@ -107,7 +107,6 @@ const AdminPreviewItem = ({ currCard, bgColor = "#fff", dark, mainColor = MAIN_C
               component={Link}
               to={`/${card.urlPage}`}
               target="_blank"
-              onClick={() => navigate(`/${card.urlPage}`)}
             >
               <Box>
                 <img

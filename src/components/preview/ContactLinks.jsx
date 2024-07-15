@@ -1,8 +1,9 @@
 import { IconButton } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { licenseLimits } from "../../utils/constants";
+import { FULL_URL_NAME, licenseLimits, MAIN_COLOR, URL_NAME } from "../../utils/constants";
 import { contactButtonsOptions } from "../../sections/ContactButtons";
 import { LuShare2 } from "react-icons/lu";
+import iconTag from "../../assets/images/auth/Marca.svg";
 
 const ContactLinks = ({
   elementsInfo = {},
@@ -59,7 +60,7 @@ const ContactLinks = ({
         )
         .map((icon, index) => (
           <IconButton
-          key={"iconButton-"+index}
+            key={"iconButton-" + index}
             style={{
               background: "#fff",
               color: contactButtonsOptions.find(
@@ -111,6 +112,24 @@ const ContactLinks = ({
           <LuShare2 size={smallPreview ? 24 : 44} />
         </IconButton>
       )}
+      <IconButton
+        style={{
+          background: MAIN_COLOR,
+          color: "#000",
+          padding: 8,
+          paddingRight: 11,
+          borderRadius: "50%",
+          marginLeft: elementsInfo.contactLinks.length > 0 ? 16 : 0,
+        }}
+        href={FULL_URL_NAME}
+        target="_blank"
+      >
+        <img
+          width={smallPreview ? 24 : 44}
+          style={{ borderRadius: "50%" }}
+          src={iconTag}
+        />
+      </IconButton>
     </div>
   );
 };

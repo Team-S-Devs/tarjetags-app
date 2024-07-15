@@ -5,6 +5,7 @@ export const TRANSPARENT_SQUARE = "../../src/assets/images/blanckImg.png"
 export const MAIN_COLOR = "#662483";
 
 export const URL_NAME = "tarjetag.com/"
+export const FULL_URL_NAME = `https://${URL_NAME}`
 export const SITE_NAME = "Tarjetag"
 export const PHONE_NUMBER = "63073135"
 

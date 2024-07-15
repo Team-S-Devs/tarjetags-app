@@ -20,42 +20,48 @@ export const LICENSE_TYPES = {
 export const licenseLimits = {
   [LICENSE_TYPES.FREE]: {
     limitValue: 3,
-    maxProducts: 10,
+    maxProducts: 5,
+    limitImagesPerProduct: 1,
     admin: false,
     excludedButtons: ["WhatsApp", "Google Maps"],
     productsDivision: false
   },
   [LICENSE_TYPES.STANDARD]: {
     limitValue: 12,
-    maxProducts: 100,
+    maxProducts: 30,
+    limitImagesPerProduct: 5,
     admin: false,
     excludedButtons: [],
     productsDivision: false
   },
   [LICENSE_TYPES.PREMIUM]: {
     limitValue: 12,
-    maxProducts: 250,
+    maxProducts: 100,
+    limitImagesPerProduct: 5,
     admin: true,
     excludedButtons: [],
     productsDivision: true
   },
   [LICENSE_TYPES.GOLD]: {
     limitValue: 12,
-    maxProducts: 250,
+    maxProducts: 100,
+    limitImagesPerProduct: 5,
     admin: true,
     excludedButtons: [],
     productsDivision: true
   },
   [LICENSE_TYPES.SILVER]: {
     limitValue: 12,
-    maxProducts: 250,
+    maxProducts: 100,
+    limitImagesPerProduct: 5,
     admin: true,
     excludedButtons: [],
     productsDivision: true
   },
   [LICENSE_TYPES.BRONZE]: {
     limitValue: 12,
-    maxProducts: 250,
+    maxProducts: 100,
+    limitImagesPerProduct: 5,
     admin: true,
     excludedButtons: [],
     productsDivision: true

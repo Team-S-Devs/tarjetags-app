@@ -6,7 +6,6 @@ import { LiaEditSolid } from "react-icons/lia";
 import { GoTrash } from "react-icons/go";
 import SmallPrimaryButton from "../components/buttons/SmallPrimaryButton";
 import {
-  GREY_RECTANGLE,
   LICENSE_TYPES,
   licenseLimits,
   SITE_NAME,
@@ -167,6 +166,7 @@ const ProductsServicesList = ({
         setElementsInfo={setElementsInfo}
         index={productIdx}
         cardId={cardId}
+        licenseType={licenseType}
       />
     </StyledCard>
   );

@@ -5,13 +5,14 @@ import { PiImageThin } from "react-icons/pi";
 import useWindowSize from "../../hooks/useWindowsSize";
 import { truncateString, validateImage } from "../../utils/methods";
 import HorizontalLine from "../lines/HorizontalLine";
-import { MAIN_COLOR } from "../../utils/constants";
+import { licenseLimits, MAIN_COLOR } from "../../utils/constants";
 
 const ProductPhotos = ({
   imageUrls = [],
   setImageUrls = () => {},
   text = "Imagen seleccionada:",
   label,
+  licenseType = "",
 }) => {
   /**
    * Handles the drop event for the image file.
@@ -24,7 +25,11 @@ const ProductPhotos = ({
     const imageFiles = e.dataTransfer.files;
     let imgUrls = [];
     const idMax = Date.now();
-    for (let i = 0; i < imageFiles.length; i++) {
+    const maxImagesLength =
+      licenseLimits[licenseType].limitImagesPerProduct > imageFiles.length
+        ? imageFiles.length
+        : licenseLimits[licenseType].limitImagesPerProduct;
+    for (let i = 0; i < maxImagesLength; i++) {
       if (!validateImage(imageFiles[i])) {
         imageFiles.splice(i, 1);
         continue;
@@ -32,7 +37,7 @@ const ProductPhotos = ({
       imgUrls.push({
         url: URL.createObjectURL(imageFiles[i]),
         file: imageFiles[i],
-        id: idMax + i
+        id: idMax + i,
       });
     }
     setImageUrls([...imageUrls, ...imgUrls]);
@@ -46,7 +51,11 @@ const ProductPhotos = ({
     const imageFiles = e.target.files;
     let imgUrls = [];
     const idMax = Date.now();
-    for (let i = 0; i < imageFiles.length; i++) {
+    const maxImagesLength =
+      licenseLimits[licenseType].limitImagesPerProduct > imageFiles.length
+        ? imageFiles.length
+        : licenseLimits[licenseType].limitImagesPerProduct;
+    for (let i = 0; i < maxImagesLength; i++) {
       if (!validateImage(imageFiles[i])) {
         imageFiles.splice(i, 1);
         continue;
@@ -54,7 +63,7 @@ const ProductPhotos = ({
       imgUrls.push({
         url: URL.createObjectURL(imageFiles[i]),
         file: imageFiles[i],
-        id: idMax + i
+        id: idMax + i,
       });
     }
     setImageUrls([...imageUrls, ...imgUrls]);
@@ -88,7 +97,6 @@ const ProductPhotos = ({
     const igmUrlsCopy = imageUrls.filter((_, index) => index !== idx);
     setImageUrls(igmUrlsCopy);
   };
-
 
   const { width } = useWindowSize();
 
@@ -135,32 +143,35 @@ const ProductPhotos = ({
             <div style={{ marginBottom: 28 }} />
           </>
         ))}
-        <>
-          <Box mb={2} mt={2}>
-            <PiImageThin size={64} color={MAIN_COLOR} />
-            {width > 1200 && (
-              <>
-                <Typography color={"#333"}>
-                  Arrastra y suelta tus imágenes aquí
-                </Typography>
-                <Typography color={"#333"}>o</Typography>
-              </>
-            )}
-          </Box>
-          <input
-            accept="image/*"
-            id="contained-button-file"
-            type="file"
-            multiple
-            style={{ display: "none" }}
-            onChange={handleFileSelect}
-          />
-          <label htmlFor="contained-button-file">
-            <Button variant="outlined" component="span">
-              Selecciona imágenes desde tu dispositivo
-            </Button>
-          </label>
-        </>
+        {licenseLimits[licenseType].limitImagesPerProduct >
+          imageUrls.length && (
+          <>
+            <Box mb={2} mt={2}>
+              <PiImageThin size={64} color={MAIN_COLOR} />
+              {width > 1200 && (
+                <>
+                  <Typography color={"#333"}>
+                    Arrastra y suelta tus imágenes aquí
+                  </Typography>
+                  <Typography color={"#333"}>o</Typography>
+                </>
+              )}
+            </Box>
+            <input
+              accept="image/*"
+              id="contained-button-file"
+              type="file"
+              multiple
+              style={{ display: "none" }}
+              onChange={handleFileSelect}
+            />
+            <label htmlFor="contained-button-file">
+              <Button variant="outlined" component="span">
+                Selecciona imágenes desde tu dispositivo
+              </Button>
+            </label>
+          </>
+        )}
       </Box>
     </div>
   );

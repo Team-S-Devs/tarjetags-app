@@ -27,6 +27,7 @@ const TitleDescription = ({ elementsInfo = {}, smallPreview = false, textColor =
         marginBottom={smallPreview ? 4 : 5}
         style={{
           padding: "0 28px",
+          textAlign: "center",
           wordBreak: "break-word",
         }}
       >

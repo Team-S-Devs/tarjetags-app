@@ -15,6 +15,28 @@
     margin-top: -90px;
 }
 
+.prodImages-buttons {
+    display: flex;
+    justify-content: center;
+    padding-block: .2rem;
+    margin-bottom: .5rem;
+}
+
+.prodImages-buttons button {
+    font-size: 1.2rem;
+    border:none;
+    background: none;
+    font-weight: 500;
+    border-radius: 10px;
+    padding-inline: .2rem;
+    filter: opacity(60%);
+    cursor: pointer;
+}
+
+.prodImages-buttons :hover {
+    filter: opacity(100%);
+}
+
 @media (max-width: 768px) {
     .portrait-card-img{
         height: 142px;

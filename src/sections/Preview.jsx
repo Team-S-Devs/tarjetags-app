@@ -12,6 +12,7 @@ import AdminPreview from "../components/preview/AdminPreview";
 import "../assets/styles/dashboard.css";
 import Carousel from "../components/preview/Carousel";
 import ThinTitle from "../components/texts/ThinTitle";
+import ProductsView from "../components/preview/ProductsView";
 
 const Preview = ({
   elementsInfo = {},
@@ -183,7 +184,7 @@ const Preview = ({
           )}
 
           <div className="carrousel-products">
-            <Carousel
+            <ProductsView
               licType={licenseType}
               editPreview={editPreview}
               index={indexCarousel}
@@ -191,7 +192,7 @@ const Preview = ({
               elemInfo={elementsInfo}
               color={color}
               textColor={textColor}
-            ></Carousel>
+            ></ProductsView>
           </div>
         </div>
       )}

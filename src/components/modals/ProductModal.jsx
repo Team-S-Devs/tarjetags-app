@@ -22,7 +22,8 @@ const ProductModal = ({
   elementsInfo,
   setElementsInfo,
   index,
-  cardId
+  cardId,
+  licenseType = "",
 }) => {
   const [userInfoCop, setUserInfoCop] = useState({});
   const [imgUrls, setImgUrls] = useState([]);
@@ -58,7 +59,13 @@ const ProductModal = ({
     try {
       for (let i = 0; i < imgUrls.length; i++) {
         if (imgUrls[i].file) {
-          let imageStatus = await handleUploadImage(imgUrls[i].file, elementsInfo, cardId, imgUrls[i].id, "products");
+          let imageStatus = await handleUploadImage(
+            imgUrls[i].file,
+            elementsInfo,
+            cardId,
+            imgUrls[i].id,
+            "products"
+          );
           if (!imageStatus.success) {
             alert("No se pudo subir una imagen, intenta de nuevo.");
           } else {
@@ -79,7 +86,7 @@ const ProductModal = ({
     }
     setLoading(false);
     let userInf = { ...userInfoCop };
-    userInf.products[index].imgs = imgUrlsCopy
+    userInf.products[index].imgs = imgUrlsCopy;
     setOpen(false);
     setElementsInfo(userInf);
   };
@@ -88,7 +95,9 @@ const ProductModal = ({
 
   return (
     <>
-      {open && elementsInfo.products.length > 0 && elementsInfo.products[index] ? (
+      {open &&
+      elementsInfo.products.length > 0 &&
+      elementsInfo.products[index] ? (
         <Dialog open={open} onClose={handleSaveProduct} style={{ margin: 0 }}>
           <Dialog open={loading}>
             <div style={{ padding: 30, textAlign: "center" }}>
@@ -147,7 +156,11 @@ const ProductModal = ({
                 marginBottom: 6,
               }}
             />
-            <ProductPhotos imageUrls={imgUrls} setImageUrls={setImgUrls} />
+            <ProductPhotos
+              imageUrls={imgUrls}
+              setImageUrls={setImgUrls}
+              licenseType={licenseType}
+            />
 
             <div style={{ marginTop: 18 }}></div>
             <CategorySelector

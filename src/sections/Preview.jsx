@@ -9,19 +9,16 @@ import ContactLinks from "../components/preview/ContactLinks";
 import ExtraButtons from "../components/preview/ExtraButtons";
 import { contrast } from "chroma-js";
 import AdminPreview from "../components/preview/AdminPreview";
-import '../assets/styles/dashboard.css'
+import "../assets/styles/dashboard.css";
 import Carousel from "../components/preview/Carousel";
 import ThinTitle from "../components/texts/ThinTitle";
-
 
 const Preview = ({
   elementsInfo = {},
   borderRadius = 0,
   licenseType,
   editPreview = false,
-  
 }) => {
-
   const color = elementsInfo.theme === "dark" ? "#FFF" : "#000";
   const backgroundColor = elementsInfo.theme === "dark" ? "#25242B" : "#FFF";
   const { width } = useWindowSize();
@@ -51,28 +48,33 @@ const Preview = ({
   useEffect(() => {
     if (actualCategory == "0") {
       setIndexCarousel(0);
-      setProducts(elementsInfo.products.slice(0, licenseLimits[licenseType].maxProducts));
-    }
-    else {
-      const categoryProducts = elementsInfo.products.filter(prod => prod.category == actualCategory);
+      setProducts(
+        elementsInfo.products.slice(0, licenseLimits[licenseType].maxProducts)
+      );
+    } else {
+      const categoryProducts = elementsInfo.products.filter(
+        (prod) => prod.category == actualCategory
+      );
       setIndexCarousel(0);
-      setProducts(categoryProducts.slice(0, licenseLimits[licenseType].maxProducts));
+      setProducts(
+        categoryProducts.slice(0, licenseLimits[licenseType].maxProducts)
+      );
     }
   }, [actualCategory]);
-      
 
   const changeCategory = (id) => {
-    setActualCategory(id)
-  }
-
+    setActualCategory(id);
+  };
 
   const isAProductVisible = () => {
-    return elementsInfo.products.some(prod => prod.show);
-  }
-  
+    return elementsInfo.products.some((prod) => prod.show);
+  };
+
   const isNotCategoryEmpty = (cat) => {
-    return elementsInfo.products.some(prod => (prod.category == cat.id && prod.show));
-  }
+    return elementsInfo.products.some(
+      (prod) => prod.category == cat.id && prod.show
+    );
+  };
 
   return (
     <div
@@ -112,8 +114,8 @@ const Preview = ({
       />
       <SocialLinks elementsInfo={elementsInfo} smallPreview={smallPreview} />
 
-      {(elementsInfo.products.length > 0 && isAProductVisible()) &&
-          <div className="products-preview-container">
+      {elementsInfo.products.length > 0 && isAProductVisible() && (
+        <div className="products-preview-container">
           <ThinTitle
             style={{
               textOverflow: "ellipsis",
@@ -130,42 +132,69 @@ const Preview = ({
             Productos o Servicios
           </ThinTitle>
 
-          {(elementsInfo.productCategories) && 
-          <div className="table-wrapper">
+          {elementsInfo.productCategories && (
+            <div className="table-wrapper">
               <style>{`
               .table-wrapper::-webkit-scrollbar-thumb {
                 background-color: ${color};
                 border-radius: 5px;
                 }
-          `     }</style>
+          `}</style>
               <table className="scrollable-table">
                 <thead></thead>
                 <tbody>
                   <tr>
                     <td key={"categ-" + 0}>
-                        <div className={"category_option"+(actualCategory == "0" ? " selected-cat" : "")} onClick={() => changeCategory("0")} style={{color: color}}>Todo</div>
-                      </td>
-                      {licenseLimits[licenseType].productsDivision && elementsInfo.productCategories.map((cat) => (
-                        isNotCategoryEmpty(cat) &&
-                        <td key={"categ-" + cat.id}>
-                          <div className={"category_option"+(actualCategory == cat.id ? " selected-cat" : "")} onClick={() => changeCategory(cat.id)} style={{color: color}}>{cat.title}</div>
-                        </td>
-                      ))}
+                      <div
+                        className={
+                          "category_option" +
+                          (actualCategory == "0" ? " selected-cat" : "")
+                        }
+                        onClick={() => changeCategory("0")}
+                        style={{ color: color }}
+                      >
+                        Todo
+                      </div>
+                    </td>
+                    {licenseLimits[licenseType].productsDivision &&
+                      elementsInfo.productCategories.map(
+                        (cat) =>
+                          isNotCategoryEmpty(cat) && (
+                            <td key={"categ-" + cat.id}>
+                              <div
+                                className={
+                                  "category_option" +
+                                  (actualCategory == cat.id
+                                    ? " selected-cat"
+                                    : "")
+                                }
+                                onClick={() => changeCategory(cat.id)}
+                                style={{ color: color }}
+                              >
+                                {cat.title}
+                              </div>
+                            </td>
+                          )
+                      )}
                   </tr>
                 </tbody>
               </table>
-          </div>
-          }
-
+            </div>
+          )}
 
           <div className="carrousel-products">
-            <Carousel licType={licenseType} editPreview={editPreview} index={indexCarousel} products={products} elemInfo={elementsInfo} color={color} textColor={textColor}></Carousel>
+            <Carousel
+              licType={licenseType}
+              editPreview={editPreview}
+              index={indexCarousel}
+              products={products}
+              elemInfo={elementsInfo}
+              color={color}
+              textColor={textColor}
+            ></Carousel>
           </div>
-
-
-          </div>
-          }
-     
+        </div>
+      )}
 
       <ExtraButtons
         elementsInfo={elementsInfo}

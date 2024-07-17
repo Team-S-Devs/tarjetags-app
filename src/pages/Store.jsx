@@ -7,7 +7,6 @@ import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import StoreProductsList from "../sections/StoreProductsList";
 import { db } from "../utils/firebase-config";
 import StoreProductsCategories from "../sections/StoreProductsCategories";
-import SmallPrimaryButton from "../components/buttons/SmallPrimaryButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import BigPrimaryButton from "../components/buttons/BigPrimaryButton";
 import useWindowSize from "../hooks/useWindowsSize";

@@ -356,11 +356,11 @@ const [userData, setUserData ] = useState(null);
 
                                     <div className="mt-md-3 mt-sm-0"></div>
                                     <FieldText
-                                        label='Código de descuento (Opcional)'
+                                        label='Código de descuento'
                                         value={discountCodeValue}
                                         setValue={setDiscountCodeValue}
-                                        focused={edit ? false : true}
-                                        readOnly={edit ? false : true}
+                                        focused={true}
+                                        readOnly={true}
                                         placeholder='Ej: swd789'
                                         fullWidth
                                     />

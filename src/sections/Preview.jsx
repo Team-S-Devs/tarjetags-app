@@ -13,6 +13,7 @@ import "../assets/styles/dashboard.css";
 import Carousel from "../components/preview/Carousel";
 import ThinTitle from "../components/texts/ThinTitle";
 import ProductsView from "../components/preview/ProductsView";
+import lightPurpleSvg from "../assets/images/light-purple.svg";
 
 const Preview = ({
   elementsInfo = {},
@@ -77,6 +78,13 @@ const Preview = ({
     );
   };
 
+  const getProfileUrl = () => {
+    elementsInfo.profilePhoto?.url &&
+          elementsInfo.profilePhoto?.url !== ""
+            ? elementsInfo.profilePhoto.url
+            : lightPurpleSvg
+  }
+
   return (
     <div
       style={{
@@ -93,6 +101,15 @@ const Preview = ({
       }}
       className="preview-container"
     >
+      <head>
+        <title>{elementsInfo.title}</title>
+        <meta property="og:title" content={elementsInfo.title} />
+        <meta property="og:description" content={elementsInfo.description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://tarjetags.com" />
+        <meta property="og:image" content={getProfileUrl} />
+      </head>
+
       <style>
         {`
           .preview-container::-webkit-scrollbar {

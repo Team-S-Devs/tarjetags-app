@@ -390,7 +390,7 @@ const SignUp = () => {
                   label="Departamento (Opcional)"
                 />
 
-                <div className="mt-md-3 mt-sm-0"></div>
+                {/* <div className="mt-md-3 mt-sm-0"></div>
                 <FieldText
                   label="Código de descuento (Opcional)"
                   value={discountCodeValue}
@@ -398,7 +398,7 @@ const SignUp = () => {
                   variant="outlined"
                   placeholder="Ej: swd789"
                   fullWidth
-                />
+                /> */}
               </div>
 
               <div className="mt-4"></div>

@@ -274,6 +274,25 @@ const [userData, setUserData ] = useState(null);
  </Modal>
  ;
 
+ const isPartner = () => {
+    if (userData != null) {
+        console.log(userData.licenseType)
+        switch (userData.licenseType) {
+          case "Bronce":
+            return true
+          case "Plata":
+            return true
+          case "Oro":
+            return true
+          default:
+            return false
+        }
+    } else {
+        return false
+    }
+   
+  }
+
     return (
         <div className='profile-container'>
             <Helmet>
@@ -354,16 +373,20 @@ const [userData, setUserData ] = useState(null);
                                         validateMethod={validatePhone}
                                     />
 
-                                    <div className="mt-md-3 mt-sm-0"></div>
-                                    <FieldText
-                                        label='Código de descuento (Opcional)'
-                                        value={discountCodeValue}
-                                        setValue={setDiscountCodeValue}
-                                        focused={edit ? false : true}
-                                        readOnly={edit ? false : true}
-                                        placeholder='Ej: swd789'
-                                        fullWidth
-                                    />
+                                    {isPartner() && 
+                                        <>
+                                        <div className="mt-md-3 mt-sm-0"></div>
+                                        <FieldText
+                                            label='Código de descuento'
+                                            value={discountCodeValue}
+                                            setValue={setDiscountCodeValue}
+                                            focused={true}
+                                            readOnly={true}
+                                            placeholder='Ej: swd789'
+                                            fullWidth
+                                        />
+                                        </>
+                                    }
 
 
                                 </div>

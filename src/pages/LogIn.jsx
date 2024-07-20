@@ -15,6 +15,7 @@ import PasswordField from "../components/form/fields/PasswordField";
 import "../assets/styles/login.css";
 import { SITE_NAME } from "../utils/constants";
 import {Helmet} from "react-helmet";
+import BoldTitleWithoutButton from "../components/texts/BoldTitleWIthoutButton";
 
 const LogIn = () => {
   const navigate = useNavigate();
@@ -124,7 +125,7 @@ const LogIn = () => {
         />
       </Helmet>
       <div className="d-flex justify-content-center flex-column login-container ">
-        <BoldTitleWithBackButton children="Inicio de Sesión" />
+        <BoldTitleWithoutButton children="Inicio de Sesión" />
         <GreySubtitleWithLink
           linkSize={20}
           subtitleText="¿Aún no tienes una cuenta?"

@@ -26,6 +26,9 @@ const UserRow = ({
 
   const [open, setOpen] = useState(false);
   const [licenseValue, setLicenseType] = useState(licenseType);
+  const [mainLicenceValue, setMainLicenseType] = useState(licenseType);
+  const [mainDiscountCodeValue, setMainDiscountCodeValue] = useState(discountCode);
+  const [discountCodeValue, setDiscountCodeValue] = useState(discountCode);
   const [isLicenseChange, setLicenceChange] = useState(false);
   const [editUser, setEditUser] = useState(false);
   const [selectedDate, setSelectedDate] = useState(dayjs("31/04/2024"));
@@ -43,8 +46,29 @@ const UserRow = ({
   const handleClose = () => setOpen(false);
   const navigate = useNavigate();
 
+  const handleDiscountCode = (data) => {
+      if (data == LICENSE_TYPES.BRONZE || data == LICENSE_TYPES.SILVER || data == LICENSE_TYPES.GOLD) {
+        generateDiscountCode(10);
+      } else {
+        setDiscountCodeValue("");
+      }
+  }
+
+  const generateDiscountCode = async (num) => {
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    let result = "";
+    while (result.length < num){
+        let ch = characters.charAt(Math.floor(Math.random() * charactersLength));
+            result += ch;
+    }
+    await setDiscountCodeValue(result);
+  }
+
+
   const setLicenseTypeBool = (data) => {
     setLicenseType(data);
+    handleDiscountCode(data);
     setLicenceChange(true);
   }
 
@@ -75,7 +99,8 @@ const UserRow = ({
   const handleEditOption = () => {
     setEditUser(!editUser);
     setLicenceChange(false);
-    setLicenseType(licenseType);
+    setLicenseType(mainLicenceValue);
+    setDiscountCodeValue(mainDiscountCodeValue);
   };
 
   const styleModal = {
@@ -110,8 +135,6 @@ const UserRow = ({
     }
     else {return selectedDate;}
   };
-  
-
 
   const saveChangesToFirestore = () => {
     setSaveLoader(true);
@@ -125,6 +148,7 @@ const UserRow = ({
     const newData = {
       limitDate: timestampObject,
       licenseType: licenseValue,
+      discountCode: discountCodeValue  
     };
 
     updateDoc(userRef, newData)
@@ -132,6 +156,8 @@ const UserRow = ({
         setSaveLoader(false);
         setEditUser(false);
         setLicenceChange(false);
+        setMainDiscountCodeValue(discountCodeValue);
+        setMainLicenseType(licenseValue);
       })
       .catch((error) => {
         alert("Error guardando los nuevos datos. Inténtalo de nuevo");
@@ -170,7 +196,7 @@ const UserRow = ({
             licenseValue
           )}
         </td>
-        <td onClick={handleOpen}>{discountCode}</td>
+        <td>{discountCodeValue}</td>
         <td>
           <div className="optionsAdmin">
             <div onClick={editUser ? saveChangesToFirestore : handleEditOption}>
